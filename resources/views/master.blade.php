@@ -29,6 +29,7 @@
  
 	<script type="text/javascript">
 		var deptHead = "{{ count(checkDepartmentHead())  }}"
+		console.log(deptHead);
 	</script>
 	@include('template.footer')
 	@yield('js')
