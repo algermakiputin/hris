@@ -105,6 +105,17 @@ class LeaveController extends Controller
 
 	}
 
+	public function checkBalance(Request $request) {
+		$data = [
+				'employee_id' => $request->input('employee_id'),
+				'campus_id' => $request->input('campus_id')
+			];
+		$employee = employee::where($data)->first();
+	 
+		$leave_types = $this->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id);
+		return json_encode($leave_types);
+	}
+
 	public function myLeaveBalance() {
 
 		$leaveTypes = Leave_type::orderBy('id','DESC')->get(); 

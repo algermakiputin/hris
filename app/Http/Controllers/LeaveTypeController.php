@@ -78,7 +78,6 @@ class LeaveTypeController extends Controller
                             <form method="post" action="'. url('leave-type/delete') .'" 
                             class="delete-form" data-name="Leave Type">
                                 <input type="hidden" name="_token" value="'. csrf_token() .'">
-                                <input type="hidden" name="_method" value="delete">
                                 <input type="hidden" name="id" value="'.$leaveType->id.'">
                                 <button type="submit" class="btn-link"> <i class="fa fa-trash"></i> delete </button>
                             </form>

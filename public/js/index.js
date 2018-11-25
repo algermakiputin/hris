@@ -6,6 +6,8 @@ var actions = role == 0 ? false : true;
 var leaveActions = role == true ? false : true;
 var startDate;
 var endDate;
+var employee_id;
+var campus_id;
 var base_url = $("meta[name='base-url']").attr('content');
 if (deptHead == 1) {
     leaveActions = true;
@@ -184,9 +186,8 @@ $(document).ready(function() {
         if (startDate && endDate && empID && campusID) {
             window.location = url + '?employee_id=' + empID +'&campus_id=' + campusID +'&start_date=' + startDate + '&end_date=' + endDate;
         }
-       
-
         e.preventDefault();
+    
     })
 
     var leave_calendar = $("#leave-calendar").fullCalendar({
@@ -345,10 +346,41 @@ $(document).ready(function() {
 
     $("#leave_table").on('click', '.view', function() {
         var id = $(this).data('id');
-        var employee_id = $(this).data('employee');
-        var campus_id = $(this).data('campus');
+        employee_id = $(this).data('employee');
+        campus_id = $(this).data('campus');
         var row = $(this).parents('tr');
         summary(id, employee_id, campus_id, row)
+    })
+
+    $("#check-balance").click(function() {
+        
+        $.ajax({
+            type : 'POST',
+            data : {
+                _token : token,
+                employee_id : employee_id,
+                campus_id : campus_id
+            },
+            url : '/leaves/checkbalance',
+            success : function(data) {
+                var result = JSON.parse(data);
+                var table = $("#balance-table tbody");
+                table.empty();
+                $.each(result, function(key, value) {
+                    table.append("<tr>" +
+                            '<td>' + value.name  +'</td>' + 
+                            '<td>' + value.allowance  +'</td>' + 
+                            '<td>' + value.used  +'</td>' + 
+                            '<td>' + value.balance  +'</td>' + 
+                        "</tr>");
+                });
+            }
+        });
+
+    })
+
+    $("#summary").on('hidden.bs.modal', function() {
+        $("#leave-b").collapse('hide');
     })
 
 
@@ -404,10 +436,13 @@ $(document).ready(function() {
                                 view = "<i class='fa fa-envelope-o'></i> View reason";
                         }else if (value.status === "approved") {
                             status = '<span class="label label-success">Approved</span>';
-
                             if (value.note)
                                 view = "<i class='fa fa-envelope-o'></i> View note";
                         }
+
+                        if (summary.status == "Approved")
+                            status = '<span class="label label-success">Approved</span>'; 
+
 
                         $("#department-heads-approval").append(
                             '<div class="col-md-6 col-md-12">' +
@@ -980,9 +1015,8 @@ $(document).ready(function() {
                 });
             }
         });
-
-
     });
+
     $("#my_leaves").on("click", '.delete', function() {
         var id = $(this).data('id');
         var row = $(this).parents('tr');

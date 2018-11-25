@@ -50,7 +50,7 @@ Route::group(['middleware' => ['auth']],function() {
  
 	Route::post('leaves/summary','LeaveController@summary');
 	Route::post('leaves/general-report','LeaveController@generalReports');
-
+	Route::post('leaves/checkbalance','LeaveController@checkBalance');
 	Route::post('leaves-approval/insert', 'LeaveApprovalsController@insert');
 	
 	Route::get('reports/general','ReportsController@general');
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::get('leave-types/add','LeaveTypeController@add_type');
 		Route::post('leave-type/insert','LeaveTypeController@insert');
 		Route::get('leave-type/edit', 'LeaveTypeController@edit');
-		Route::delete('leave-type/delete', 'LeaveTypeController@destroyRow');
+		Route::post('leave-type/delete', 'LeaveTypeController@destroyRow');
 		Route::put('leave-type/update','LeaveTypeController@update');
 		
 

@@ -103,7 +103,24 @@
 				 </div>
 			</div>
 			<div class="modal-header">
-				<h4 class="modal-title">Department Heads Approval</h4>
+				<h4 class="modal-title">Department Heads Approval </h4>
+				<span class="btn btn-link btn-sm" data-toggle="collapse" data-target="#leave-b" id="check-balance">View Leave Balance</span>
+				<div id="leave-b" class="collapse">
+					 <table class="table" id="balance-table">
+						<thead>
+							<tr>
+								<th class="text-center" >Type</th>
+								<th class="text-center">Allowance Per School Year</th>
+								<th class="text-center">Used</th>
+								<th class="text-center">Balance</th>
+							</tr>
+						</thead>
+						<tbody class="text-center">
+							
+						</tbody>
+					 	
+					</table>
+				</div>
 			</div>
 			<div class="modal-body">
 				 <div class="row" id="department-heads-approval">
@@ -120,4 +137,22 @@
 		</div>
 	</div>
 </div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="leave-balance">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><i class="fa fa-info-circle"></i> Leave Balance</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+      </div>
+    </div> 
+  </div> 
+</div> 
 @endsection
