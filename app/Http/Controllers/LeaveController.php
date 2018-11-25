@@ -90,12 +90,18 @@ class LeaveController extends Controller
  
 	public function myLeave() {
 
+		$employee = employee::select('employee_id','campus_id','department_id')
+	 						->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
+	 						->first();
+		$department_id = $employee->department_id;
+		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
+
 		$status['application'] = Leave::where('employee_id',Auth()->user()->employee_id)->count();
 		$status['declined'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 0, 'pending' => 0])->count();
 		$status['approved'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 1, 'pending' => 0])->count();
 		$status['pending'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 0, 'pending' => 1])->count();
 		 
-		return view('Leave.myLeaves',compact('status'));
+		return view('Leave.myLeaves',compact('status','leave_types'));
 
 	}
 

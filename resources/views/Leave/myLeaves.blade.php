@@ -124,4 +124,50 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal" tabindex="-1" role="dialog" id="leave-balance">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><i class="fa fa-info-circle"></i> My Leave Balance</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+			<tr>
+				<th class="text-center" >Type</th>
+				<th class="text-center">Allowance Per School Year</th>
+				<th class="text-center">Used</th>
+				<th class="text-center">Balance</th>
+			</tr>
+		 
+			@if ($leave_types)
+				@foreach($leave_types as $l)
+				<tr>
+					<td class="text-center">{{$l['name']}}</td>
+					<td class="text-center">{{$l['allowance']}} Days</td>
+					<td class="text-center">{{ $l['used'] }}</td>
+					<td class="text-center">{{ $l['balance'] }}</td>
+				</tr>
+				@endforeach
+			@else
+				<tr>
+					<td class="text-center" colspan="4">No leave allocated for you department</td>
+				</tr>
+			@endif
+		</table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+      </div>
+    </div> 
+  </div> 
+</div>
+<script type="text/javascript">
+	var balance = "{{ json_encode($leave_types) }}";
+</script>
+@endsection
+
+@section('js')
+	<script src="{{ url('page/js/leaves.js')}}"></script>
 @endsection

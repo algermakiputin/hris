@@ -63,14 +63,7 @@
                   <a href="{{ url('leaves/calendar') }}">Leave Calendar</a>
                 </li>
                 @endif
-                @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2) 
-                  <li>
-                    <a href="{{ url('leave-types') }}">View Leave Types</a>
-                  </li>
-                  <li>
-                    <a href="{{ url('leave-types/add') }}">Add leave Type</a>
-                  </li>
-                @endif
+                
                 @if ((int)Auth()->user()->role !== 3)
                 <li>
                   <a href="{{ url('my-leaves') }}">My Leaves</a>
@@ -82,6 +75,20 @@
              
               </ul>
             </li>
+          @endif
+          @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
+            <li><a><i class="fa fa-cog"></i> Leaves Settings <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                <li>
+                  <a href="{{ url('leave-types') }}">View Leave Types</a>
+                </li>
+                <li>
+                  <a href="{{ url('leave-types/add') }}">Add leave Type</a>
+                </li>    
+
+              </ul>
+            </li>
+            
           @endif
           <li>
             <a href="{{ url('calendar') }}"><i class="fa fa-calendar"></i>School Calendar  </a>
@@ -130,19 +137,23 @@
         </ul>
       </div>
       <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock">
-                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="" href="login.html" data-original-title="Logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
+          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+          </a>
+          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen">
+            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+          </a>
+          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          </a>
+          <a data-toggle="tooltip" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();" data-placement="top" title="" href="login.html" data-original-title="Logout">
+            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+           </form>
+        </div>
 
       </div>
       <!-- /sidebar menu -->

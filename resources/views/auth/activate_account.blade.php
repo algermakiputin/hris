@@ -36,7 +36,7 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-adn"></i> Human Resource System</h1>
+                  <h1><i class="fa fa-adn"></i> HRIS</h1>
                   <p>©2018. Developed by <a href="https://algermakiputin.com">Alger Makiputin</a></p>
                 </div>
               </div>

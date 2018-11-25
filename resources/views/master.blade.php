@@ -31,5 +31,6 @@
 		var deptHead = "{{ count(checkDepartmentHead())  }}"
 	</script>
 	@include('template.footer')
+	@yield('js')
 </html>
 

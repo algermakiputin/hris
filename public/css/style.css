@@ -1,3 +1,7 @@
+#updateCalendar fieldset:disabled input, #updateCalendar fieldset:disabled select, #updateCalendar fieldset:disabled textarea{
+    background: #fff;
+    
+}
 .toolbar {
     float: left;
     width: 50%;

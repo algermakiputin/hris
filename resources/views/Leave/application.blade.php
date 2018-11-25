@@ -245,8 +245,6 @@
 	</div>
 </div>
 
- 
-
 <div class="modal" tabindex="-1" role="dialog" id="leave-balance">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -262,23 +260,28 @@
 				<th class="text-center">Used</th>
 				<th class="text-center">Balance</th>
 			</tr>
-		 
-			@foreach($leave_types as $l)
-			<tr>
-				<td class="text-center">{{$l['name']}}</td>
-				<td class="text-center">{{$l['allowance']}} Days</td>
-				<td class="text-center">{{ $l['used'] }}</td>
-				<td class="text-center">{{ $l['balance'] }}</td>
-			</tr>
-			@endforeach
+		 	@if ($leave_types)
+				@foreach($leave_types as $l)
+				<tr>
+					<td class="text-center">{{$l['name']}}</td>
+					<td class="text-center">{{$l['allowance']}} Days</td>
+					<td class="text-center">{{ $l['used'] }}</td>
+					<td class="text-center">{{ $l['balance'] }}</td>
+				</tr>
+				@endforeach
+			@else
+				<tr>
+					<td class="text-center" colspan="4">No leave allocated for you department</td>
+				</tr>
+			@endif
 		</table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
       </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div> 
+  </div> 
+</div> 
 <script type="text/javascript">
 	var balance = "{{ json_encode($leave_types) }}";
 </script>
