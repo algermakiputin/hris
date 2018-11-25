@@ -12,6 +12,8 @@ use App\Users;
 
 use Session;
 
+use App\departmentHeads;
+
 class LoginController extends Controller
 {
     /*
@@ -52,6 +54,11 @@ class LoginController extends Controller
         $this->performLogout($request);
     
         return redirect()->route('login');
+    }
+
+    public function authenticated(Request $request, $user) {
+        $heads = departmentHeads::select('employee_id','campus_id','department_id')->get()->toArray();
+        Session::put('heads', $heads);
     }
 
     public function not_active($email) {

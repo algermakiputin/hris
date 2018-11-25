@@ -16,7 +16,7 @@ class AppController extends Controller
 {
 
     public function index() {
-    		dd(checkDepartmentHead());
+  	 
       	$year = date('Y');
 		$applications = [];
 		$approved = [];
