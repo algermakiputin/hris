@@ -26,7 +26,7 @@
      <div class="clearfix"></div>
    </footer>
 </body>
- 
+  
 	<script type="text/javascript">
 		var deptHead = "{{ count(checkDepartmentHead())  }}"
 		console.log(deptHead);
