@@ -22,7 +22,7 @@
 			}
 		}
 
-		return false;
+		return [];
 
 	}
 
