@@ -53,7 +53,7 @@
           </li>
           @endif
          
-          @if ((int)Auth()->user()->employmentType() !== 0 || (int)Auth()->user->role > 2)
+          @if (Auth()->user()->employmentType() == 1 || Auth()->user->role != 0)
             <li><a><i class="fa fa-bed"></i> Leaves <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
                 @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2 || count(checkDepartmentHead()) >= 1)
