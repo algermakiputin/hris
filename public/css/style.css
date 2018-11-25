@@ -1,6 +1,6 @@
 .dataTables_wrapper .btn-sm {
     color: #73879C;
-    border-color: #ddd;
+    border-color: #ddd; 
 }
 
 #updateCalendar fieldset:disabled input, #updateCalendar fieldset:disabled select, #updateCalendar fieldset:disabled textarea{

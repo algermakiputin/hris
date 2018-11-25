@@ -41,7 +41,7 @@
 								<div class="col-xs-12">
 									<div class="x_content">
 										<br>
-										@include('employee.edit_content_parts.schedule')
+										@include('/employee.edit_content_parts.schedule')
 									</div>
 								</div> 
 							</div>
@@ -49,7 +49,7 @@
 								<div class=" col-xs-12">
 									<div class="x_content">
 										<br />
-										@include('Employee.edit_content_parts.personal')
+										@include('/Employee.edit_content_parts.personal')
 									</div>
 								</div>
 							</div>
@@ -57,7 +57,7 @@
 								<div class="col-xs-12">
 									<div class="x_content">
 										<br>
-										@include('Employee.edit_content_parts.employment')
+										@include('/Employee.edit_content_parts.employment')
 									</div>
 								</div>
 							</div>
