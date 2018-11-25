@@ -53,10 +53,10 @@
           </li>
           @endif
          
-          @if (Auth()->user()->employmentType() == 1 || Auth()->user->role != 0)
+          @if((int)Auth()->user()->employmentType() == 1 || (int)Auth()->user->role !== 0)
             <li><a><i class="fa fa-bed"></i> Leaves <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
-                @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2 || count(checkDepartmentHead()) >= 1)
+                @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2 || count(checkDepartmentHead()))
                 <li>
                   <a href="{{ url('leaves') }}">View Leaves</a>
                 </li>
