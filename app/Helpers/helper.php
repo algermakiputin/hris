@@ -3,11 +3,12 @@
 	function checkDepartmentHead() {
 
 		$departmentHeads = Session::get('heads');
-
+		dd($departmentHeads);
 		if ($departmentHeads) {
 			$userCampusID = Auth()->user()->campus_id;
 			$userEmployeeID = Auth()->user()->employee_id;
 			$department = [];
+
 			foreach ($departmentHeads as $head) {
 	
 				if ($head['campus_id'] == $userCampusID && $head['employee_id'] == $userEmployeeID) {

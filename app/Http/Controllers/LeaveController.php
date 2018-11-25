@@ -22,7 +22,7 @@ class LeaveController extends Controller
 
 	public function index() {
 		$sy = getCurrentSchoolYear();
-		dd(count(checkDepartmentHead()));
+	 	dd(count(checkDepartmentHead()));
 	 	$sy_start = Carbon::create($sy['start'][0], $sy['start'][1])->format('Y-m-d');
 	 	$sy_end = Carbon::create($sy['end'][0], $sy['end'][1])->format('Y-m-d');
 	 	$school_year = $sy['sy'];
