@@ -52,7 +52,7 @@
             </ul>
           </li>
           @endif
-          @if (Auth()->user()->employmentType() !== "part_time")
+          @if (Auth()->user()->employmentType() != 0)
             <li><a><i class="fa fa-bed"></i> Leaves <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu">
                 @if (Auth()->user()->role == 3 || Auth()->user()->role == 2 || count(checkDepartmentHead()) >= 1)
