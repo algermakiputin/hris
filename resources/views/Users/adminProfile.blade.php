@@ -5,16 +5,7 @@
 	<div class="title_left">
 		<h3>Profile</h3>
 	</div>
-	<div class="title_right">
-		<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Go!</button>
-				</span>
-			</div>
-		</div>
-	</div>
+	 
 </div>
 
 <div class="row">
@@ -40,9 +31,9 @@
 					</div>
 					<br/>
  					<form method="GET" action="{{ url('admin/profile/edit') }}">
- 						@csrf
+
  						<input type="hidden" name="id" value="{{ $user->id }}">
- 						<button type="submit" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</button>
+ 						<button type="submit" class="btn btn-success"><i class="fa fa-edit"></i> Edit Profile</button>
  						
  					</form>
 
@@ -70,7 +61,7 @@
 							</tr>
 							<tr>
 								<td>Role:</td>
-								<td>{{ $user->role }}</td>
+								<td>{{ config('config.access')[$user->role] }}</td>
 							</tr>
 							
 						</table>

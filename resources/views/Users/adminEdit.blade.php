@@ -4,17 +4,7 @@
 <div class="page-title">
 	<div class="title_left">
 		<h3>My Profile</h3>
-	</div>
-	<div class="title_right">
-		<div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for...">
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Go!</button>
-				</span>
-			</div>
-		</div>
-	</div>
+	</div> 
 </div>
 
 <div class="row">
@@ -62,17 +52,17 @@
 						 
 						<div class="form-group">
 
-							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="name">avatar  
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="name">avatar:  
 							</label>
 							<div class="col-md-6">
 
-								<input type="file" class="form-control" name="avatar" id="avatar" placeholder="Upload image">
+								<input type="file" class="form-control" style="border: 0;box-shadow: 0;padding-left: 0;" name="avatar" id="avatar" placeholder="Upload image">
 
 
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="name">Name  
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="name">Name: 
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name" placeholder="Full Name" required="required" data-parsley-errors-container="#error-1" value="{{ $user['name'] }}">
@@ -81,7 +71,7 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="email">Email 
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="email">Email: 
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12" >
 								<input type="email" readonly="readonly" id="email" class="form-control col-md-7 col-xs-12" name="email" placeholder="Email" required="required" data-parsley-errors-container="#error-2" value="{{ $user['email'] }}">
@@ -90,16 +80,10 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="role">Role 
+							<label class="control-label col-md-2 col-sm-2 col-xs-12" for="role">Role:
 							</label>
 							<div class="col-md-6 col-sm-6 col-xs-12">
-								<select class="form-control" name="role" disabled="disabled" id="role" required="required" data-parsley-errors-container="#error-3">
-									<option value="">Select Role</option>
-									<option value="staff" {{ $user['role'] == 'staff' ? 'selected="selected"' : '' }}>Staff</option>
-									<option value="hrStaff" {{ $user['role'] == 'hrStaff' ? 'selected="selected"' : '' }}>HR Staff</option>
-									<option value="hrAdmin" {{ $user['role'] == 'hrAdmin' ? 'selected="selected"' : '' }} >HR Admin</option>
-									<option value="admin" {{ $user['role'] == 'admin' ? 'selected="selected"' : '' }}>System Administrator</option>
-								</select>
+								<input type="text" readonly="readonly" id="role" class="form-control col-md-7 col-xs-12" name="role" placeholder="Role" required="required" data-parsley-errors-container="#error-2" value="{{ config('config.access')[$user['role']] }}">
 							</div>
 							<span id="error-3"></span>	 
 						</div>

@@ -12,7 +12,7 @@
                <span class=" fa fa-angle-down"></span>
                </a>
                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                  @if (Auth()->user()->role !== 3)
+                  @if (Auth()->user()->role != 3)
                   <li>
                      <a type="submit" class="btn-link" onclick="document.getElementById('myprofile').submit()">
                      </i>My Profile 

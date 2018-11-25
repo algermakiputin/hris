@@ -23,14 +23,12 @@ class UsersController extends Controller
 
     public function adminProfile(Request $request) {
         $user = Users::where('id', $request->input('id'))->first();
-
         return view('Users.adminProfile',compact('user'));
     }
 
     public function adminEdit(Request $request) {
 
         $user = Users::where('id', $request->input('id'))->first();
-       
         return view('Users.adminEdit',compact('user'));
     }
 
