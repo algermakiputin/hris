@@ -47,7 +47,7 @@ class LeaveController extends Controller
 	}
 
 	public function calendar(Request $request) {
-		return view('Leave.calendar');
+		return view('Leave.Calendar');
 	}
 
 	public function getCalendar(Request $request) {
