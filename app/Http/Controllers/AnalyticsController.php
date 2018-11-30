@@ -20,6 +20,11 @@ class AnalyticsController extends Controller
         return view('Analytics.employee', compact('campuses'));
     }
 
+    public function test() {
+        header("Access-Control-Allow-Origin: http://localhost");
+        echo "test";
+    }
+
     public function export(Request $request) {
 
         $campus_id = $request->input('campus_id');

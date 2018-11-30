@@ -151,3 +151,5 @@ Route::patch('user/update_password','UsersController@updatePassword');
 Route::get('activate-account','EmployeeController@activate_account');
 Route::post('validate-account','UsersController@validateAccount'); 
 Route::post('activate','EmployeeController@activate'); 
+
+Route::get('test', 'AnalyticsController@test');

@@ -136,6 +136,10 @@
 										<td>Marital Status:</td>
 										<td>{{ ucfirst($profile->marital_status) }}</td>
 									</tr>
+									<tr>
+										<td>Education Level:</td>
+										<td>{{ $profile->education }}</td>
+									</tr>
 
 								</table>
 							</div>
@@ -160,6 +164,10 @@
 									<tr>
 										<td>Employment Type:</td>
 										<td>{{ $profile->employment_type === 1 ? "Full Time" : "Part Time" }}</td>
+									</tr>
+									<tr>
+										<td>Tenure:</td>
+										<td>{{ $profile->tenure }}</td>
 									</tr>
 									<tr>
 										<td>Salary:</td>

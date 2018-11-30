@@ -1308,7 +1308,7 @@ class Attendance {
                         });
                     },
                     success: function(data) {
-                        console.log(data);
+                  
                         $(".x_content").loading({
                             destroy: true
                         });

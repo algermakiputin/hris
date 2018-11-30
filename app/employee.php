@@ -58,14 +58,15 @@ class employee extends Model
 				'email_address' => $request['email'],
 				'mobile' => $request['mobile'],
 				'telephone' => $request['telephone'],
-				'marital_status' => $request['marital_status']
+				'marital_status' => $request['marital_status'],
+				'education' => $request['education']
     			]);
     		
 		return $update;
     	}
 
     	public function update_employment_details($request) {
-    		
+  	 
     		$data = array(
     				'campus_id' => $request['campus_id'],
     				'role_id' => $request['designation'],
@@ -74,7 +75,8 @@ class employee extends Model
     				'salary' => $request['salary'],
     				'date_joining' => $request['date_joining'],
     				'status' => $request['status'],
-    				'schedule_id' => $request['schedule']
+    				'schedule_id' => $request['schedule'],
+    				'tenure' => $request['tenure']
     			);
 
     		return $this->where('id', $request['_id'])->update($data);

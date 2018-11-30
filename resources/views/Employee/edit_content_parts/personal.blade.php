@@ -82,6 +82,18 @@
 			</select>
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Education Level</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<select name="education" id="education" class="form-control selectpicker" required="required" data-parsley-group='block1' data-parsley-notequalto="#default" data-parsley-errors-container="#e-status-error">
+			<option value="">Select Education Level</option>
+			<option value="0" {{ $employee->education == 'Associate Degree' ? 'selected' : '' }}>Associate Degree</option>
+			<option value="1" {{ $employee->education == 'Bachelor Degree' ? 'selected' : '' }}>Bachelor's Degree</option>
+			<option value="2" {{ $employee->education == 'Master Degree' ? 'selected' : '' }}>Master's Degree</option>
+			<option value="3" {{ $employee->education == 'Doctoral Degree' ? 'selected' : '' }}>Doctoral Degree</option>
+		</select>
+		</div>
+	</div>
 	<div class="ln_solid"></div>
 	<div class="form-group">
 		<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">

@@ -103,6 +103,16 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Tenure:</label>
+			<div class="col-md-9 col-sm-9 col-xs-12">
+				<select class="form-control" name="tenure" required="required">
+                    	<option value="">Select Tenure</option>
+                    	<option value="0" {{ $employee->tenure == 0 ? 'selected' : '' }}>No</option>
+                    	<option value="1" {{ $employee->tenure == 1 ? 'selected' : '' }}>Yes</option>
+                    </select>
+			</div>
+		</div>
 		<div class="ln_solid"></div>
 		<div class="form-group">
 			<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">

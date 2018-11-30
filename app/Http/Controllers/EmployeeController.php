@@ -112,8 +112,7 @@ class EmployeeController extends Controller
         $id = $request->input('id');
 
         if ($id) {
-            $employee = employee::select('id','employee_id','first_name','last_name','middle_name','gender','birthday','email_address','mobile','schedule_id','telephone','marital_status','role_id','campus_id','employment_type','salary','date_joining','resume','status','avatar','department_id')
-                            ->where('employee_id',$id)->first();
+            $employee = employee::where('employee_id',$id)->first();
 
             if ($employee) {
                 $scheduleID = 0;
@@ -247,7 +246,7 @@ class EmployeeController extends Controller
 
         if ($id) {
 
-            $profile = employee::select('employees.id','employee_id','employees.campus_id as campus_id','avatar','first_name','last_name','middle_name','gender','schedule_id','birthday','email_address','mobile','telephone','marital_status','role_id','employment_type','salary','date_joining','resume','status', 'roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
+            $profile = employee::select('employees.id','tenure','education','employee_id','employees.campus_id as campus_id','avatar','first_name','last_name','middle_name','gender','schedule_id','birthday','email_address','mobile','telephone','marital_status','role_id','employment_type','salary','date_joining','resume','status', 'roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
                             ->leftJoin('roles','roles.id','=', 'employees.role_id')
                             ->leftJoin('departments','departments.id','=','employees.department_id')
                             ->leftJoin('campuses','campuses.id','=','employees.campus_id')

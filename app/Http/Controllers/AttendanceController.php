@@ -473,13 +473,13 @@ class AttendanceController extends Controller
 					} 
 
 					foreach($row as $row) {	
-
-						if ($row['id'] && $row['date'] && $row['place']) {
+						 
+						if ($row['account_no'] && $row['date'] && $row['time']) {
 
 							$data[] = array(
-								'employee_id' => $row['id'],
+								'employee_id' => $row['account_no'],
 								'name' => $row['name'],
-								'date' => $row['date'],
+								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']->format('h:i:s a')),
 								'campus_id' => $this->campus_id
 								);
 						}
@@ -487,10 +487,11 @@ class AttendanceController extends Controller
 					}
 
 					$insert = Attendance::insert($data);
-					if ($insert)
-						return true;
+					
 
 				});
+
+				return 1;
 
 			}else {
 				return 0;

@@ -31,7 +31,7 @@
                 @endif
               </div>
               <div>
-                <button class="btn btn-info submit form-control" type="submit">Log in</button>
+                <button class="btn btn-info submit form-control" type="submit" id="login-btn">Log in</button>
                
               </div>
               

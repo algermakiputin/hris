@@ -97,7 +97,7 @@
 							<div class="col-sm-9">
 								<select name="type" class="form-control" id="type">
 									<option value="">Select Type</option>
-									<option value="holiday">Holiday</option>
+									<option value="holiday">Non-Working Holiday</option>
 									<option value="event">Event</option>
 								</select>
 							</div>
@@ -152,7 +152,7 @@
 								<div class="col-sm-9">
 									<select name="type" class="form-control" id="type">
 										<option value="">Select Type</option>
-										<option value="holiday">Holiday</option>
+										<option value="holiday">Non-Working Holiday</option>
 										<option value="event">Event</option>
 									</select>
 								</div>
