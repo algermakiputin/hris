@@ -12,6 +12,7 @@
 */
 
 Route::group(['middleware' => ['auth']],function() {
+	Route::get('notification/viewed', 'NotificationController@viewed');
 	Route::get('/', 'AppController@index'); 
 	//Employee
 	Route::get('employee', 'EmployeeController@index');

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\LeaveApproval;
 use App\departmentHeads;
 use App\Leave; 
+use App\Notification;
+use App\employee;
 
 class LeaveApprovalsController extends Controller
 {
@@ -21,7 +23,17 @@ class LeaveApprovalsController extends Controller
     		];
 
     		if ($request->input('status') == 'approved') {
+                
+
     			$leave = Leave::where('id', $leave_id)->first();
+                Notification::create([
+                            'user_id' => (new employee)->getID(),
+                            'campus_id' => $leave->campus_id,
+                            'employee_id' => $leave->employee_id,
+                            'link' => 'my-leaves',
+                            'message' => 'Approved your leave request',
+                            'status' => 1
+                        ]);
     			$heads = departmentHeads::where('department_id', $leave->department_id)->get();
     			$approvalCount = $heads->count();
     			$approvedCount = 0;
@@ -44,6 +56,7 @@ class LeaveApprovalsController extends Controller
     			} 
 
     			LeaveApproval::create($data);
+
                 return 'pending';
     		}
     		

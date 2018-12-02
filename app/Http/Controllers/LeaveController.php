@@ -12,6 +12,7 @@ use App\LeaveApproval;
 use DB;
 use App\Roles;
 use App\Department;
+use App\Notification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
@@ -245,7 +246,7 @@ class LeaveController extends Controller
 					$needsApproval = true;
 				}
 
-				if ($status == "pending" && $leaveStatus == "declined" || $status == "approved" && $leaveStatus == "declined")
+				if ($status == "pending" && $leaveStatus == "Declined" || $status == "approved" && $leaveStatus == "declined")
 					$status = "closed";
 
 				$head_employee[] = [
@@ -368,6 +369,7 @@ class LeaveController extends Controller
 	}
 
 	public function application() { 
+		 
 	 	$employee = employee::select('employee_id','campus_id','department_id')
 	 						->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
 	 						->first();
@@ -675,27 +677,54 @@ class LeaveController extends Controller
 		$leave->department_id = $request->input('department_id');
 
 		if ($leave->save()) {
+			$departmentHeads = departmentHeads::where('department_id', $request->input('department_id'))->get();
+			$employee_id = (new employee)->getID();
+			 
+			if ($departmentHeads) {
+				foreach($departmentHeads as $head) {
+					Notification::create([
+							'employee_id' => $head->employee_id,
+							'campus_id' => $head->campus_id,
+							'user_id' => $employee_id,
+							'message' => 'Apply for leave',
+							'link' => 'leaves',
+							'status' => 1
+						]);
+				}
+			}
 			return redirect()->back()->with('success','Your application has been submitted successfully');
 		}
 	}
 
-	public function approve(Request $request, Leave $leave) {
+	public function approve(Request $request, Notification $nofication) {
 		$id = $request->input('id');
 
-		if ($leave->approve($id)) 
+		if ($leave->approve($id)) {
 			return redirect()->back();
+		}
 
 	}
 
 	public function decline(Request $request) {
 		
-	 	return LeaveApproval::create([
+	 	LeaveApproval::create([
 				'leave_id' => $request->input('leave_id'),
 				'campus_id' => $request->input('campus_id'),
 				'employee_id' => $request->input('employee_id'), 
 				'status' => $request->input('status'),
 				'note' => $request->input('reason')
 			]); 
+
+	 	Leave::where('id', $request->input('leave_id'))->update(['status' => 0, 'pending' => 0]);
+	 	$leave = Leave::find($request->input('leave_id'));
+	 	return Notification::create([
+                            'user_id' => (new employee)->getID(),
+                            'campus_id' => $leave->campus_id,
+                            'employee_id' => $leave->employee_id,
+                            'link' => 'my-leaves',
+                            'message' => 'Declined your leave request',
+                            'status' => 1
+                        ]);
 
 
 	}

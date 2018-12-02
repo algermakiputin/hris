@@ -1,5 +1,8 @@
 <?php 
-	 
+	use App\Notification;
+	use App\employee;
+	use Carbon\Carbon;
+
 	function checkDepartmentHead() {
 
 		$departmentHeads = Session::get('heads');
@@ -80,6 +83,37 @@
  	function sy_end() {
  		$sy = getCurrentSchoolYear();
  		return $sy['end'][0] . '-' . $sy['end'][1] . '-1';
+ 	}
+
+ 	function getNotification() {
+ 		$datasets = [];
+ 		$notification = Notification::where(['employee_id' => Auth()->user()->employee_id,
+ 										'campus_id' => Auth()->user()->campus_id,
+ 										'status' => 1
+ 							])->get();
+ 		if ($notification) {
+
+ 			foreach ($notification as $notify) {
+ 				$employee = employee::find($notify->user_id);
+ 				$name = ucwords($employee->first_name . ' ' . $employee->last_name);
+
+
+ 				$datasets[] = [
+ 					'id' => $notify->id,
+ 					'avatar' => $employee->avatar,
+ 					'diff' => Carbon::parse($notify->created_at)->diffForHumans(),
+ 					'message' => $name . ' ' . $notify->message,
+ 					'link' =>  $notify->link,
+ 					'name' => $name
+ 				];
+
+ 			} 
+ 		
+ 		}
+
+ 		return $datasets;
+
+
  	}
 
 

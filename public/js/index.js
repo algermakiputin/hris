@@ -33,6 +33,23 @@ if (typeof balance != 'undefined') {
 }
 
 $(document).ready(function() {
+
+    $("body").on('click','.notify', function(e) {
+ 
+        $.ajax({
+            type : 'GET',
+            url : '/notification/viewed',
+            data : {
+                id : $(this).data('id')
+            },
+            success : function() {
+              
+            },
+            error : function() {
+                e.preventDefault();
+            }
+        });
+    })
     $('input, select').change(function() {
         if ($(this).val())
             $(this).parents(".form-group").find('.parsley-errors-list').empty();
@@ -438,6 +455,8 @@ $(document).ready(function() {
                             status = '<span class="label label-success">Approved</span>';
                             if (value.note)
                                 view = "<i class='fa fa-envelope-o'></i> View note";
+                        }else {
+                            status = '<span class="label label-default">Closed</span>';
                         }
 
                         if (summary.status == "Approved")

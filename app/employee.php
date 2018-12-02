@@ -82,4 +82,12 @@ class employee extends Model
     		return $this->where('id', $request['_id'])->update($data);
 
     	}
+
+    	public function getID() {
+    		$employee_id = $this->where(['employee_id' => Auth()->user()->employee_id,
+    								'campus_id' => Auth()->user()->campus_id
+    							])->first();
+    		return $employee_id->id;
+    	}
+
 }
