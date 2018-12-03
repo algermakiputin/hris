@@ -1372,7 +1372,7 @@ class DatePicker {
 
      
         $('#date_joining_datepicker').datetimepicker({
-            format: 'MM-DD-YYYY',
+            format: 'YYYY-MM-DD',
             viewMode: 'years'
         }).on('dp.change', function() {
             $(this).removeClass('parsley-error');

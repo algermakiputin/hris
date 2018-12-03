@@ -252,9 +252,18 @@
 						</div>
 					</div>
 					<div class="form-group">
+						
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Permanent</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="tenure">
+								<option value="">Permanent Position</option>
+								<option value="0">No</option>
+								<option value="1">Yes</option>
+							</select>
+						</div>
 						<div style="display: none;" id="sched-wrap">
 							
-							<label class="control-label col-md-2 col-sm-2 col-xs-12">Schedule</label>
+							<label class="control-label col-md-1 col-sm-1 col-xs-12">Schedule</label>
 							<div class="col-md-4 col-sm-4 col-xs-12">
 								<select class="form-control selectpicker" name="schedule" data-parsley-errors-container="#schedule-error">
 									<option value="">Select Schedule</option>
@@ -267,26 +276,17 @@
 							</div>
 
 						</div>
-						<label class="control-label col-md-2 col-sm-2 col-xs-12">Permanent Position</label>
-						<div class="col-md-4 col-sm-4 col-xs-12">
-							<select class="form-control" name="tenure">
-								<option value="">Select Tenure</option>
-								<option value="0">No</option>
-								<option value="1">Yes</option>
-							</select>
-						</div>
-						
 					</div>
 					<div class="clearfix"></div>
-				</div>
-
-				<div class="ln_solid"></div>
+				     <div class="ln_solid"></div>
 				<div class="form-group">
 					<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2 text-right">
 						<button class="btn btn-primary prev" >Previous</button>
 						<button type="submit" class="btn btn-success next">Next</button>
 					</div>
 				</div>
+
+				
 			</fieldset>
 
 			<fieldset class="form-step" step-no = '3'>
