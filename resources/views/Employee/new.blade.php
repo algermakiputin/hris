@@ -44,7 +44,7 @@
 				</div>
 				@endif
 				@if (count($errors) > 0)
-				<div class="error">
+				<div class="alert alert-danger">
 					<ul>
 						@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
@@ -107,7 +107,9 @@
 						<label class="control-label col-md-1 col-sm-1 col-xs-12">Birthday</label>
 						<div class="col-md-2 col-sm-3 col-xs-12">
 							
-							<input type='text' class="form-control birthday" name="birthday" id="birthday" placeholder="YYYY-MM-DD" required="required" data-parsley-group='block1'/>
+							<div class="form-group">
+								<input type='text' class="form-control birthday" name="birthday" id="birthday" placeholder="YYYY-MM-DD" required="required" data-parsley-group='block1'/>
+							</div>
 						</div>
 
 						<div class="col-md-3 col-sm-3 col-xs-12">
@@ -136,7 +138,7 @@
 						</label>
 						<div class="col-md-3 col-sm-3 col-xs-12">
 							
-							<select name="marital_status" id="marital_status" class="form-control selectpicker" required="required" data-parsley-group='block1' data-parsley-notequalto="#default" data-parsley-errors-container="#m-status-error">
+							<select name="marital_status" id="marital_status" class="form-control selectpicker" required="required" data-parsley-group='block1'  data-parsley-errors-container="#m-status-error">
 								<option value="">Select Status</option>
 								<option value="single">Single</option>
 								<option value="married">Married</option>
@@ -148,7 +150,7 @@
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12">
 							
-							<select name="education" id="education" class="form-control selectpicker" required="required" data-parsley-group='block1' data-parsley-notequalto="#default" data-parsley-errors-container="#e-status-error">
+							<select name="education" id="education" class="form-control selectpicker" required="required" data-parsley-group='block1' data-parsley-errors-container="#e-status-error">
 								<option value="">Select Education Level</option>
 								<option value="Associate Degree">Associate Degree</option>
 								<option value="Bachelor Degree">Bachelor's Degree</option>
