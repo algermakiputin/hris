@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Users;
-
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Http\Request;
-
 use Session;
-
 use Auth;
 
 class UsersController extends Controller
@@ -45,7 +41,6 @@ class UsersController extends Controller
             
         }
         
-         
         Users::where('id', $request->input('id'))->update(['name' => $request->input('name')]);
         
         return redirect()->back()->with('success','Profile updated successfully');

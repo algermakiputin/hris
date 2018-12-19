@@ -91,8 +91,8 @@
  										'campus_id' => Auth()->user()->campus_id,
  										'status' => 1
  							])->get();
+ 		
  		if ($notification) {
-
  			foreach ($notification as $notify) {
  				$employee = employee::find($notify->user_id);
  				$name = ucwords($employee->first_name . ' ' . $employee->last_name);

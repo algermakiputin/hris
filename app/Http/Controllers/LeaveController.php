@@ -24,11 +24,11 @@ class LeaveController extends Controller
 	public function index() {
 		$sy = getCurrentSchoolYear();
 		
-	 	$sy_start = Carbon::create($sy['start'][0], $sy['start'][1])->format('Y-m-d');
-	 	$sy_end = Carbon::create($sy['end'][0], $sy['end'][1])->format('Y-m-d');
-	 	$school_year = $sy['sy'];
+		$sy_start = Carbon::create($sy['start'][0], $sy['start'][1])->format('Y-m-d');
+		$sy_end = Carbon::create($sy['end'][0], $sy['end'][1])->format('Y-m-d');
+		$school_year = $sy['sy'];
 		$model = new Leave_type;
- 
+		
 		if ($deptID = checkDepartmentHead()) {
 			$status['application'] = Leave::whereBetween('date',[$sy_start, $sy_end])->where('department_id', $deptID)->count();
 			$status['declined'] = Leave::where(['status' => 0, 'pending' => 0, 'department_id' => $deptID])->count();
@@ -39,7 +39,7 @@ class LeaveController extends Controller
 			$status['declined'] = Leave::where(['status' => 0, 'pending' => 0])->count();
 			$status['approved'] = Leave::where(['status' => 1, 'pending' => 0])->count();
 			$status['pending'] = Leave::where(['status' => 0, 'pending' => 1])->count();
- 		
+			
 		}
 		
 		$leaves = Leave::all();
@@ -56,8 +56,8 @@ class LeaveController extends Controller
 		$calendar = [];
 		$date = $request->input('year') . $request->input('month');
 		$leaves = Leave::where(DB::raw('DATE_FORMAT(date,"%Y%m")'), $date) 
-			 		->where(['status' => 1, 'pending' => 0])
-					->get();
+		->where(['status' => 1, 'pending' => 0])
+		->get();
 		foreach ($leaves as $leave) {
 			$employee = employee::where(['employee_id' => $leave->employee_id, 'campus_id' => $leave->campus_id])->first();
 
@@ -75,26 +75,26 @@ class LeaveController extends Controller
 			}
 
 			$calendar[] = array(
-					'leave_id' => $leave->id,
-					'employee_id' => $employee->employee_id,
-					'campus_id' => $employee->campus_id,
-					'title' => ' '. ucwords($employee->first_name) . ' ' . ucwords($employee->last_name),
-					'start' => $start,
-					'end' => $end,
-					'description' => 'test',
-					'duration' => $leave->duration
+				'leave_id' => $leave->id,
+				'employee_id' => $employee->employee_id,
+				'campus_id' => $employee->campus_id,
+				'title' => ' '. ucwords($employee->first_name) . ' ' . ucwords($employee->last_name),
+				'start' => $start,
+				'end' => $end,
+				'description' => 'test',
+				'duration' => $leave->duration
 
 				);
 		}
 
 		return json_encode($calendar);
 	}
- 
+	
 	public function myLeave() {
 
 		$employee = employee::select('employee_id','campus_id','department_id')
-	 						->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
-	 						->first();
+		->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
+		->first();
 		$department_id = $employee->department_id;
 		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
 
@@ -102,18 +102,18 @@ class LeaveController extends Controller
 		$status['declined'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 0, 'pending' => 0])->count();
 		$status['approved'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 1, 'pending' => 0])->count();
 		$status['pending'] = Leave::where('employee_id',Auth()->user()->employee_id)->where(['status' => 0, 'pending' => 1])->count();
-		 
+		
 		return view('Leave.myLeaves',compact('status','leave_types'));
 
 	}
 
 	public function checkBalance(Request $request) {
 		$data = [
-				'employee_id' => $request->input('employee_id'),
-				'campus_id' => $request->input('campus_id')
-			];
+		'employee_id' => $request->input('employee_id'),
+		'campus_id' => $request->input('campus_id')
+		];
 		$employee = employee::where($data)->first();
-	 
+		
 		$leave_types = $this->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id);
 		return json_encode($leave_types);
 	}
@@ -167,10 +167,10 @@ class LeaveController extends Controller
 
 
 		$leaves = Leave::offset($start)
-					->limit($limit)
-					->orderBy($col,$dir)
-					->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
-					->get();
+		->limit($limit)
+		->orderBy($col,$dir)
+		->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
+		->get();
 
 		$totalFiltered = $leaves->count();
 		$data = [];
@@ -189,14 +189,14 @@ class LeaveController extends Controller
 					$to = Carbon::parse($leave->end)->format($dateFormat);
 				}
 				$nestedData = [
-					ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
-					Carbon::parse($leave->date)->format($dateFormat), 
-					$from, 
-					$to, 
-					$this->getStatus($leave->status, $leave->pending),
-					'
-					<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
-					'
+				ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
+				Carbon::parse($leave->date)->format($dateFormat), 
+				$from, 
+				$to, 
+				$this->getStatus($leave->status, $leave->pending),
+				'
+				<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
+				'
 				];
 
 				$data[] = $nestedData;
@@ -223,10 +223,10 @@ class LeaveController extends Controller
 		$leave = Leave::find($request->input('id'));
 		$employee = employee::where(['campus_id' => $campus_id, 'employee_id' => $employee_id])->first();
 		$department_heads = departmentHeads::where('department_id', $leave->department_id)->orderBy('order','DESC')->get();
-	  
+		
 		$needsApproval = false;
-		 
-	 	$leaveStatus = $this->getStatus($leave->status, $leave->pending);
+		
+		$leaveStatus = $this->getStatus($leave->status, $leave->pending);
 
 		if ($department_heads->count()) {
 
@@ -234,9 +234,9 @@ class LeaveController extends Controller
 
 				$emp = employee::where(['employee_id' => $head->employee_id, 'campus_id' => $head->campus_id])->first();
 				$row = LeaveApproval::where(['leave_id' => $leave->id, 'employee_id' => $emp->employee_id, 'campus_id' => $emp->campus_id])->first();
- 		 	 
- 				$status = "pending";
- 				$note = "";
+				
+				$status = "pending";
+				$note = "";
 				if ($row) {
 					$status = $row->status;
 					$note = $row->note;
@@ -250,11 +250,11 @@ class LeaveController extends Controller
 					$status = "closed";
 
 				$head_employee[] = [
-						'name' => ucfirst($emp->first_name) . ' ' . ucfirst($emp->last_name),
-						'position' => (new Roles)->getName($emp->role_id), 
-						'status' => $status,
-						'note' => $note
-					];
+				'name' => ucfirst($emp->first_name) . ' ' . ucfirst($emp->last_name),
+				'position' => (new Roles)->getName($emp->role_id), 
+				'status' => $status,
+				'note' => $note
+				];
 			}
 		}else {
 			$head_employee[] = null;
@@ -275,13 +275,13 @@ class LeaveController extends Controller
 		}
 
 		$datasets['summary'][] = [
-			'name' => ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-			'document' => $leave->document ? url('storage/document') . '/' . $leave->document : null,
-			'reason' => $leave->reason,
-			'leave_type' => (new Leave_type)->getLeaveType($leave->leave_type_id),
-			'duration' => $duration,
-			'interval' => $interval
-			
+		'name' => ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
+		'document' => $leave->document ? url('storage/document') . '/' . $leave->document : null,
+		'reason' => $leave->reason,
+		'leave_type' => (new Leave_type)->getLeaveType($leave->leave_type_id),
+		'duration' => $duration,
+		'interval' => $interval
+		
 		];
 
 		$datasets['heads'][] = $head_employee;
@@ -295,9 +295,9 @@ class LeaveController extends Controller
 	}
 
 	public function report() {
- 		
- 		$employees = employee::select('id','first_name','last_name')->where('status',1)->get();
- 		$campuses = Campus::all();
+		
+		$employees = employee::select('id','first_name','last_name')->where('status',1)->get();
+		$campuses = Campus::all();
 
 		return view('Leave.report', compact('employees','campuses'));
 	}
@@ -313,23 +313,23 @@ class LeaveController extends Controller
 
 			$leaves = leave::where(['leave_type_id' => $type->id, 'employee_id' => $employee_id,'status' => 1, 'pending' => 0])->get()->toArray();
 
-			 
+			
 			if ($leaves) {
 				foreach ($leaves as $leave ) { 
 					$days += Carbon::parse($leave['start_date'])->diffInDays(Carbon::parse($leave['end_date']));
 					$dataSet[$id][] = [
-						'days' => $days,
-						'name' => $type->name,
-						'allowance' => $type->allowance
+					'days' => $days,
+					'name' => $type->name,
+					'allowance' => $type->allowance
 					];
 				}
 				continue;
 			}
 
 			$dataSet[$id][] = [
-				'days' => $days,
-				'name' => $type->name,
-				'allowance' => $type->allowance
+			'days' => $days,
+			'name' => $type->name,
+			'allowance' => $type->allowance
 			];
 
 		}
@@ -369,10 +369,10 @@ class LeaveController extends Controller
 	}
 
 	public function application() { 
-		 
-	 	$employee = employee::select('employee_id','campus_id','department_id')
-	 						->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
-	 						->first();
+		
+		$employee = employee::select('employee_id','campus_id','department_id')
+		->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
+		->first();
 		$department_id = $employee->department_id;
 		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
 
@@ -403,13 +403,13 @@ class LeaveController extends Controller
 		if ($search) {
 
 			$employees = employee::offset($start)
-				->limit($limit)
-				->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $search . '%')
-				->get();
+			->limit($limit)
+			->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $search . '%')
+			->get();
 		}else {
 			$employees = employee::offset($start)
-				->limit($limit) 
-				->get();
+			->limit($limit) 
+			->get();
 		}
 
 		
@@ -424,9 +424,9 @@ class LeaveController extends Controller
 			$sy_end = config('config.school_year.end');
 			$start_sy = Carbon::create($s ."$start", $sy_start)->format('Y-m-d');
 			$end_sy = Carbon::create($s . "$end", $sy_end)->format('Y-m-d');
- 
+			
 		}
- 
+		
 
 		$totalFiltered = $employees->count();
 		$data = [];
@@ -444,12 +444,12 @@ class LeaveController extends Controller
 					foreach ($leave_types as $type) {
 
 						$nestedData = [
-								ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-								$type['name'],
-								$type['allowance'],
-								$type['used'],
-								$type['balance']
-							];
+						ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
+						$type['name'],
+						$type['allowance'],
+						$type['used'],
+						$type['balance']
+						];
 
 						$data[] = $nestedData;
 
@@ -499,26 +499,26 @@ class LeaveController extends Controller
 			$usedLeave = $this->getUsedLeave($minutes);
 			$currentBalance = $this->getBalance($minutes, $allowance);
 			$dataSets[] = [
-				'id' => $type->id,
-				'name' => $type->name,
-				'allowance' => $allowance, 
-				'used' => $usedLeave == "" ? 0 : $usedLeave,
-				'balance' => $currentBalance == "" ? 0 : $currentBalance
+			'id' => $type->id,
+			'name' => $type->name,
+			'allowance' => $allowance, 
+			'used' => $usedLeave == "" ? 0 : $usedLeave,
+			'balance' => $currentBalance == "" ? 0 : $currentBalance
 			];
 
 		}
-	 
+		
 		return $dataSets;
 	}
 
 	public function getApproveLeaveFromLeaveType($leave_type_id, $employee_id, $campus_id, $start = null, $end = null) {
 		
 		$data = [
-			'leave_type_id' => $leave_type_id, 
-			'employee_id' => $employee_id, 
-			'campus_id' => $campus_id, 
-			'status' => 1, 
-			'pending' => 0
+		'leave_type_id' => $leave_type_id, 
+		'employee_id' => $employee_id, 
+		'campus_id' => $campus_id, 
+		'status' => 1, 
+		'pending' => 0
 		];
 
 		if ($start && $end) 
@@ -616,11 +616,11 @@ class LeaveController extends Controller
 	}
 
 	public function insert(Request $request) {
- 		$request->validate([
-					'leave_type' => 'required',
-					'duration' => 'required',
-					'reason' => 'required'
-				]);
+		$request->validate([
+			'leave_type' => 'required',
+			'duration' => 'required',
+			'reason' => 'required'
+			]);
 
 		$duration = $request->input('duration');
 		
@@ -629,9 +629,9 @@ class LeaveController extends Controller
 			$end = $request->input('end_time');
 			$date = $request->input('leave_date');
 			$request->validate([
-					'start_time' => 'required',
-					'end_time' => 'required',
-					'leave_date' => 'required'
+				'start_time' => 'required',
+				'end_time' => 'required',
+				'leave_date' => 'required'
 				]);
 
 		}else if ($duration == "whole_day") {
@@ -639,7 +639,7 @@ class LeaveController extends Controller
 			$end = $request->input('date');
 			$date = $request->input('date');
 			$request->validate([
-					'date' => 'required' 
+				'date' => 'required' 
 				]);
 
 		}else if ($duration == "long") {
@@ -647,17 +647,17 @@ class LeaveController extends Controller
 			$start = $request->input('start_date');
 			$end = $request->input('end_date');
 			$request->validate([
-					'start_date' => 'required',
-					'end_date' => 'required'  
+				'start_date' => 'required',
+				'end_date' => 'required'  
 				]);
 		}
- 
+		
 		if ($request->hasFile('document')) {
 			$request->validate([
-					'document' => 'mimes:txt,jpeg,pdf,docx'
+				'document' => 'mimes:txt,jpeg,pdf,docx'
 				]);
 			$path = $request->file('document')->store('public/document');
-            	$fileName = basename($path);
+			$fileName = basename($path);
 		}else {
 			$fileName = null;
 		}
@@ -679,16 +679,16 @@ class LeaveController extends Controller
 		if ($leave->save()) {
 			$departmentHeads = departmentHeads::where('department_id', $request->input('department_id'))->get();
 			$employee_id = (new employee)->getID();
-			 
+			
 			if ($departmentHeads) {
 				foreach($departmentHeads as $head) {
 					Notification::create([
-							'employee_id' => $head->employee_id,
-							'campus_id' => $head->campus_id,
-							'user_id' => $employee_id,
-							'message' => 'Apply for leave',
-							'link' => 'leaves',
-							'status' => 1
+						'employee_id' => $head->employee_id,
+						'campus_id' => $head->campus_id,
+						'user_id' => $employee_id,
+						'message' => 'Apply for leave',
+						'link' => 'leaves',
+						'status' => 1
 						]);
 				}
 			}
@@ -707,24 +707,24 @@ class LeaveController extends Controller
 
 	public function decline(Request $request) {
 		
-	 	LeaveApproval::create([
-				'leave_id' => $request->input('leave_id'),
-				'campus_id' => $request->input('campus_id'),
-				'employee_id' => $request->input('employee_id'), 
-				'status' => $request->input('status'),
-				'note' => $request->input('reason')
+		LeaveApproval::create([
+			'leave_id' => $request->input('leave_id'),
+			'campus_id' => $request->input('campus_id'),
+			'employee_id' => $request->input('employee_id'), 
+			'status' => $request->input('status'),
+			'note' => $request->input('reason')
 			]); 
 
-	 	Leave::where('id', $request->input('leave_id'))->update(['status' => 0, 'pending' => 0]);
-	 	$leave = Leave::find($request->input('leave_id'));
-	 	return Notification::create([
-                            'user_id' => (new employee)->getID(),
-                            'campus_id' => $leave->campus_id,
-                            'employee_id' => $leave->employee_id,
-                            'link' => 'my-leaves',
-                            'message' => 'Declined your leave request',
-                            'status' => 1
-                        ]);
+		Leave::where('id', $request->input('leave_id'))->update(['status' => 0, 'pending' => 0]);
+		$leave = Leave::find($request->input('leave_id'));
+		return Notification::create([
+			'user_id' => (new employee)->getID(),
+			'campus_id' => $leave->campus_id,
+			'employee_id' => $leave->employee_id,
+			'link' => 'my-leaves',
+			'message' => 'Declined your leave request',
+			'status' => 1
+			]);
 
 
 	}
@@ -739,22 +739,43 @@ class LeaveController extends Controller
 		$dir = $request->input('order.0.dir');
 		$col = $request->input("columns.$order.name");
 		$search = $request->input('search.value');
+		$status = $request->input('columns.2.search.value');
 		$sy = getCurrentSchoolYear();
 
 		if (checkDepartmentHead()) {
-			 $leaves = Leave::offset($start)
-					->limit($limit)
-					->orderBy($col,$dir)
-					->whereIn('department_id', checkDepartmentHead())
-					->get();
-		}else {
 			$leaves = Leave::offset($start)
-					->limit($limit)
-					->orderBy($col,$dir)
-					->get();
+			->limit($limit)
+			->orderBy($col,$dir)
+			->whereIn('department_id', checkDepartmentHead())
+			->get();
+		}else {
+			if ($status) {
+				$data = [
+				'pending' => [
+				'status' => 0,
+				'pending' => 1,
+				],
+				'declined' => [
+				'status' => 0,
+				'pending' => 0,
+				],
+				'approved' => [
+				'status' => 1,
+				'pending' => 0,
+				],
+				];
+				$leaves = Leave::where($data[$status])
+				->offset($start)
+				->limit($limit)
+				->orderBy($col,$dir)
+				->get();
+			}else {
+				$leaves = Leave::offset($start)
+				->limit($limit)
+				->orderBy($col,$dir)
+				->get();
+			}
 		}
-
-
 
 		$totalFiltered = $leaves->count();
 		$data = [];
@@ -765,16 +786,16 @@ class LeaveController extends Controller
 				$employee = employee::where(['campus_id' => $leave->campus_id, 'employee_id' => $leave->employee_id])->first();
 				$dateFormat = "Y-m-d";
 				$nestedData = [
-					Carbon::parse($leave->date)->format($dateFormat),
-					ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-					ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
-					Carbon::parse($leave->start)->format($dateFormat), 
-					Carbon::parse($leave->end)->format($dateFormat), 
-					$this->getStatus($leave->status, $leave->pending),
-					'
-						<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
+				Carbon::parse($leave->date)->format($dateFormat),
+				ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
+				ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
+				Carbon::parse($leave->start)->format($dateFormat), 
+				Carbon::parse($leave->end)->format($dateFormat), 
+				$this->getStatus($leave->status, $leave->pending),
+				'
+				<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
 
-					'
+				'
 				];
 
 				$data[] = $nestedData;
@@ -782,29 +803,29 @@ class LeaveController extends Controller
 			}
 		}
 
-			$jsonData = array(
-				'draw' => $request->input('draw'),
-				'recordsTotal' => intval($totalData),
-				'recordsFiltered' => $totalData,
-				'data' => $data
+		$jsonData = array(
+			'draw' => $request->input('draw'),
+			'recordsTotal' => intval($totalData),
+			'recordsFiltered' => $totalData,
+			'data' => $data
 
-				);
+			);
 
 
-			echo json_encode($jsonData);
-
-		}
-
-		public function getStatus($status, $pending) {
-
-			if ($pending == 1 && $status == 0) 
-				return "Pending";
-			else if ($pending == 0 && $status == 1) 
-				return "Approved";
-			else if ($pending == 0 && $status == 0) 
-				return "Declined";
-
-		}
-
+		echo json_encode($jsonData);
 
 	}
+
+	public function getStatus($status, $pending) {
+
+		if ($pending == 1 && $status == 0) 
+			return "Pending";
+		else if ($pending == 0 && $status == 1) 
+			return "Approved";
+		else if ($pending == 0 && $status == 0) 
+			return "Declined";
+
+	}
+
+
+}

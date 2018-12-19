@@ -1574,7 +1574,7 @@ class Employee {
 class Leave {
 
     dataTables() {
-        $("#leave_table").DataTable({
+        var leave_table = $("#leave_table").DataTable({
             responsive : true,
             'processing': true,
             'serverSide': true,
@@ -1611,7 +1611,21 @@ class Leave {
                     'orderable': false,
                     "visible": leaveActions
                 }
-            ]
+            ],
+            initComplete : function() {
+                $("#leave_table_length").append("&nbsp;&nbsp; <select style='width:100px;' id='leave-status'>" +
+                            "<option value=''>Status</option>" +
+                            "<option value='pending'>Pending</option>" +
+                            "<option value='approved'>Approved</option>" +
+                            "<option value='declined'>Declined</option>" +
+                        "</select>"
+                    );
+
+                $("#leave-status").change(function() {
+                    var status = $(this).val();
+                    leave_table.columns(2).search(status).draw();
+                })
+            }
         });
     }
 
