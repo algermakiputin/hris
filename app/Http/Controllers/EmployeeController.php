@@ -266,7 +266,7 @@ class EmployeeController extends Controller
                 }
 
                
-                return view('Employee.profile',compact('profile','campus','age','schedules','address','scheduleID'));
+                return view('Employee.profile',compact('profile','age','schedules','address','scheduleID'));
                     
                 
             }

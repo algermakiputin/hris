@@ -87,26 +87,34 @@ $(document).ready(function() {
 		    	  			destroy: true
 		    	  		});
 		    	  		var data = JSON.parse(data);
-		    	  		holidays.fullCalendar( 'removeEvents');
-		    	  		holidays.fullCalendar( 'addEventSource', data.calendar);
-		    	  		if (!$.isEmptyObject(data.holiday)) {
-		    	  			
-		    	  			$.each(data.holiday, function(key,value) {
-		    	  				var d = year + (value.start.slice(4,value.start.length));
-			    	  			$("#holiday-list").append('<li>'+ value.title +'<br> <span class="small">'+ d +'</span></li>');
-			    	  		})
-		    	  		}else {
-		    	  			$("#holiday-list").append('<li>No holidays</li>');
-		    	  		}
-		    	  		if (!$.isEmptyObject(data.event)) {
-		    	  			$.each(data.event, function(key,value) {
-		    	  				var d = year + (value.start.slice(4,value.start.length));
-			    	  			$("#event-list").append('<li>'+ value.title +'<br> <span class="small">'+ d +'</span></li>');
-			    	  		})
-		    	  		}else {
-		    	  			$("#event-list").append('<li>No events</li>');
-		    	  		}
-		    	  		
+						console.log(data)
+		    	  		if (data.length) {
+
+							holidays.fullCalendar( 'removeEvents');
+							holidays.fullCalendar( 'addEventSource', data.calendar);
+						}
+
+						if (data.holiday) {
+							$.each(data.holiday, function(key,value) {
+								var d = year + (value.start.slice(4,value.start.length));
+								$("#holiday-list").append('<li>'+ value.title +'<br> <span class="small">'+ d +'</span></li>');
+							})
+						}else {
+							$("#holiday-list").append('<li>No holidays</li>');
+						}
+						if (data.event) {
+							$.each(data.event, function(key,value) {
+								var d = year + (value.start.slice(4,value.start.length));
+								$("#event-list").append('<li>'+ value.title +'<br> <span class="small">'+ d +'</span></li>');
+							})
+						}else {
+							$("#event-list").append('<li>No events</li>');
+						}
+
+
+
+
+
 		    	  	}
 		    	  });
 	    }
