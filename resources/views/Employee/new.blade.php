@@ -270,7 +270,7 @@
 								<select class="form-control selectpicker" name="schedule" data-parsley-errors-container="#schedule-error">
 									<option value="">Select Schedule</option>
 									@foreach ($schedules as $schedule)
-									<option value="{{ $schedule['id'] }}">{{ $schedule['name'] }} ( {{ toTime($schedule['start']) . ' - ' .  toTime($schedule['end']) }} )</option>
+									<option value="{{ $schedule['id'] }}">{{ $schedule['name'] }}: {{ toTime($schedule['start']) . ' - ' .  toTime($schedule['end']) }}  ( {{ config('config.scheduleDays')[0] }} )</option>
 									@endforeach
 								</select>
 								<div class="clearfix"></div>

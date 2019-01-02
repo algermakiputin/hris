@@ -69,7 +69,7 @@
 					<option value="">Select Schedule</option>
 					@foreach ($schedules as $schedule)
 					<option value="{{ $schedule['id'] }}" {{ $scheduleID == $schedule['id'] ? 'selected' : '' }}>
-						{{ $schedule['name'] }} ( {{ toTime($schedule['start']) . ' - ' . toTime($schedule['end']) }} )
+						{{ $schedule['name'] }}: {{ toTime($schedule['start']) . ' - ' . toTime($schedule['end']) }} ( {{ config('config.scheduleDays')[0] }} )
 					</option>
 					@endforeach
 				</select>

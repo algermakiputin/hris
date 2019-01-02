@@ -261,7 +261,8 @@ class EmployeeController extends Controller
                 $address = address::where('employee_id',$profile->id)->first();
                 if ($profile->employment_type == 1) {
                     $sched = Schedule::find($profile->schedule_id);
-                    $scheduleID = $sched->name . ': ' . toTime($sched->start) . ' - ' . toTime($sched->end);
+                 
+                    $scheduleID = $sched->name . ': ' . toTime($sched->start) . ' - ' . toTime($sched->end) . ' ('. config('config.scheduleDays')[$sched->days] .')';
                 
                 }
 
