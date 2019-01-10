@@ -26,6 +26,30 @@ class AttendanceController extends Controller
 		return view('Attendance.index',compact('employees'));
 	}
 
+	public function entry() {
+		$campuses = Campus::all();
+		return view('Attendance.entry', compact('campuses'));
+	}
+
+	public function insert(Request $request) {
+		 
+		Attendance::create([
+				'employee_id' => $request->employee,
+				'campus_id' => $request->campus,
+				'date' => Carbon::parse($request->date . ' ' . $request->timein),
+				'name' => 'null',
+			]);
+
+		Attendance::create([
+				'employee_id' => $request->employee,
+				'campus_id' => $request->campus,
+				'date' => Carbon::parse($request->date . ' ' . $request->timein),
+				'name' => 'null',
+			]);
+
+		return redirect()->back()->with('success','Attendance saved successfully.');
+	}
+
 	public function upload() {
 		$campuses = Campus::get();
 		return view('Attendance.upload',compact('campuses'));

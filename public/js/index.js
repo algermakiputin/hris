@@ -55,6 +55,30 @@ $(document).ready(function() {
             $(this).parents(".form-group").find('.parsley-errors-list').empty();
     })
 
+    $("#campus-select").change(function() {
+
+        var campus_id = $(this).val();
+  
+        $.ajax({
+            type : 'POST',
+            url : base_url + '/employee/getEmployeesByCampus',
+            data : {
+                _token : token,
+                campus_id : campus_id
+            },
+            success : function(data) {
+                var result = JSON.parse(data);
+                $.each(result, function(key,value) {
+                    
+                    $("#employees").append("<option value='"+ value.employee_id +"'>"+value.first_name + ' ' + value.last_name +"</option>");
+                })
+
+                $("#employee-wrapper").show();
+            }
+
+        })
+    })
+
     $("#report-type").change(function(){
      
         if ($(this).val() == "leave"){
@@ -1454,6 +1478,14 @@ class DatePicker {
             format: 'YYYY-MM-DD',
             viewMode : 'months'
         })
+
+        $(".attendance-date").datetimepicker({
+            format: 'YYYY-MM-DD'
+        })
+
+        $(".time").datetimepicker({
+            format: 'LT'
+        });
 
     }
 }

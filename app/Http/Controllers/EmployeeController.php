@@ -423,8 +423,10 @@ class EmployeeController extends Controller
                     ->orderBy($col,$dir)
                     ->get();
         }
-     
         
-        
+    }
+
+    public function getEmployeesByCampus(Request $request) {
+        return json_encode(employee::where('campus_id', $request->campus_id)->get());
     }
 }

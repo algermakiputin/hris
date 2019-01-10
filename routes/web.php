@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::get('employee/new', 'EmployeeController@new');
 		Route::post('employee/insert','EmployeeController@insert');
 		Route::post('employee/destroy','EmployeeController@destroy');
+		Route::post('employee/getEmployeesByCampus', 'EmployeeController@getEmployeesByCampus');
 
 		//Campus
 		Route::get('campus/new','CampusController@new');
@@ -111,6 +112,8 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::post('attendance/data','AttendanceController@data');
 		Route::post('attendance/report','AttendanceController@report');
 		Route::get('attendance/export','AttendanceController@export');
+		Route::get('attendance/entry','AttendanceController@entry');
+		Route::post('attendance/insert', 'AttendanceController@insert');
 		//Users
 		Route::get('users','UsersController@index');
 		Route::get('users/new', 'UsersController@new');
