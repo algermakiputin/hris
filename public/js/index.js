@@ -932,7 +932,6 @@ $(document).ready(function() {
         
 
     });
-    new DatePicker;
 
     var employee = new Employee;
     employee.dataTables();
@@ -1127,6 +1126,8 @@ $(document).ready(function() {
         $(this).data('campusid', campus_id);
 
     });
+
+    new DatePicker;
 })
 
 class Confirmation {
@@ -1328,10 +1329,11 @@ class Attendance {
         })
         $("#attendance_upload_form").submit(function(e) {
             var form = $(this);
+
             form.find('input[type="submit"]').prop('disabled', true);
             e.preventDefault();
 
-            if ($("#attendance").val() !== "") {
+            if ($("#attendance").val() != "" && $("[name='campus_id']").val() != "") {
                 var formData = new FormData($(this)[0]);
                 $.ajax({
 
@@ -1460,6 +1462,7 @@ class DatePicker {
             $(this).parents('.form-group').find('.parsley-errors-list li').text('');
         });
 
+
         $("#start_time").datetimepicker({
             format: 'LT'
         });
@@ -1479,13 +1482,18 @@ class DatePicker {
             viewMode : 'months'
         })
 
+       
+        
         $(".attendance-date").datetimepicker({
             format: 'YYYY-MM-DD'
         })
 
+      
         $(".time").datetimepicker({
             format: 'LT'
         });
+      
+        
 
     }
 }

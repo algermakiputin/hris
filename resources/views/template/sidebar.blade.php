@@ -48,7 +48,7 @@
           @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
           <li><a><i class="fa fa-clock-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu"> 
-              <li><a href="{{ url('attendance/upload') }}">Upload</a></li>
+              <li><a href="{{ url('attendance/upload') }}">Import</a></li>
               <li><a href="{{ url('attendance/entry') }}">Manual Entry</a></li>
             </ul>
           </li>

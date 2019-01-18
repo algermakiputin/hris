@@ -496,14 +496,15 @@ class AttendanceController extends Controller
 						$row[] = $result;
 					} 
 
+
 					foreach($row as $row) {	
-						 
+					
 						if ($row['account_no'] && $row['date'] && $row['time']) {
 
 							$data[] = array(
 								'employee_id' => $row['account_no'],
 								'name' => $row['name'],
-								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']->format('h:i:s a')),
+								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']),
 								'campus_id' => $this->campus_id
 								);
 						}
