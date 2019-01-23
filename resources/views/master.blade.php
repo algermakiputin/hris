@@ -5,6 +5,7 @@
 	 <meta name="csrf-token" content="{{ csrf_token() }}">
 	 <meta name="role" content="{{Auth::user()->role}}">
 	 <meta name="base-url" content="{{ url('') }}">
+ 
 </head>
 <body class="nav-md">
 	<div class="container body">

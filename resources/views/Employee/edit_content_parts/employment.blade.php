@@ -12,7 +12,11 @@
 		<div class="form-group">
 			<label class="control-label col-md-2 col-sm-2 col-xs-12">Employee ID:</label>
 			<div class="col-md-9 col-sm-9 col-xs-12">
-				<input type="text" name="_id" value="{{ $employee->id }}" class="form-control">
+				<input type="text" name="_id" value="{{ $employee->id }}" class="form-control"
+				data-parsley-remote="{{ url('employee/validate/id') }}"
+				data-parsley-remote-options='{ "type": "POST", "dataType": "jsonp", "data": { "_token": "{{ csrf_token() }}" } }'
+				data-parsley-remote-message="Employee ID already used"
+				>
 			</div>
 		</div>
 		<div class="form-group">

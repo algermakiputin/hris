@@ -55,7 +55,12 @@
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-2 col-xs-12">Email:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="email" class="form-control" placeholder="Email" name="email" value="{{ $employee->email_address }}">
+			<input type="email" class="form-control" placeholder="Email" name="email" value="{{ $employee->email_address }}"
+			data-parsley-group='block2' required="required"
+			data-parsley-remote="{{ url('employee/validate/email') }}"
+			data-parsley-remote-options='{ "type": "POST", "dataType": "jsonp", "data": { "_token": "{{ csrf_token() }}" } }'
+			data-parsley-remote-message="Email name already used"
+			>
 		</div>
 	</div>
 	<div class="form-group">

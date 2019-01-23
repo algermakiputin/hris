@@ -66,7 +66,8 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::post('employee/insert','EmployeeController@insert');
 		Route::post('employee/destroy','EmployeeController@destroy');
 		Route::post('employee/getEmployeesByCampus', 'EmployeeController@getEmployeesByCampus');
-
+		Route::post('employee/validate/email', 'EmployeeController@validateEmail');
+		Route::post('employee/validate/id', 'EmployeeController@validateID');
 		//Campus
 		Route::get('campus/new','CampusController@new');
 		Route::post('campus/save','CampusController@save');

@@ -122,7 +122,11 @@
 							Contact
 						</label>
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="email" id="email" class="form-control col-md-7 col-xs-12" name="email_address" placeholder="Email Address" required="required" data-parsley-group='block1'>
+							<input type="email" id="email" class="form-control col-md-7 col-xs-12" name="email_address" placeholder="Email Address" required="required" data-parsley-group='block1'
+							data-parsley-remote="{{ url('employee/validate/email') }}"
+							data-parsley-remote-options='{ "type": "POST", "dataType": "jsonp", "data": { "_token": "{{ csrf_token() }}" } }'
+							data-parsley-remote-message="Email name already used"
+							>
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12">
 							<input type="text" id="mobile" class="mobile form-control col-md-7 col-xs-12" name="mobile" placeholder="Mobile" required="required" data-parsley-group='block1'>
@@ -196,7 +200,11 @@
 						<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Employee ID  
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" name="employee_id" class="form-control col-md-7 col-xs-12" placeholder="Employee ID" data-parsley-group='block2' required="required">
+							<input type="text" name="employee_id" class="form-control col-md-7 col-xs-12" placeholder="Employee ID" data-parsley-group='block2' required="required"
+							data-parsley-remote="{{ url('employee/validate/id') }}"
+							data-parsley-remote-options='{ "type": "POST", "dataType": "jsonp", "data": { "_token": "{{ csrf_token() }}" } }'
+							data-parsley-remote-message="Employee ID already used"
+							>
 						</div>
 						
 						<label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Role  

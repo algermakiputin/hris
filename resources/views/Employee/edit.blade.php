@@ -18,7 +18,7 @@
 		<div class="col-md-8">
 			<div class="x_panel">
 				<div class="x_title">
-					<a href="{{ url('employee') }}">Return</a>
+					<a href="{{ url('employee') }}"><i class="fa fa-link"></i> Return</a>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
@@ -142,6 +142,7 @@
 						@endif
 					</div>
 					<div class="ln_solid"></div>
+					<a href="{{ url('employee/profile/?id=' . $employee->employee_id ) }}"><i class="fa fa-link"></i> View Profile</a>
 				</fieldset>
 			</form>
 		</div>

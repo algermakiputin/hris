@@ -38,6 +38,22 @@ class EmployeeController extends Controller
 
 	}
 
+    public function validateEmail(Request $request) {
+        if (employee::where('email_address', $request->input('email_address'))->exists())
+            return \Response::json('exists', 404);
+
+        return \Response::json('not exists', 200);
+
+    }
+
+    public function validateID(Request $request) {
+        if (employee::where('employee_id', $request->input('employee_id'))->exists())
+            return \Response::json('exists', 404);
+
+        return \Response::json('not exists', 200);
+
+    }
+
     public function getSchedules($schedules) {
         $sched = [];
         foreach ($schedules as $schedule) {
