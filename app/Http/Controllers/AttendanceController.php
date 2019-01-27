@@ -32,19 +32,19 @@ class AttendanceController extends Controller
 	}
 
 	public function insert(Request $request) {
-		 
-		Attendance::create([
-				'employee_id' => $request->employee,
-				'campus_id' => $request->campus,
-				'date' => Carbon::parse($request->date . ' ' . $request->timein), 
-			]);
 
 		Attendance::create([
-				'employee_id' => $request->employee,
-				'campus_id' => $request->campus,
-				'date' => Carbon::parse($request->date . ' ' . $request->timeout),
-				'name' => 'null',
-			]);
+			'employee_id' => $request->employee,
+			'campus_id' => $request->campus,
+			'date' => Carbon::parse($request->date . ' ' . $request->timein), 
+		]);
+
+		Attendance::create([
+			'employee_id' => $request->employee,
+			'campus_id' => $request->campus,
+			'date' => Carbon::parse($request->date . ' ' . $request->timeout),
+			'name' => 'null',
+		]);
 
 		return redirect()->back()->with('success','Attendance saved successfully.');
 	}
@@ -71,7 +71,7 @@ class AttendanceController extends Controller
 		}
 		$attendance['attendance'][] = $days;
 		$attendance['worked'][] = $worked;
-	 	
+
 		return $attendance;
 
 	}
@@ -112,83 +112,83 @@ class AttendanceController extends Controller
 	}
 
 	public function export(Request $request) {
- 		$data = $this->report($request);
- 		$data = json_decode($data,true);
- 	 
+		$data = $this->report($request);
+		$data = json_decode($data,true);
+
 		Excel::create('Filename', function($excel) use($data, $request) {
 
 		    // Set the title
-		    $excel->setTitle('Our new awesome title');
+			$excel->setTitle('Our new awesome title');
 
 		    // Chain the setters
-		    $excel->setCreator('Maatwebsite')
-		          ->setCompany('Maatwebsite');
-		     
+			$excel->setCreator('Maatwebsite')
+			->setCompany('Maatwebsite');
+
 		    // Call them separately
-		     $excel->setDescription('A demonstration to change the file properties');
-		     $excel->sheet('Attendance Report', function($sheet) use($data, $request) {
-		     	$dataset = [];
+			$excel->setDescription('A demonstration to change the file properties');
+			$excel->sheet('Attendance Report', function($sheet) use($data, $request) {
+				$dataset = [];
 
-		     	foreach ($data['data'] as $d) {
-		     		$dataset[] = array(
-		     				'Date' => $d['date'] ?? '--', 
-		     				'In' => $d['in'] ?? '--',
-		     				'Out' => $d['out'] ?? '--',
-		     				'Total Hours' => $d['total_hours'] ?? '--',
-		     				'Late' => $d['late'] ?? '--',
-		     				'Overtime' => $d['overtime'] ?? '--',
-		     				'Status' => $d['status'] ?? '--',
-		     			);
-		     	}
+				foreach ($data['data'] as $d) {
+					$dataset[] = array(
+						'Date' => $d['date'] ?? '--', 
+						'In' => $d['in'] ?? '--',
+						'Out' => $d['out'] ?? '--',
+						'Total Hours' => $d['total_hours'] ?? '--',
+						'Late' => $d['late'] ?? '--',
+						'Overtime' => $d['overtime'] ?? '--',
+						'Status' => $d['status'] ?? '--',
+					);
+				}
 
-		      
-		     	 
-		     	$sheet->fromArray($dataset);
 
-		     	$sheet->prependRow(1, 
-		     		array('Attendance Report')
-		     		);
-		     	$sheet->prependRow(2, 
-		     		array("Date:", Carbon::parse($request->input('start_date'))->format('Y-m-d') . ' - ' . Carbon::parse($request->input('end_date'))->format('Y-m-d'))
-		     		);
-		     	$sheet->prependRow(3, 
-		     		array('Employee Name:', $data['name'])
-		     		);
-		     	$sheet->prependRow(4, 
-		     		array('Total Hours Worked:', $data['total_hours'])
-		     		);
-		  	   	$sheet->prependRow(5, 
-		     		array('Total Late:', $data['late'])
-		     		);
-		     	$sheet->prependRow(6, 
-		     		array('Total Overtime:', $data['overtime'])
-		     		);
+
+				$sheet->fromArray($dataset);
+
+				$sheet->prependRow(1, 
+					array('Attendance Report')
+				);
+				$sheet->prependRow(2, 
+					array("Date:", Carbon::parse($request->input('start_date'))->format('Y-m-d') . ' - ' . Carbon::parse($request->input('end_date'))->format('Y-m-d'))
+				);
+				$sheet->prependRow(3, 
+					array('Employee Name:', $data['name'])
+				);
+				$sheet->prependRow(4, 
+					array('Total Hours Worked:', $data['total_hours'])
+				);
+				$sheet->prependRow(5, 
+					array('Total Late:', $data['late'])
+				);
+				$sheet->prependRow(6, 
+					array('Total Overtime:', $data['overtime'])
+				);
 
 				$sheet->setWidth(array(
-				    'A'     =>  25,
-				    'B'     =>  25,
-				    'C'	=> 25,
-				    'D'	=> 15,
-				    'E'	=> 15,
-				    'F'	=> 15,
-				    'G'	=> 15
+					'A'     =>  25,
+					'B'     =>  25,
+					'C'	=> 25,
+					'D'	=> 15,
+					'E'	=> 15,
+					'F'	=> 15,
+					'G'	=> 15
 				));
- 
+
 				$sheet->setFontSize(14);
 				$sheet->setFontBold(false);
 				$sheet->prependRow(7, 
-		     		array('')
-		     		);
+					array('')
+				);
 				$sheet->prependRow(8, 
-		     		array('Attendance')
-		     		);
-				 
+					array('Attendance')
+				);
+
 				$sheet->setHeight(1, 25);
-				 
+
 				$sheet->mergeCells('A1:G1');
 				$sheet->cell('A1', function($cell) {
 
-				     $cell->setAlignment('center');
+					$cell->setAlignment('center');
 					$cell->setValignment('center');
 					$cell->setFontSize(18);
 					$cell->setFontWeight('bold');
@@ -202,7 +202,7 @@ class AttendanceController extends Controller
 				$sheet->cell('A7', function($cell) {
 					$cell->setFontSize(16); 
 				});
-		     });
+			});
 
 		})->export('xls');
 	} 
@@ -242,9 +242,9 @@ class AttendanceController extends Controller
 			$date = $d->format('m/d/Y');
 			$tardiness = 0;
 			$dayOfWeek = Carbon::parse($date)->dayOfWeek;
-		 
+
             	//check if Holidays
-            	if ($holidays) {
+			if ($holidays) {
 				if ($key = array_search($date, $holidays)) {
 					$dataSet[] = ['date' => $date, 'status' => 'holiday'];
 					continue;
@@ -254,7 +254,7 @@ class AttendanceController extends Controller
 			if ($employmentType == 1) {
 				$sched = Schedule::where('id', $schedule_id)->first();
 				$noWork = $this->getScheduleDays($sched->days);
-			 	$hasWork = false;
+				$hasWork = false;
 
 				if (!in_array($dayOfWeek, $noWork[0])) {
 					$working++;
@@ -263,16 +263,16 @@ class AttendanceController extends Controller
 
 	            	//Check Status,Absent Or No Work
 				if(!in_array($date, $groupAttendance['worked'][0]) || count($groupAttendance['attendance'][0][$date]) < 2 ) {
-		 		 
+
 					$status = "";
 					if (!in_array($dayOfWeek, $noWork) && $hasWork) {
 						$status = "absent";
 						$absent++;
 					}else  
-						$status = '--';
-						$dataSet[] = ['date' => $date, 'status' => $status];
+					$status = '--';
+					$dataSet[] = ['date' => $date, 'status' => $status];
 					continue;
-						
+
 				}
 
 
@@ -286,7 +286,7 @@ class AttendanceController extends Controller
 				}
 
 				$max = max(array_map('strtotime', $attendanceDate));
-	 			$min = min(array_map('strtotime', $attendanceDate));	
+				$min = min(array_map('strtotime', $attendanceDate));	
 				$in = Carbon::createFromTimestamp($min);
 				$out = Carbon::createFromTimestamp($max);
 
@@ -303,7 +303,7 @@ class AttendanceController extends Controller
 					$tardiness = Carbon::parse($in->format('h:i'))->diffInMinutes(Carbon::parse($timeIn));
 					$late += $tardiness;
 				}
-			 
+
 				$dataSet[] = [
 					'date' => Carbon::parse($date)->format('Y-m-d'),
 					'in' => $inTime,
@@ -320,8 +320,11 @@ class AttendanceController extends Controller
 				$worked++;
 
 			}else if ($employmentType == 0) {
-				
-				$sched = ParttimeSchedule::where(['employee_id' => $id, 'campus_id' => $campus_id])->get()->toArray();	
+			 
+				$sched = ParttimeSchedule::where(['employee_id' => $id, 'campus_id' => $campus_id])
+										->where('day', $dayOfWeek)
+										->orderBy('start', 'ASC')
+										->get()->toArray();	
 
 				if ($this->partTimeWorking($dayOfWeek, $sched))
 					$working++;
@@ -334,19 +337,19 @@ class AttendanceController extends Controller
 					$maxHours = (int)getTotalHours($dayOfWeek, 'start', $sched);
 
 					$attendances = Attendance::whereBetween('date', [Carbon::parse($date . ' ' . $timeIn)->subHours(1),
-															Carbon::parse($date . ' ' . $timeOut)->addHours(5)
-											])
-											->where(['employee_id' => $id, 'campus_id' => $campus_id])
-											->get()->toArray();
-	
+						Carbon::parse($date . ' ' . $timeOut)->addHours(5)
+					])
+					->where(['employee_id' => $id, 'campus_id' => $campus_id])
+					->get()->toArray();
+
 					foreach ($attendances as $attendance) {
 						$dates[] = $attendance['date'];
 					}
 
 					if (count($dates) >= 2) {
-				 	 
+
 						$max = max(array_map('strtotime', $dates));
-			 			$min = min(array_map('strtotime', $dates));
+						$min = min(array_map('strtotime', $dates));
 
 						$in = Carbon::createFromTimestamp($min);
 						$out = Carbon::createFromTimestamp($max);
@@ -355,7 +358,7 @@ class AttendanceController extends Controller
 						$outTime = $out->format('h:i A');
 
 						$totalHours = 0;
-					 	$count = 0;
+						$count = 0;
 
 
 						if ($timeIn && $timeOut) { 
@@ -399,17 +402,55 @@ class AttendanceController extends Controller
 				$totalMinutesToday = 0;
 
 				if (Carbon::parse($outTime)->lt(Carbon::parse($timeOut))){
-			 		$timeDiff = Carbon::parse($outTime)->diffInMinutes(Carbon::parse($timeOut));
-				  	$newTimeOut = Carbon::parse($timeOut)->subMinutes($timeDiff);
-				 	
-					$totalMinutes += ($maxHours * 60) - $timeDiff;
-					$totalMinutesToday = $maxHours * 60 - $timeDiff;
-				 
+
+					foreach ($sched as $key => $schedTime) {
+
+						if ($this->isInLeave($schedTime, $date))
+							continue;
+
+						if (Carbon::parse($schedTime['start'])->gte(Carbon::parse($inTime)->subHours(1)) && Carbon::parse($schedTime['end'])->lte(Carbon::parse($outTime)) ) { 
+
+							$totalMinutesToday += Carbon::parse($schedTime['start'])->diffInMinutes(Carbon::parse($schedTime['end']));
+							if (Carbon::parse($inTime)->gt(Carbon::parse($schedTime['start']))) {
+								$totalMinutesToday -= Carbon::parse($inTime)->diffInMinutes(Carbon::parse($schedTime['start']));
+
+							}
+
+						}else  if (Carbon::parse($schedTime['end'])->diffInHours(Carbon::parse($outTime)) <= 1) 
+						{
+							 $totalMinutesToday += Carbon::parse($schedTime['start'])->diffInMinutes(Carbon::parse($schedTime['end']));
+							 $totalMinutesToday -= Carbon::parse($outTime)->diffInMinutes(Carbon::parse($schedTime['end']));
+						}
+
+						
+
+						continue;
+					}
+
+
+
+					$timeDiff = Carbon::parse($outTime)->diffInMinutes(Carbon::parse($timeOut));
+					$newTimeOut = Carbon::parse($timeOut)->subMinutes($timeDiff);
+
+					$totalMinutes += $totalMinutesToday; 
+
 				}else if (Carbon::parse($outTime)->gte(Carbon::parse($timeOut))){
 					$totalMinutes += $maxHours * 60;
 					$totalMinutesToday = $maxHours * 60;
+
+					if (Carbon::parse($inTime)->diffInMinutes(Carbon::parse($timeIn)) >= 30) {
+						$status = 'Absent';
+						$absent++;
+						$dataSet[] = ['date' => $date, 'status' => $status];
+						continue;
+					}
+
+					if (Carbon::parse($inTime)->gt(Carbon::parse($timeIn))) {
+						$totalMinutesToday -= Carbon::parse($inTime)->diffInMinutes(Carbon::parse($timeIn));
+						
+					}
 				}
-			 
+
 				$totalOvertime += $totalHours[1];
 				$worked++;
 
@@ -419,11 +460,11 @@ class AttendanceController extends Controller
 					'out' => $outTime, 
 					'status' => $status,
 					'total_hours' => floor($totalMinutesToday / 60) . ' hrs :' . $totalMinutesToday % 60 . ' mins'  ,
-					'late' => $tardiness > 0 ? $tardiness . ' min' : 0,
+					'late' => $tardiness > 0 ? $tardiness . ' mins' : 0,
 					'overtime' => $totalHours[1] > 0 ? $totalHours[1] . ' min' : 0
 
 				];
-		 		
+
 			}
 		}
 
@@ -437,10 +478,28 @@ class AttendanceController extends Controller
 		$attendance['absent'] = $absent . ' Days';
 		$attendance['employmentType'] = $employmentType;
 		$attendance['late'] = $late;
-		$attendance['overtime'] = $totalOvertime . ' min';
+		$attendance['overtime'] = $totalOvertime . ' mins';
 
 		return json_encode($attendance);
- 
+
+	}
+
+	public function isInLeave($schedule, $date) {
+	 
+		$leaves = Leave::where(['employee_id' => $schedule['employee_id'], 'campus_id' => $schedule['campus_id']])
+						->where('date', date('Y-m-d', strtotime($date)))
+						->get();
+		 
+		foreach ($leaves as $leave) {
+			
+			if ($leave->duration == 'short') {
+
+				if (Carbon::parse($schedule['start'])->gte(Carbon::parse($leave->start)) && Carbon::parse($schedule['end'])->lte(Carbon::parse($leave->end)) ) {
+						return true;
+					}
+			}
+		}
+
 	}
 
 	public function convertToMinutes($timeDifference, $string = false) {
@@ -472,7 +531,7 @@ class AttendanceController extends Controller
 		$in = Carbon::parse($in->format('h:i a'));
 
 		$timeOut = Carbon::parse($timeOut);
-  
+
 
 		if ($out->gt($timeOut)) {
 			$overtime = Carbon::parse($out->format('h:i a'))->diffInMinutes(Carbon::parse($timeOut));
@@ -494,9 +553,9 @@ class AttendanceController extends Controller
 	public function file_upload(Request $request) {
 
 		$request->validate([
-				'campus_id' => 'required',
-				'attendance' => 'required'
-			]);
+			'campus_id' => 'required',
+			'attendance' => 'required'
+		]);
 		$this->campus_id = $request->input('campus_id');
 
 		if ($request->hasFile('attendance')) {			
@@ -508,7 +567,7 @@ class AttendanceController extends Controller
 				$path = $request->file('attendance')->getRealPath();
 
 				$data = Excel::load($path, function($reader) {
-				 	
+
 					$results =$reader->get()->toArray();
 
 					foreach ($results as $result) {
@@ -518,14 +577,14 @@ class AttendanceController extends Controller
 
 
 					foreach($row as $row) {	
-					
+
 						if ($row['account_no'] && $row['date'] && $row['time']) {
 
 							$data[] = array(
 								'employee_id' => $row['account_no'], 
 								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']),
 								'campus_id' => $this->campus_id
-								);
+							);
 						}
 
 					}

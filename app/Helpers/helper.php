@@ -64,7 +64,7 @@
  			 	$data[] = $sched;
 
  		}
-
+  
  		if ($data) {
  			$times = array_column($data, $time);
  		  
