@@ -363,9 +363,9 @@ class AttendanceController extends Controller
 				$totalMinutes += $maxHours * 60;
 				$totalMinutesToday = $maxHours * 60;
 
-
 				if (Carbon::parse($inTime)->gt(Carbon::parse($timeIn))) {
 					$totalMinutesToday -= Carbon::parse($inTime)->diffInMinutes(Carbon::parse($timeIn));
+					$totalMinutes -= Carbon::parse($inTime)->diffInMinutes(Carbon::parse($timeIn));
 				}
 			}
 
