@@ -114,7 +114,7 @@ class AttendanceController extends Controller
 	public function export(Request $request) {
 		$data = $this->report($request);
 		$data = json_decode($data,true);
-
+		
 		Excel::create('Filename', function($excel) use($data, $request) {
 
 		    // Set the title

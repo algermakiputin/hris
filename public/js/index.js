@@ -237,6 +237,8 @@ $(document).ready(function() {
         
         if (startDate && endDate && empID && campusID) {
             window.location = url + '?employee_id=' + empID +'&campus_id=' + campusID +'&start_date=' + startDate + '&end_date=' + endDate;
+        }else {
+            alert('Please select an employee and date');
         }
         e.preventDefault();
     
