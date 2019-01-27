@@ -30,11 +30,11 @@
 							</li>
 							<li role="presentation" class="{{ Session()->get('update') == "resume" ? 'active in' : ''  }}" ><a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
 							</li>
-							@if (!$employee->employment_type)
-								<li role="presentation" class="{{ Session()->get('update') == "schedule" ? 'active in' : ''  }}">
-									<a href="#scheds" role="tab" id="sched-tab3" data-toggle="tab" aria-expanded="true">Schedules</a>
-								</li>
-							@endif
+						 
+							<li role="presentation" class="{{ Session()->get('update') == "schedule" ? 'active in' : ''  }}">
+								<a href="#scheds" role="tab" id="sched-tab3" data-toggle="tab" aria-expanded="true">Schedules</a>
+							</li>
+						 
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab tab-pane fade {{ Session()->get('update') == "schedule" ? 'active in' : ''  }}" id="scheds" aria-labelledby="sched-tab">

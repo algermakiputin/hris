@@ -50,10 +50,8 @@
 						<a target="__blank" href="{{ url('attendance/export') }}" class="btn btn-default" id="export-attendance"><i class="fa fa-file-excel-o"></i> Export Reports</a> 
 					</div>
 				</div>
-			 	<div style="padding: 5px 0;">
-			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> View Schedule</button>
-			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> Profile</button>
-			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> Edit</button>
+			 	<div style="padding: 5px 0;display: none;" id="tools">
+			 		<button class="btn btn-default btn-sm" id="view-schedule"><i class="fa fa-calendar"></i> View Schedule</button>
 			 	</div>
 				<ul class="stats-overview" style="display: none;">
 					<li>
@@ -82,65 +80,6 @@
 					</li>
 
 				</ul>
-				 
-				<!-- <div class="row top_tiles attendance-header">
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12">
-						<div class="tile-stats"> 
-							<h3>Name</h3>
-							<p id="name">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12">
-						<div class="tile-stats"> 
-							<h3>Employment Type</h3>
-							<p id="employmentType">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12" id="working-wrapper">
-						<div class="tile-stats"> 
-							<h3>Working Days</h3>
-							<p id="working">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12" id="worked-wrapper">
-						<div class="tile-stats"> 
-							<h3>Total Late</h3>
-							<p id="worked">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12">
-						<div class="tile-stats"> 
-							<h3>Total Hours</h3>
-							<p id="total_hours">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12" id="absent-wrapper">
-						<div class="tile-stats"> 
-							<h3>Absent</h3>
-							<p id="absent">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-md-offset-3 col-lg-2 col-md-2 col-sm-6 col-xs-12" id="absent-wrapper">
-						<div class="tile-stats"> 
-							<h3>Schedule</h3>
-							<p id="absent">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12" id="absent-wrapper">
-						<div class="tile-stats"> 
-							<h3>Worked</h3>
-							<p id="absent">--</p>
-						</div>
-					</div>
-					<div class="animated flipInY col-lg-2 col-md-2 col-sm-6 col-xs-12" id="absent-wrapper">
-						<div class="tile-stats"> 
-							<h3>Overtime</h3>
-							<p id="absent">--</p>
-						</div>
-					</div>
-					 
-				 
-				</div> -->
 
 				<table class="table table-striped table-bordered no-footer" id="employee_attendance_table">
 					<thead>
@@ -163,5 +102,30 @@
 		</div>
 	</div>
 	<div class="clearfix"></div>
+</div>
+
+<div id="scheduleModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Schedule</h4>
+      </div>
+      <div class="modal-body">
+ 
+        <table id="schedule-table" class="table table-striped table-hover">
+        	<tbody>
+        		
+        	</tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
 @endsection

@@ -271,21 +271,6 @@
 								<option value="1">Yes</option>
 							</select>
 						</div>
-						<div style="display: none;" id="sched-wrap">
-							
-							<label class="control-label col-md-1 col-sm-1 col-xs-12">Schedule</label>
-							<div class="col-md-4 col-sm-4 col-xs-12">
-								<select class="form-control selectpicker" name="schedule" data-parsley-errors-container="#schedule-error">
-									<option value="">Select Schedule</option>
-									@foreach ($schedules as $schedule)
-									<option value="{{ $schedule['id'] }}">{{ $schedule['name'] }}: {{ toTime($schedule['start']) . ' - ' .  toTime($schedule['end']) }}  ( {{ config('config.scheduleDays')[0] }} )</option>
-									@endforeach
-								</select>
-								<div class="clearfix"></div>
-								<div id="schedule-error"></div>
-							</div>
-
-						</div>
 					</div>
 					<div class="clearfix"></div>
 				     <div class="ln_solid"></div>

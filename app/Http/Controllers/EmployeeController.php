@@ -6,8 +6,7 @@ use App\Department;
 use App\employee;
 use App\Campus;
 use App\Users;
-use App\Schedule;
-use App\ParttimeSchedule;
+use App\Schedule; 
 use App\address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -138,7 +137,7 @@ class EmployeeController extends Controller
                 $departments = Department::select('id','name')->get();
                 $campuses = Campus::select('id','name')->get();
                 $age = Carbon::parse($employee->birthday)->diffInYears(Carbon::now());
-                $partimeScheds = ParttimeSchedule::where(['employee_id' => $employee->employee_id, 'campus_id' => $employee->campus_id])
+                $partimeScheds = Schedule::where(['employee_id' => $employee->employee_id, 'campus_id' => $employee->campus_id])
                             ->orderBy('day', 'ASC')
                             ->orderBy('start', 'ASC')
                             ->get()->toArray();
@@ -279,7 +278,7 @@ class EmployeeController extends Controller
 
         if ($id) {
 
-            $profile = employee::select('employees.id','tenure','education','employee_id','employees.campus_id as campus_id','avatar','first_name','last_name','middle_name','gender','schedule_id','birthday','email_address','mobile','telephone','marital_status','role_id','employment_type','salary','date_joining','resume','status', 'roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
+            $profile = employee::select('employees.id','tenure','education','employee_id','employees.campus_id as campus_id','avatar','first_name','last_name','middle_name','gender','birthday','email_address','mobile','telephone','marital_status','role_id','employment_type','salary','date_joining','resume','status', 'roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
                             ->leftJoin('roles','roles.id','=', 'employees.role_id')
                             ->leftJoin('departments','departments.id','=','employees.department_id')
                             ->leftJoin('campuses','campuses.id','=','employees.campus_id')
@@ -290,19 +289,13 @@ class EmployeeController extends Controller
                 $this->authorize('show', $profile);
                 $scheduleID = 0;
                 $age = (new Carbon($profile->birthday))->diffInYears(Carbon::now());
-                $schedules = ParttimeSchedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->orderBy('day','ASC')
+                $schedules = Schedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->orderBy('day','ASC')
                                 ->orderBy('start', 'ASC')
                                 ->get();
                 $address = address::where('employee_id',$profile->id)->first();
-                if ($profile->employment_type == 1) {
-                    $sched = Schedule::find($profile->schedule_id);
-                 
-                    $scheduleID = $sched->name . ': ' . toTime($sched->start) . ' - ' . toTime($sched->end) . ' ('. config('config.scheduleDays')[$sched->days] .')';
-                
-                }
-
+              
                
-                return view('Employee.profile',compact('profile','age','schedules','address','scheduleID'));
+                return view('Employee.profile',compact('profile','age','schedules','address'));
                     
                 
             }
@@ -323,7 +316,7 @@ class EmployeeController extends Controller
             employee::where($data)->delete();
             Users::where($data)->delete();
             if ($employee->employment_type == 0) 
-                ParttimeSchedule::where($data)->delete();
+                Schedule::where($data)->delete();
         });
        
         

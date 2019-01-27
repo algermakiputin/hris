@@ -3,107 +3,127 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Schedule;
 use Carbon\Carbon;
 
 class ScheduleController extends Controller
 {
 
-	public function index() {
-		return view('Schedule.index');
-	}
+    public function destroy(Request $request) {
+        Schedule::where('id', $request->input('id'))->delete();
+        return redirect()->back()->with('success', 'Schedule Deleted successfully')
+                                ->with('update', 'schedule');
+    }
 
-	public function insert(Request $request) {
-		return Schedule::create([
-			'name' => $request->input('name'),
-			'start' => Carbon::parse($request->input('start'))->format('H:i:s'),
-			'end' => Carbon::parse($request->input('end'))->format('H:i:s'),
-			'days' => $request->input('days')
-			])->id;
+    public function insert(Request $request) {
+        $startTime = Carbon::parse($request->input('start_time'))->format('G:i:s');
+        $endTime = Carbon::parse($request->input('end_time'))->format('G:i:s');
+        $empID = $request->input('employee_id');
+        $campusID = $request->input('campus_id');
+        $sched = [
+                'day' => $request->input('day'),
+                'start' => $startTime,
+                'end' => $endTime,
+                'employee_id' => $empID,
+                'campus_id' => $campusID
+            ];
 
-	}
+        $validate = Schedule::where('start', '>=', $startTime)
+                                    ->where('end', '<=', $endTime)
+                                    ->where('employee_id', $request->input('employee_id'))
+                                    ->where('campus_id', $campusID)
+                                    ->count();    
 
-	public function destroy(Request $request) {
-		return Schedule::where('id', $request->input('id'))->delete();
-	}
+        if (!$validate) {
+            Schedule::create($sched);
+            return redirect()->back()->with('update','schedule')
+                                    ->with('success', 'Schedule added successfully');
+        }
 
-	public function update(Request $request) {
-		
-		Schedule::where('id', $request->input('id'))
-				->update([
-					'name' => $request->input('name'),
-					'start' => Carbon::parse($request->input('start'))->format('H:i:s'),
-					'end' => Carbon::parse($request->input('end'))->format('H:i:s'),
-					'days' => $request->input('days')
-				]);
+        return redirect()->back()->with('error','error')
+                                ->with('update', 'schedule');
 
-		return redirect()->back();
-	}
+    }
 
-	public function data(Request $request) {
-		$totalData = Schedule::count();
+    public function getEmployeeSchedule(Request $request) {
+        $data = [];
+        $schedules = Schedule::where(['employee_id' => $request->employee_id, 'campus_id' => $request->campus_id])->orderBy('day','ASC')
+                                ->orderBy('start', 'ASC')
+                                ->get();
 
-		$limit = intval($request->input('length'));
-		$start = intval($request->input('start'));
-		$order = intval($request->input('order.0.column'));
-		$dir = $request->input('order.0.dir');
-		$search = $request->input('search');
-		$col = $request->input("columns.$order.name");
+        foreach ($schedules as $sched) {
+            $data[] = [
+                    'day' => config('config.weekOfDay')[(int)$sched->day - 1],
+                    'startTime' => date('h:i a', strtotime($sched->start)),
+                    'endTime' => date('h:i a', strtotime($sched->end))
+                ];
+        }
 
-		$schedules = Schedule::offset($start)
-		->limit($limit)
-		->orderBy($col,$dir)
-		->get();
-		$days = config('config.scheduleDays');
-		$data = [];
-
-		if ($schedules) {
-			$counter = 0;
-			foreach ($schedules as $schedule) {
-				$counter++;
-				$nestedData = [
-				ucwords($schedule->name),
-				date('h:i A',strtotime($schedule->start)),
-				date('h:i A',strtotime($schedule->end)),
-				$days[$schedule->days],
-				'<div class="dropdown">
-				<a class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px; ">
-					Action
-					<span class="caret"></span>
-				</a>
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-					<li>
-						<form > 
-							 
-							<button type="submit" class="btn-link edit" data-id="'.$schedule->id.'"> <i class="fa fa-edit" ></i> Edit </button>
-						</form>
-					</li>
-					<li>
-						<form method="post" action="' .url('schedule/destroy'). '" class="delete-form" data-name="Schedule">
-							<input type="hidden" name="_token" value="'.csrf_token() . '">
-							<input type="hidden" name="id" value="'.$schedule->id.'">
-							<input name="_method" type="hidden" value="delete">
-
-							<button type="submit" class="btn-link"> <i class="fa fa-trash"></i> delete </button>
-						</form>
-					</li>
-				</ul>
-			</div>
-			'
-			];
-			$data[] = $nestedData;
-			}
-		}
-
-		$json_data = array(
-			'draw' => $request->input('draw'),
-			'recordsTotal' => intval($totalData),
-			'recordsFiltered' => $totalData,
-			'data' => $data,
-			'paging' => 'false'
+        return json_encode($data);
+    }
+    
+    public function update(Request $request) {
+       
+		$scheds = array(
+				$request->input('mon'),
+			$request->input('tue'),
+			$request->input('wed'),
+			$request->input('thu'),
+			$request->input('fri'),
+			$request->input('sat'),
+			$request->input('sun')
 			);
 
-		echo json_encode($json_data);
-	}
+        $set = (int)$request->input('set');
+		$campus_id = $request->input('campus_id');
+        $employee_id = $request->input('employee_id');
+
+		foreach ($scheds as $key => $sched) {
+
+			if ($sched[0] && $sched[1]) {
+				$day = $key + 1;
+
+          
+                if ($set) {
+                    $exist = Schedule::where([
+                                                'campus_id' => $campus_id, 
+                                                'employee_id' => $employee_id, 
+                                                'day' => $day])
+                                            ->count();
+                    if ($exist) {
+                        Schedule::where([
+                                        'campus_id' => $campus_id, 
+                                        'employee_id' => $employee_id, 
+                                        'day' => $day])
+                                        ->update([
+                                            'start' => Carbon::parse($sched[0])->format('G:i'), 
+                                            'end' => Carbon::parse($sched[1])->format('G:i')]);
+                    }else {
+                        Schedule::create([
+                            'day' => $day,
+                            'start' => Carbon::parse($sched[0])->format('G:i'),
+                            'end' => Carbon::parse($sched[1])->format('G:i'),
+                            'campus_id' => $request->input('campus_id'),
+                            'employee_id' => $request->input('employee_id')
+                        ]);
+                    }
+                    
+                }else {
+                    Schedule::create([
+                        'day' => $day,
+                        'start' => Carbon::parse($sched[0])->format('G:i'),
+                        'end' => Carbon::parse($sched[1])->format('G:i'),
+                        'campus_id' => $request->input('campus_id'),
+                        'employee_id' => $request->input('employee_id')
+                    ]);
+                }
+				
+			} 
+
+		}
+
+        return redirect()->back()->with('update','schedule');
+
+
+    }
 }

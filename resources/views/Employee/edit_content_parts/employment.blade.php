@@ -66,21 +66,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="form-group" style="{{ $employee->employment_type == 0 ? 'display: none;' : '' }}" id="sched-wrap">
-			<label class="control-label col-md-2 col-sm-2 col-xs-12">Schedule</label>
-			<div class="col-md-9 col-sm-9 col-xs-12">
-				<select class="form-control " name="schedule" data-parsley-errors-container="#schedule-error">
-					<option value="">Select Schedule</option>
-					@foreach ($schedules as $schedule)
-					<option value="{{ $schedule['id'] }}" {{ $scheduleID == $schedule['id'] ? 'selected' : '' }}>
-						{{ $schedule['name'] }}: {{ toTime($schedule['start']) . ' - ' . toTime($schedule['end']) }} ( {{ config('config.scheduleDays')[0] }} )
-					</option>
-					@endforeach
-				</select>
-				<div class="clearfix"></div>
-				<div id="schedule-error"></div>
-			</div>
-		</div>
+	 
 		<div class="form-group">
 			<label class="control-label col-md-2 col-sm-2 col-xs-12">Salary ({{ config('config.currency')}}):</label>
 			<div class="col-md-9 col-sm-9 col-xs-12">

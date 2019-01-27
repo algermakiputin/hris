@@ -58,7 +58,7 @@
 
 					<form method="get" action="{{ url('employee/edit') }}">
 						<input type="hidden" name="id" value="{{ $profile->employee_id }}">
-						<button class="btn btn-success" type="submit"><i class="fa fa-edit m-right-xs"></i>Edit Profile</button>
+						<button class="btn btn-success" type="submit"><i class="fa fa-edit m-right-xs"></i> Edit</button>
 					</form>
 					<br>
 
@@ -72,10 +72,10 @@
 							</li>
 							<li role="presentation" ><a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
 							</li>
-							@if ( $profile->employment_type !== 1 )
+							 
 							<li role="presentation" ><a href="#schedule" role="tab" data-toggle="tab" aria-expanded="true">Schedules</a>
 							</li>
-							@endif
+						 
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab-pane fade" id="schedule">
@@ -177,12 +177,7 @@
 										<td>Date Joining:</td>
 										<td>{{ $profile->date_joining }}</td>
 									</tr>
-									@if ($scheduleID)
-									<tr>
-										<td>Schedule</td>
-										<td>{{ $scheduleID }}</td>
-									</tr>
-									@endif
+								 
 								</table>
 
 							</div>

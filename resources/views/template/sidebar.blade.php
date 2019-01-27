@@ -39,8 +39,7 @@
             <ul class="nav child_menu">
               <li><a href="{{ url('employee') }}">View Employees</a></li>
               @if (Auth()->user()->role)
-              <li><a href="{{ url('employee/new') }}">New Employee</a></li>
-              <li><a href="{{ url('schedule') }}">Full Time Schedule</a></li>
+              <li><a href="{{ url('employee/new') }}">New Employee</a></li> 
               @endif
             </ul>
           </li>

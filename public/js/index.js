@@ -1585,7 +1585,6 @@ class Employee {
                     url: '/campus/getCampuses',
                     success: function(data) {
                         var campuses = JSON.parse(data);
-                        console.log(campuses);
                         
                         $.each(campuses, function(key, value) {
 
@@ -1765,7 +1764,7 @@ class LeaveType {
                     url: '/campus/getCampuses',
                     success: function(data) {
                         var campuses = JSON.parse(data);
-                        console.log(campuses);
+                      
                         $("#leave_type_table_length").append('<label>Campus:&nbsp; <select id="select-campus" name="select-campus" aria-controls="department_table" style="width:150px;"><option value="">Select Campus</option></select></label>');
                         $.each(campuses, function(key, value) {
 
@@ -2022,6 +2021,7 @@ function init_daterangepicker() {
                                 var result = JSON.parse(data);
                                 $(".process-loader").hide();
                                 $(".stats-overview").show();
+
                                 var table = $("#employee_attendance_table tbody");
                                 table.empty();
 
@@ -2052,7 +2052,9 @@ function init_daterangepicker() {
                                         table.append('<tr><td colspan="5" class="text-center">No records found</td></tr>')
                                     }
 
-                                    
+                                    $("#tools").show();
+                                    $("#view-schedule").data('employee', employee_id);
+                                    $("#view-schedule").data('campus', campus_id);
                                     $("#total_hours").text(result.total_hours);
                                     $("#working").text(result.working);
                                     $("#total_Late").text(result.late + ' min');
@@ -2093,6 +2095,37 @@ function init_daterangepicker() {
             })
     }
 }
+
+$("#view-schedule").click(function() {
+    $("#scheduleModal").modal('toggle');
+    var employee_id = $(this).data('employee');
+    var campus_id = $(this).data('campus');
+
+    $.ajax({
+        type : 'POST',
+        data : {
+            _token : token,
+            campus_id : campus_id,
+            employee_id : employee_id
+        },
+        url : base_url + '/parttimeschedule/getEmployeeSchedule',
+        success : function(data) {
+            var result = JSON.parse(data);
+            $("#schedule-table").empty();
+            if (result.length) {
+                $.each (result, function(key, value) {
+                    $("#schedule-table").append("<tr>"+
+                            "<td>"+ value.day +"</td>" +
+                            "<td>"+ value.startTime +"</td>" +
+                            "<td>"+ value.endTime +"</td>" +
+                        "</tr>");
+                })
+            }else 
+                $("#schedule-table").append("<tr><td>Empty Schedule</td></tr>");
+        }
+
+    });
+})
 
 function bs_input_file() {
 

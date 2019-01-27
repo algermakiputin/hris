@@ -38,8 +38,7 @@ class employee extends Model
 		$this->salary = $request['salary'];
 		$this->date_joining = $request['date_joining'];
 		$this->resume = $resume; 
-		$this->status = $request['status'];
-		$this->schedule_id = $request['schedule'] ?? 0;
+		$this->status = $request['status']; 
 		$this->tenure = $request['tenure'];
 		$this->education = $request['education'];
 
@@ -74,8 +73,7 @@ class employee extends Model
     				'department_id' => $request['department'],
     				'salary' => $request['salary'],
     				'date_joining' => $request['date_joining'],
-    				'status' => $request['status'],
-    				'schedule_id' => $request['schedule'],
+    				'status' => $request['status'], 
     				'tenure' => $request['tenure']
     			);
 
