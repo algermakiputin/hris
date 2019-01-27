@@ -68,11 +68,22 @@ $(document).ready(function() {
             },
             success : function(data) {
                 var result = JSON.parse(data);
-                $.each(result, function(key,value) {
-                    
-                    $("#employees").append("<option value='"+ value.employee_id +"'>"+value.first_name + ' ' + value.last_name +"</option>");
-                })
+                $("#employees").empty();
+                $("#employees").selectpicker('destroy');
+                if (result.length) {
 
+                    $.each(result, function(key,value) {
+                    
+                        $("#employees").append("<option value='"+ value.employee_id +"'>"+value.first_name + ' ' + value.last_name +"</option>");
+                    })
+                }else {
+                    $("#employees").append("<option value=''>No employee found</option>")
+                }
+                
+                $("#employees").selectpicker({
+                    liveSearch : true,
+                    size : 5
+                });
                 $("#employee-wrapper").show();
             }
 
