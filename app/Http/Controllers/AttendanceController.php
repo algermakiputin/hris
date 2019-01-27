@@ -107,14 +107,13 @@ class AttendanceController extends Controller
 
 			$dates[] = Carbon::parse($holiday['start'])->format('m/d/') . date('Y');
 		}
-
 		return $dates;
 	}
 
 	public function export(Request $request) {
 		$data = $this->report($request);
 		$data = json_decode($data,true);
-		
+
 		Excel::create('Filename', function($excel) use($data, $request) {
 
 		    // Set the title
@@ -140,8 +139,6 @@ class AttendanceController extends Controller
 						'Status' => $d['status'] ?? '--',
 					);
 				}
-
-
 
 				$sheet->fromArray($dataset);
 
@@ -184,17 +181,14 @@ class AttendanceController extends Controller
 				);
 
 				$sheet->setHeight(1, 25);
-
 				$sheet->mergeCells('A1:G1');
 				$sheet->cell('A1', function($cell) {
-
 					$cell->setAlignment('center');
 					$cell->setValignment('center');
 					$cell->setFontSize(18);
 					$cell->setFontWeight('bold');
 					$cell->setBackground('#00238b');
 					$cell->setFontColor('#ffffff');
-
 				});
 				$sheet->cells('A9:G9', function($cells) {
 					$cells->setBackground('#eeeeee');

@@ -50,7 +50,11 @@
 						<a target="__blank" href="{{ url('attendance/export') }}" class="btn btn-default" id="export-attendance"><i class="fa fa-file-excel-o"></i> Export Reports</a> 
 					</div>
 				</div>
-			 
+			 	<div style="padding: 5px 0;">
+			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> View Schedule</button>
+			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> Profile</button>
+			 		<button class="btn btn-default btn-sm"><i class="fa fa-calendar"></i> Edit</button>
+			 	</div>
 				<ul class="stats-overview" style="display: none;">
 					<li>
 						<span class="name"> Working Days </span>

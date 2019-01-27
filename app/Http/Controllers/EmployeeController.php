@@ -140,6 +140,7 @@ class EmployeeController extends Controller
                 $age = Carbon::parse($employee->birthday)->diffInYears(Carbon::now());
                 $partimeScheds = ParttimeSchedule::where(['employee_id' => $employee->employee_id, 'campus_id' => $employee->campus_id])
                             ->orderBy('day', 'ASC')
+                            ->orderBy('start', 'ASC')
                             ->get()->toArray();
                 $schedules = Schedule::all();
 
@@ -289,7 +290,9 @@ class EmployeeController extends Controller
                 $this->authorize('show', $profile);
                 $scheduleID = 0;
                 $age = (new Carbon($profile->birthday))->diffInYears(Carbon::now());
-                $schedules = ParttimeSchedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->get();
+                $schedules = ParttimeSchedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->orderBy('day','ASC')
+                                ->orderBy('start', 'ASC')
+                                ->get();
                 $address = address::where('employee_id',$profile->id)->first();
                 if ($profile->employment_type == 1) {
                     $sched = Schedule::find($profile->schedule_id);
