@@ -33,6 +33,7 @@
 				<table class="table table-striped table-bordered no-footer" id="employee_table">
 					<thead>
 						<tr>
+							<th>Employee ID</th>
 							<th>Name</th>
 							<th>Campus</th>
 							<th>Position</th>

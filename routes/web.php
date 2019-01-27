@@ -142,7 +142,8 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::post('schedule/destroy', 'ScheduleController@destroy');
 
 		Route::post('parttimeschedule/update', 'ParttimeScheduleController@update');
-
+		Route::post('parttimeschedule/insert', 'ParttimeScheduleController@insert');
+		Route::post('parttimeschedule/destroy', 'ParttimeScheduleController@destroy');
 		Route::get('analytics/employee','AnalyticsController@employee');
 		Route::post('analytics/employee/export','AnalyticsController@export');
 	});

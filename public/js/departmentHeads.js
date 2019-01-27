@@ -48,8 +48,9 @@ $(document).ready(function(){
 				department_id : department_id,
 				campus_id : campus_id,
 				current : current
-			},
+			}, 
 			success : function(data) {
+				$("#select-employee").selectpicker('destroy');
 				var employees = JSON.parse(data);
 				$("#select-employee").empty();
 				var i = Object.keys(employees).length;
@@ -62,6 +63,11 @@ $(document).ready(function(){
 				}else {
 					$("#select-employee").append('<option value="">No employee found</option>');
 				}
+
+				$("#select-employee").selectpicker({
+					size : 5,
+					liveSearch : true
+				});
 	 
 			}
 

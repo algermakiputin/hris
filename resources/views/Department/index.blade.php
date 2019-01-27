@@ -85,7 +85,7 @@
 				<form>
 					<div class="form-group">
 						<label>Select Employee</label>
-						<select id="select-employee" name="select-employee" class="form-control">
+						<select id="select-employee" name="select-employee" class="form-control" >
 							<option value="">Select Employee</option>
 						</select>
 					</div>

@@ -57,20 +57,47 @@
  	}
 
  	function scheduleExist($day, $time, $scheds) {
-
+ 		$data = [];
  		foreach ($scheds as $sched) {
 
- 			if ($sched['day'] !== $day)
- 				continue;
- 			else 
- 				return $sched[$time];
+ 			if ($sched['day'] == $day)
+ 			 	$data[] = $sched;
 
  		}
+
+ 		if ($data) {
+ 			$times = array_column($data, $time);
+ 		  
+ 			if ($time == 'start')
+ 				return date('h:i:s a',min(array_map('strtotime', $times)));
+
+ 			return date('h:i:s a', max(array_map('strtotime', $times)));
+ 		}
+
+
 
  		return false;
 
  	}
 
+ 	function getTotalHours($day, $time, $scheds) {
+
+ 		$hours = 0;
+
+ 		foreach ($scheds as $sched) {
+
+ 			if ($sched['day'] == $day) {
+
+ 				$hours += Carbon::parse($sched['start'])->diffInHours(Carbon::parse($sched['end']));
+
+ 			}
+ 		}
+
+ 		return $hours;
+  	}
+
+  	
+ 
  	function toTime($time) {
  		return date('h:i a', strtotime($time));
  	}

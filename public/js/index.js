@@ -1519,9 +1519,14 @@ class Employee {
 
             },
             searchDelay: 800,
-            'columns': [{
+            'columns': [
+                {
+                    "name": 'employee_id',
+                    width: '10%'
+                },
+                {
                     "name": 'first_name',
-                    width: '15%'
+                    width: '10%'
                 },
                 {
                     'name': 'campus_id',
@@ -1530,7 +1535,7 @@ class Employee {
                 },
                 {
                     'name': 'designation',
-                    width: '15%',
+                    width: '10%',
                     orderable: false
                 },
                 {

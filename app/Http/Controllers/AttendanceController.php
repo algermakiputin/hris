@@ -36,14 +36,13 @@ class AttendanceController extends Controller
 		Attendance::create([
 				'employee_id' => $request->employee,
 				'campus_id' => $request->campus,
-				'date' => Carbon::parse($request->date . ' ' . $request->timein),
-				'name' => 'null',
+				'date' => Carbon::parse($request->date . ' ' . $request->timein), 
 			]);
 
 		Attendance::create([
 				'employee_id' => $request->employee,
 				'campus_id' => $request->campus,
-				'date' => Carbon::parse($request->date . ' ' . $request->timein),
+				'date' => Carbon::parse($request->date . ' ' . $request->timeout),
 				'name' => 'null',
 			]);
 
@@ -256,6 +255,7 @@ class AttendanceController extends Controller
 				$sched = Schedule::where('id', $schedule_id)->first();
 				$noWork = $this->getScheduleDays($sched->days);
 			 	$hasWork = false;
+
 				if (!in_array($dayOfWeek, $noWork[0])) {
 					$working++;
 					$hasWork = true;
@@ -280,6 +280,7 @@ class AttendanceController extends Controller
 
 				//Merge Attendance Arrays
 				$attendanceDate = [];
+
 				foreach ( $groupAttendance['attendance'][0][$date] as $day) {
 					$attendanceDate[] = $day['date'];
 				}
@@ -327,22 +328,23 @@ class AttendanceController extends Controller
 
 				if ($this->partTimeWorking($dayOfWeek, $sched) && in_array($date, $groupAttendance['worked'][0])) {
 
-					$dates = [];
-					
+					$dates = [];			 	 
 					$timeIn = scheduleExist($dayOfWeek, 'start', $sched);
 					$timeOut = scheduleExist($dayOfWeek, 'end', $sched);
+					$maxHours = (int)getTotalHours($dayOfWeek, 'start', $sched);
 
-
-					$attendances = Attendance::whereBetween('date', [Carbon::parse($date . ' ' . $timeIn),Carbon::parse($date . ' ' . $timeOut)->addMinutes(35)])
+					$attendances = Attendance::whereBetween('date', [Carbon::parse($date . ' ' . $timeIn)->subHours(1),
+															Carbon::parse($date . ' ' . $timeOut)->addHours(5)
+											])
 											->where(['employee_id' => $id, 'campus_id' => $campus_id])
 											->get()->toArray();
-
+	
 					foreach ($attendances as $attendance) {
 						$dates[] = $attendance['date'];
 					}
 
-					if (count($dates) > 2) {
-
+					if (count($dates) >= 2) {
+				 	 
 						$max = max(array_map('strtotime', $dates));
 			 			$min = min(array_map('strtotime', $dates));
 
@@ -351,6 +353,7 @@ class AttendanceController extends Controller
 
 						$inTime = $in->format('h:i A');
 						$outTime = $out->format('h:i A');
+
 						$totalHours = 0;
 					 	$count = 0;
 
@@ -372,12 +375,15 @@ class AttendanceController extends Controller
 
 
 					}else {
+
 						$status = 'Absent';
 						$absent++;
 						$dataSet[] = ['date' => $date, 'status' => $status];
 						continue;
 					}
+
 				}else if (in_array($dayOfWeek, array_column($sched, 'day')) && !in_array($date, $groupAttendance['worked'][0]))  {
+
 					$status = 'Absent';
 					$absent++;
 					$dataSet[] = ['date' => $date, 'status' => $status];
@@ -389,24 +395,37 @@ class AttendanceController extends Controller
 					continue;
 				}
 
+				
+				$totalMinutesToday = 0;
+
+				if (Carbon::parse($outTime)->lt(Carbon::parse($timeOut))){
+			 		$timeDiff = Carbon::parse($outTime)->diffInMinutes(Carbon::parse($timeOut));
+				  	$newTimeOut = Carbon::parse($timeOut)->subMinutes($timeDiff);
+				 	
+					$totalMinutes += ($maxHours * 60) - $timeDiff;
+					$totalMinutesToday = $maxHours * 60 - $timeDiff;
+				 
+				}else if (Carbon::parse($outTime)->gte(Carbon::parse($timeOut))){
+					$totalMinutes += $maxHours * 60;
+					$totalMinutesToday = $maxHours * 60;
+				}
+			 
+				$totalOvertime += $totalHours[1];
+				$worked++;
+
 				$dataSet[] = [
 					'date' => Carbon::parse($date)->format('Y-m-d'),
 					'in' => $inTime,
 					'out' => $outTime, 
 					'status' => $status,
-					'total_hours' => $totalHours[0]->format('%h') . ' hrs' . ' : ' . $totalHours[0]->format('%i') . ' min',
+					'total_hours' => floor($totalMinutesToday / 60) . ' hrs :' . $totalMinutesToday % 60 . ' mins'  ,
 					'late' => $tardiness > 0 ? $tardiness . ' min' : 0,
 					'overtime' => $totalHours[1] > 0 ? $totalHours[1] . ' min' : 0
 
 				];
-
-				$totalMinutes += $this->convertToMinutes($totalHours[0]);
-				$totalOvertime += $totalHours[1];
-				$worked++;
+		 		
 			}
 		}
-
-
 
 		$hours = floor($totalMinutes / 60);
 		$minutes = $totalMinutes % 60;
@@ -424,7 +443,7 @@ class AttendanceController extends Controller
  
 	}
 
-	public function convertToMinutes($timeDifference) {
+	public function convertToMinutes($timeDifference, $string = false) {
 		$minutes = $timeDifference->format('%i');
 		$hours = $timeDifference->format("%h");
 		return (int) $minutes + ((int) $hours * 60);
@@ -448,11 +467,12 @@ class AttendanceController extends Controller
 	}
 
 	public function getTotalHoursAndOverTime($in, $out, $timeOut) {
+
 		$out = Carbon::parse($out->format('h:i a'));
 		$in = Carbon::parse($in->format('h:i a'));
 
 		$timeOut = Carbon::parse($timeOut);
- 	  
+  
 
 		if ($out->gt($timeOut)) {
 			$overtime = Carbon::parse($out->format('h:i a'))->diffInMinutes(Carbon::parse($timeOut));
@@ -502,8 +522,7 @@ class AttendanceController extends Controller
 						if ($row['account_no'] && $row['date'] && $row['time']) {
 
 							$data[] = array(
-								'employee_id' => $row['account_no'],
-								'name' => $row['name'],
+								'employee_id' => $row['account_no'], 
 								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']),
 								'campus_id' => $this->campus_id
 								);

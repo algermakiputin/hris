@@ -138,9 +138,16 @@ class EmployeeController extends Controller
                 $departments = Department::select('id','name')->get();
                 $campuses = Campus::select('id','name')->get();
                 $age = Carbon::parse($employee->birthday)->diffInYears(Carbon::now());
-                $partimeScheds = ParttimeSchedule::where(['employee_id' => $employee->employee_id, 'campus_id' => $employee->campus_id])->get()->toArray();
+                $partimeScheds = ParttimeSchedule::where(['employee_id' => $employee->employee_id, 'campus_id' => $employee->campus_id])
+                            ->orderBy('day', 'ASC')
+                            ->get()->toArray();
                 $schedules = Schedule::all();
-             
+
+                if ($partimeScheds)
+                    $partimeScheds = $this->formatSchedules($partimeScheds);
+
+         
+                
                 if ($employee->employment_type == 1) 
                     $scheduleID = $employee->schedule_id;
              
@@ -148,9 +155,18 @@ class EmployeeController extends Controller
             }
 
         }
-        
-         
             
+    }
+
+    public function formatSchedules($sched) {
+        $data = [];
+
+        foreach ($sched as $s) {
+
+            $data[$s['day']][] = $s;
+        }
+
+        return $data;
     }
 
     public function resumeUpdate(Request $request) {
@@ -339,6 +355,7 @@ class EmployeeController extends Controller
             
             foreach ($employees as $employee) {
                 $nestedData = [
+                    $employee->employee_id,
                     ucwords($employee->first_name . ' ' . $employee->last_name),
                     Campus::find($employee->campus_id)->name,
                     Roles::find($employee->role_id)->name,

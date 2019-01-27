@@ -8,6 +8,42 @@ use Carbon\Carbon;
 
 class ParttimeScheduleController extends Controller
 {
+
+    public function destroy(Request $request) {
+        ParttimeSchedule::where('id', $request->input('id'))->delete();
+        return redirect()->back()->with('success', 'Schedule Deleted successfully')
+                                ->with('update', 'schedule');
+    }
+
+    public function insert(Request $request) {
+        $startTime = Carbon::parse($request->input('start_time'))->format('G:i:s');
+        $endTime = Carbon::parse($request->input('end_time'))->format('G:i:s');
+        $empID = $request->input('employee_id');
+        $campusID = $request->input('campus_id');
+        $sched = [
+                'day' => $request->input('day'),
+                'start' => $startTime,
+                'end' => $endTime,
+                'employee_id' => $empID,
+                'campus_id' => $campusID
+            ];
+
+        $validate = ParttimeSchedule::where('start', '>=', $startTime)
+                                    ->where('end', '<=', $endTime)
+                                    ->where('employee_id', $request->input('employee_id'))
+                                    ->where('campus_id', $campusID)
+                                    ->count();    
+
+        if (!$validate) {
+            ParttimeSchedule::create($sched);
+            return redirect()->back()->with('update','schedule')
+                                    ->with('success', 'Schedule added successfully');
+        }
+
+        return redirect()->back()->with('error','error')
+                                ->with('update', 'schedule');
+
+    }
     
     public function update(Request $request) {
        
