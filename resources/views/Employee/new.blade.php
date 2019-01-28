@@ -64,7 +64,7 @@
 						<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first_name">Full Name  
 						</label>
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="text" id="first_name" class="form-control form-control-lg" name="first_name" placeholder="First Name" required="required" data-parsley-group='block1' minlength="2">
+							<input type="text" id="first_name" class="form-control form-control-lg" name="first_name" placeholder="First Name" pattern="^[a-zA-Z]+$" required="required" data-parsley-group='block1' minlength="2">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12">
 							<input type="text" id="family_name"  class="form-control" name="family_name" placeholder="Family Name" required="required" data-parsley-group='block1' minlength="2">

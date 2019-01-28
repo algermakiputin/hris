@@ -493,7 +493,6 @@ class AttendanceController extends Controller
 						$row[] = $result;
 					} 
 
-
 					foreach($row as $row) {	
 
 						if ($row['account_no'] && $row['date'] && $row['time']) {
@@ -503,11 +502,18 @@ class AttendanceController extends Controller
 								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']),
 								'campus_id' => $this->campus_id
 							);
+
+							if (count($data) > 180) {
+								$insert = Attendance::insert($data);
+								$data = [];
+							}
 						}
 
 					}
 
-					$insert = Attendance::insert($data);
+					if ($data) {
+						$insert = Attendance::insert($data);
+					}
 					
 
 				});
