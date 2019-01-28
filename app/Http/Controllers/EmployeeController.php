@@ -117,17 +117,21 @@ class EmployeeController extends Controller
     }
 
     public function updateEmploymentdetails(Request $request, employee $employee) {
+     
+        if ($employee->update_employment_details($request->all()))
+            return redirect()->back()->with('update','employment');
 
-        $employee->update_employment_details($request->all());
-        return redirect()->back()->with('update','employment');
-    
+        
+        
+        return redirect()->back()->with('update','employment')
+                                ->with('error', 'Cannot update employee id');
     }
 
     public function edit(Request $request) {
         $id = $request->input('id');
 
         if ($id) {
-            $employee = employee::where('employee_id',$id)->first();
+            $employee = employee::where('id',$id)->first();
 
             if ($employee) {
                 $scheduleID = 0;
@@ -374,7 +378,7 @@ class EmployeeController extends Controller
                                 </li>
                                 <li>
                                     <form method="get" action="' .url('employee/edit'). '">
-                                        <input type="hidden" name="id" value="'.$employee->employee_id.'">
+                                        <input type="hidden" name="id" value="'.$employee->id.'">
                                         <button type="submit" class="btn-link"> <i class="fa fa-edit"></i> Edit </button>
                                     </form>
                                 </li>

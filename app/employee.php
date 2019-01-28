@@ -74,10 +74,15 @@ class employee extends Model
     				'salary' => $request['salary'],
     				'date_joining' => $request['date_joining'],
     				'status' => $request['status'], 
-    				'tenure' => $request['tenure']
+    				'tenure' => $request['tenure'],
+                    'employee_id' => $request['_id']
     			);
 
-    		return $this->where('id', $request['_id'])->update($data);
+    		if ($this->where('id', $request['id'])->update($data)) {
+                return true;
+            }
+
+            return false;
 
     	}
 
