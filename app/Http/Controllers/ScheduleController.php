@@ -30,6 +30,7 @@ class ScheduleController extends Controller
 
         $validate = Schedule::where('start', '>=', $startTime)
                                     ->where('end', '<=', $endTime)
+                                    ->where('day', $request->input('day'))
                                     ->where('employee_id', $request->input('employee_id'))
                                     ->where('campus_id', $campusID)
                                     ->count();    
