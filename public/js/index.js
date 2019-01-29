@@ -1441,17 +1441,23 @@ class DatePicker {
 
             var id = $("#leave_type").val();
 
-            var start_date = $("#start_date").data('DateTimePicker').date();
-            var end_date = $(this).data('DateTimePicker').date();
-            var days = Math.round((end_date - start_date) / (1000 * 60 * 60 * 24));
-
-            $.each(myLeaveBalance, function(key, value) {
+            var start_date = $("#start_date").data('DateTimePicker').date().format('YYYY-MM-DD');
+            var end_date = $("#end_date").data('DateTimePicker').date().format('YYYY-MM-DD');
+           
+            //var days = Math.round((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
+            var days = moment(end_date).diff(moment(start_date), 'days') + 1;
+ 
+            if (days > 0) {
+                var output = (days > 1 ? days + ' Days' : days + ' Day');
+                $("#days").val(output);
+                $.each(myLeaveBalance, function(key, value) {
                 if (value.id == id) {
                     var allowance = value.allowance - value.total;
 
                     if (days > value.allowance) {
                         $("#a-error").show();
                         $("#a-success").hide();
+                        $("#a-error").show();
                         $("#a-error .message").text('Your applicated exceeds your allowable days limit please check your leave balance');
                     } else {
                         $("#a-error").hide();
@@ -1461,11 +1467,9 @@ class DatePicker {
 
                 }
             });
-
-            if (days > 0) {
-                var output = (days > 1 ? days + ' Days' : days + ' Day');
-                $("#days").val(output);
+                
             }else {
+
                 $("#days").val("Start date is greater than end date.");
             }
 

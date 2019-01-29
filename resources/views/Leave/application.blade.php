@@ -71,9 +71,11 @@
 								</div>
 						 	@endif
 					 		
-					 			<div class="form-group" id="a-error" style="display: none;">
+					 			<div class="" id="a-error" style="display: none;">
 									<div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">
-										 <span class="text-danger"><b>Error!</b> <span class="message"></span> </span>
+										 <div class="alert alert-danger">
+										 	<span><b>Error!</b> <span class="message"></span> </span>
+										 </div>
 									</div>
 								</div>
 

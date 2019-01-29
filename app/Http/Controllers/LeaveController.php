@@ -197,7 +197,7 @@ class LeaveController extends Controller
 				Carbon::parse($leave->date)->format($dateFormat), 
 				$from, 
 				$to, 
-				$this->getStatus($leave->status, $leave->pending),
+				$this->labeledStatus($leave->status, $leave->pending),
 				'
 				<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
 				'
@@ -274,7 +274,7 @@ class LeaveController extends Controller
 			$interval = Carbon::parse($leave->start)->diffInHours($leave->end) . ' Hours';
 			$duration = $leave->date . ': ' . "$leave->start" . ' - ' . "$leave->end";
 		}else if ($leave->duration == "long") {
-			$interval = $start->diffInDays($end) . ' Days';
+			$interval = $start->diffInDays($end) + 1 . ' Days';
 			$duration = $start->format('Y-m-d') . ' - ' . $end->format('Y-m-d');
 		}
 
@@ -320,7 +320,11 @@ class LeaveController extends Controller
 			
 			if ($leaves) {
 				foreach ($leaves as $leave ) { 
+
 					$days += Carbon::parse($leave['start_date'])->diffInDays(Carbon::parse($leave['end_date']));
+					if ($leave->duration == "long") {
+						$days += 1;
+					}
 					$dataSet[$id][] = [
 					'days' => $days,
 					'name' => $type->name,
@@ -498,6 +502,8 @@ class LeaveController extends Controller
 
 				$minutes += $this->getTotalMinutes($leave);
 
+				if ($leave->duration == "long")
+					$minutes += 480;
 			}
 
 			$usedLeave = $this->getUsedLeave($minutes);
@@ -814,7 +820,7 @@ class LeaveController extends Controller
 					ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
 					Carbon::parse($leave->start)->format($dateFormat), 
 					Carbon::parse($leave->end)->format($dateFormat), 
-					$this->getStatus($leave->status, $leave->pending),
+					$this->labeledStatus($leave->status, $leave->pending),
 					'
 					<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
 
@@ -851,6 +857,15 @@ class LeaveController extends Controller
 		else if ($pending == 0 && $status == 0) 
 			return "Declined";
 
+	}
+
+	public function labeledStatus($status, $pending) {
+		if ($pending == 1 && $status == 0) 
+			return "<h2 class='label label-warning'>Pending</h2>";
+		else if ($pending == 0 && $status == 1) 
+			return "<h2 class='label label-success'>Approved</h2>";
+		else if ($pending == 0 && $status == 0) 
+			return "<h2 class='label label-danger'>Declined</h2>";
 	}
 
 

@@ -39,7 +39,7 @@
         }
     ],
     initComplete : function() {
-        $("#my_leaves_length").append('&nbsp;&nbsp; <button class="btn btn-default btn-sm" style="color:#73879C" data-toggle="modal" data-target="#leave-balance">My Leave Balance</button>');
+        $("#my_leaves_length").append('&nbsp;&nbsp; <button class="btn btn-default btn-sm" style="color:#73879C;" data-toggle="modal" data-target="#leave-balance"><i class="fa fa-info-circle"></i> My Leave Balance</button>');
     }
 });
 
