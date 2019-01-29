@@ -470,14 +470,13 @@ $(document).ready(function() {
 
                 if (summary.summary[0].document)
                     $("#document").html('Document: ' + '<a href="' + summary.summary[0].document + '" target="__blank">Download attachment</a>');
-                $("#reason").text('Reason: ' + summary.summary[0].reason);
-                $("#leave_type").text(summary.summary[0].leave_type);
-                $("#interval").text(summary.summary[0].interval);
+                    $("#reason").text('Reason: ' + summary.summary[0].reason);
+                    $("#leave_type").text(summary.summary[0].leave_type);
+                    $("#interval").text(summary.summary[0].interval);
 
                 var heads = summary.heads[0];
                 $("#department-heads-approval").empty();
-
-
+                
                 if (heads[0] !== null) {
                     $.each(heads, function(key, value) {
                         var status = "";
@@ -498,7 +497,6 @@ $(document).ready(function() {
 
                         if (summary.status == "Approved")
                             status = '<span class="label label-success">Approved</span>'; 
-
 
                         $("#department-heads-approval").append(
                             '<div class="col-md-6 col-md-12">' +

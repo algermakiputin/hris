@@ -61,30 +61,34 @@ class LeaveController extends Controller
 		foreach ($leaves as $leave) {
 			$employee = employee::where(['employee_id' => $leave->employee_id, 'campus_id' => $leave->campus_id])->first();
 
-			if ($leave->duration == "short") {
-				$start = $leave->date . ' ' . $leave->start;
-				$end = $leave->date . ' ' . $leave->end;
-				$start = Carbon::parse($start)->format('Y-m-d H:i:s');
-				$end = Carbon::parse($end)->format('Y-m-d H:i:s');
-			}else if ($leave->duration == "whole_day") {
-				$start = $leave->date;
-				$end = $leave->date;
-			}else if ($leave->duration == "long") {
-				$start = $leave->start;
-				$end = $leave->end;
+			if ($employee) {
+				if ($leave->duration == "short") {
+					$start = $leave->date . ' ' . $leave->start;
+					$end = $leave->date . ' ' . $leave->end;
+					$start = Carbon::parse($start)->format('Y-m-d H:i:s');
+					$end = Carbon::parse($end)->format('Y-m-d H:i:s');
+				}else if ($leave->duration == "whole_day") {
+					$start = $leave->date;
+					$end = $leave->date;
+				}else if ($leave->duration == "long") {
+					$start = $leave->start;
+					$end = $leave->end;
+				}
+
+				$calendar[] = array(
+					'leave_id' => $leave->id,
+					'employee_id' => $employee->employee_id,
+					'campus_id' => $employee->campus_id,
+					'title' => ' '. ucwords($employee->first_name) . ' ' . ucwords($employee->last_name),
+					'start' => $start,
+					'end' => $end,
+					'description' => 'test',
+					'duration' => $leave->duration
+
+					);
 			}
 
-			$calendar[] = array(
-				'leave_id' => $leave->id,
-				'employee_id' => $employee->employee_id,
-				'campus_id' => $employee->campus_id,
-				'title' => ' '. ucwords($employee->first_name) . ' ' . ucwords($employee->last_name),
-				'start' => $start,
-				'end' => $end,
-				'description' => 'test',
-				'duration' => $leave->duration
-
-				);
+			continue;
 		}
 
 		return json_encode($calendar);
@@ -742,40 +746,57 @@ class LeaveController extends Controller
 		$status = $request->input('columns.2.search.value');
 		$sy = getCurrentSchoolYear();
 
-		if (checkDepartmentHead()) {
-			$leaves = Leave::offset($start)
-			->limit($limit)
-			->orderBy($col,$dir)
-			->whereIn('department_id', checkDepartmentHead())
-			->get();
-		}else {
-			if ($status) {
-				$data = [
-				'pending' => [
-				'status' => 0,
-				'pending' => 1,
-				],
-				'declined' => [
-				'status' => 0,
-				'pending' => 0,
-				],
-				'approved' => [
-				'status' => 1,
-				'pending' => 0,
-				],
+	 
+
+	 
+		if ($status) {
+			$data = [
+					'pending' => [
+						'status' => 0,
+						'pending' => 1,
+					],
+					'declined' => [
+						'status' => 0,
+						'pending' => 0,
+					],
+					'approved' => [
+						'status' => 1,
+						'pending' => 0,
+					],
 				];
+
+			if (checkDepartmentHead()) {
 				$leaves = Leave::where($data[$status])
-				->offset($start)
-				->limit($limit)
-				->orderBy($col,$dir)
-				->get();
+							->offset($start)
+							->limit($limit)
+							->orderBy($col,$dir)
+							->whereIn('department_id', checkDepartmentHead())
+							->get();
+			}else {
+				$leaves = Leave::where($data[$status])
+							->offset($start)
+							->limit($limit)
+							->orderBy($col,$dir)
+							->get();
+			}
+			
+		}else {
+			
+			if (checkDepartmentHead()) {
+				$leaves = Leave::offset($start)
+								->limit($limit)
+								->orderBy($col,$dir)
+								->whereIn('department_id', checkDepartmentHead())
+								->get();
+
 			}else {
 				$leaves = Leave::offset($start)
-				->limit($limit)
-				->orderBy($col,$dir)
-				->get();
+								->limit($limit)
+								->orderBy($col,$dir)
+								->get();
 			}
 		}
+ 	 
 
 		$totalFiltered = $leaves->count();
 		$data = [];
@@ -784,21 +805,26 @@ class LeaveController extends Controller
 
 			foreach ($leaves as $leave) {
 				$employee = employee::where(['campus_id' => $leave->campus_id, 'employee_id' => $leave->employee_id])->first();
-				$dateFormat = "Y-m-d";
-				$nestedData = [
-				Carbon::parse($leave->date)->format($dateFormat),
-				ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-				ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
-				Carbon::parse($leave->start)->format($dateFormat), 
-				Carbon::parse($leave->end)->format($dateFormat), 
-				$this->getStatus($leave->status, $leave->pending),
-				'
-				<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
+				
+				if ($employee) {
+					$dateFormat = "Y-m-d";
+					$nestedData = [
+					Carbon::parse($leave->date)->format($dateFormat),
+					ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
+					ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
+					Carbon::parse($leave->start)->format($dateFormat), 
+					Carbon::parse($leave->end)->format($dateFormat), 
+					$this->getStatus($leave->status, $leave->pending),
+					'
+					<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
 
-				'
-				];
+					'
+					];
 
-				$data[] = $nestedData;
+					$data[] = $nestedData;
+				}
+
+				continue;
 
 			}
 		}

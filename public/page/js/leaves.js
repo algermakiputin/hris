@@ -71,23 +71,37 @@ $("#my_leaves").on('click', '.view', function() {
             $("#reason").text('Reason: ' + summary.summary[0].reason);
             $("#leave_type").text(summary.summary[0].leave_type);
             $("#interval").text(summary.summary[0].interval);
-
+            console.log(summary)
             var heads = summary.heads[0];
             $("#department-heads-approval").empty();
+
             $.each(heads, function(key, value) {
                 var status = "";
                 var view = "";
-                if (value.status === "pending") {
-                    status = '<span class="label label-info">Pending</span>';
-                }else if (value.status === "declined") {
-                    status = '<span class="label label-danger">Declined</span>';
-                    if (value.note)
-                        view = "<i class='fa fa-envelope-o'></i> View reason";
-                }else if (value.status === "approved") {
+                
+                if (summary.status != "Approved") {
+                    if (value.status === "pending") {
+                        status = '<span class="label label-info">Pending</span>';
+                    }else if (value.status === "declined") {
+                        status = '<span class="label label-danger">Declined</span>';
+                        if (value.note)
+                            view = "<i class='fa fa-envelope-o'></i> View reason";
+                    }else if (value.status === "approved") {
+                        status = '<span class="label label-success">Approved</span>';
+
+                        if (value.note)
+                            view = "<i class='fa fa-envelope-o'></i> View note";
+                    }
+                }else {
+
                     status = '<span class="label label-success">Approved</span>';
+                    if (value.status != "approved") {
+                        status = '<span class="label label-default">closed</span>';
+
+                    }
 
                     if (value.note)
-                        view = "<i class='fa fa-envelope-o'></i> View note";
+                            view = "<i class='fa fa-envelope-o'></i> View note";
                 }
 
                 $("#department-heads-approval").append(
