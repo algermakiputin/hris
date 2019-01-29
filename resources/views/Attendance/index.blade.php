@@ -63,12 +63,12 @@
 						<span class="value text-success" id="worked">  </span>
 					</li>
 					<li class="hidden-phone">
-						<span class="name"> Total Hours </span>
-						<span class="value text-success" id="total_hours">  </span>
-					</li>
-					<li class="hidden-phone">
 						<span class="name"> Absent </span>
 						<span class="value text-success" id="absent">  </span>
+					</li>
+					<li class="hidden-phone">
+						<span class="name"> Total Hours </span>
+						<span class="value text-success" id="total_hours">  </span>
 					</li>
 					<li class="hidden-phone">
 						<span class="name"> Total Late </span>

@@ -2109,7 +2109,16 @@ $("#view-schedule").click(function() {
             employee_id : employee_id
         },
         url : base_url + '/parttimeschedule/getEmployeeSchedule',
+        beforeSend : function() {
+            $("#scheduleModal .modal-content").loading({
+                base: 0.15,
+                overlay: true,
+                circles: 1,
+
+            })
+        },
         success : function(data) {
+
             var result = JSON.parse(data);
             $("#schedule-table").empty();
             if (result.length) {
@@ -2122,6 +2131,17 @@ $("#view-schedule").click(function() {
                 })
             }else 
                 $("#schedule-table").append("<tr><td>Empty Schedule</td></tr>");
+
+            $("#scheduleModal .modal-content").loading({
+                destroy : true
+
+            })
+        },
+        error : function() {
+            $("#scheduleModal .modal-content").loading({
+                destroy : true
+
+            })
         }
 
     });

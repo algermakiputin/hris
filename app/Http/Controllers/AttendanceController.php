@@ -346,9 +346,6 @@ class AttendanceController extends Controller
 						 $totalMinutesToday += Carbon::parse($schedTime['start'])->diffInMinutes(Carbon::parse($schedTime['end']));
 						 $totalMinutesToday -= Carbon::parse($outTime)->diffInMinutes(Carbon::parse($schedTime['end']));
 					}
-
-					
-
 					continue;
 				}
 
@@ -356,7 +353,6 @@ class AttendanceController extends Controller
 
 				$timeDiff = Carbon::parse($outTime)->diffInMinutes(Carbon::parse($timeOut));
 				$newTimeOut = Carbon::parse($timeOut)->subMinutes($timeDiff);
-
 				$totalMinutes += $totalMinutesToday; 
 
 			}else if (Carbon::parse($outTime)->gte(Carbon::parse($timeOut))){
@@ -389,7 +385,7 @@ class AttendanceController extends Controller
 		$hours = floor($totalMinutes / 60);
 		$minutes = $totalMinutes % 60;
 		$attendance['data'] = $dataSet;
-		$attendance['total_hours'] = $hours . ($minutes != 0 ? ' : '. $minutes  : '') . ' hrs';
+		$attendance['total_hours'] = $hours . ' hrs ' . $minutes . ' mins';
 		$attendance['worked'] = $worked . ' Days';
 		$attendance['name'] = ucwords($employee_name);
 		$attendance['working'] = $working . ' Days';
