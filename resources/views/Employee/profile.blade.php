@@ -57,7 +57,7 @@
 					</ul>
 
 					<form method="get" action="{{ url('employee/edit') }}">
-						<input type="hidden" name="id" value="{{ $profile->employee_id }}">
+						<input type="hidden" name="id" value="{{ $profile->id }}">
 						<button class="btn btn-success" type="submit"><i class="fa fa-edit m-right-xs"></i> Edit</button>
 					</form>
 					<br>
@@ -73,29 +73,31 @@
 							<li role="presentation" ><a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
 							</li>
 							 
-							<li role="presentation" ><a href="#schedule" role="tab" data-toggle="tab" aria-expanded="true">Schedules</a>
+							<li role="presentation" ><a href="#schedule" role="tab" data-toggle="tab" aria-expanded="true">Schedule </a>
 							</li>
 						 
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab-pane fade" id="schedule">
-								<table class="table table-stripped">
+								<table class="table table-striped table-bordered table-hover">
 									<tr>
-										<th colspan="3"><i class="fa fa-clock-o"></i> Schedules</th>
+										<th colspan="3"><i class="fa fa-clock-o"></i> Schedule </th>
 									</tr>
-									<tr>
-										<th>Day</th>
-										<th>Start</th>
-										<th>End</th>
-									</tr>
+									 
 									@if (count($schedules))
-									@foreach($schedules as $schedule)
-									<tr>
-										<td>{{ config('config.weekOfDay')[(int)$schedule->day - 1] }}</td>
-										<td>{{ date('h:i a', strtotime($schedule->start)) }}</td>
-										<td>{{ date('h:i a', strtotime($schedule->end)) }}</td>
-									</tr>
-									@endforeach
+										@foreach($schedules as $key => $schedule)
+											<tr>
+									 			<th colspan="4">{{  config('config.weekOfDay')[$key - 1] }}</th>
+									 		</tr>
+											
+											@foreach ($schedule as $sched) 
+											<tr>
+												<td>{{ config('config.weekOfDay')[(int)$sched->day - 1] }}</td>
+												<td>{{ date('h:i a', strtotime($sched->start)) }}</td>
+												<td>{{ date('h:i a', strtotime($sched->end)) }}</td>
+											</tr>
+											@endforeach
+										@endforeach
 									@else 
 									<tr>
 										<td colspan="3" class="text-center">Schedule not set</td>

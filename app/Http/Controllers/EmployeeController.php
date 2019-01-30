@@ -145,7 +145,7 @@ class EmployeeController extends Controller
                             ->orderBy('day', 'ASC')
                             ->orderBy('start', 'ASC')
                             ->get()->toArray();
-                $schedules = Schedule::all();
+           
 
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
                 if ($employee->employment_type == 1) 
                     $scheduleID = $employee->schedule_id;
              
-                return view('Employee.edit', compact('employee','departments','campuses','age','role','roles', 'partimeScheds','schedules','scheduleID'));
+                return view('Employee.edit', compact('employee','departments','campuses','age','role','roles', 'partimeScheds','scheduleID'));
             }
 
         }
@@ -296,6 +296,9 @@ class EmployeeController extends Controller
                 $schedules = Schedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->orderBy('day','ASC')
                                 ->orderBy('start', 'ASC')
                                 ->get();
+                if ($schedules)
+                    $schedules = $this->formatSchedules($schedules);
+              
                 $address = address::where('employee_id',$profile->id)->first();
               
                

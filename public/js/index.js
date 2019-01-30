@@ -2123,8 +2123,10 @@ $("#view-schedule").click(function() {
 
             var result = JSON.parse(data);
             $("#schedule-table").empty();
+            var grouped = [];
             if (result.length) {
                 $.each (result, function(key, value) {
+                
                     $("#schedule-table").append("<tr>"+
                             "<td>"+ value.day +"</td>" +
                             "<td>"+ value.startTime +"</td>" +
@@ -2134,6 +2136,7 @@ $("#view-schedule").click(function() {
             }else 
                 $("#schedule-table").append("<tr><td>Empty Schedule</td></tr>");
 
+            console.log(grouped);
             $("#scheduleModal .modal-content").loading({
                 destroy : true
 
@@ -2148,6 +2151,20 @@ $("#view-schedule").click(function() {
 
     });
 })
+
+function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item);
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            collection.push(item);
+        }
+    });
+    return map;
+}
 
 function bs_input_file() {
 
