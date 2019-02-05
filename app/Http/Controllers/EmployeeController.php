@@ -149,13 +149,8 @@ class EmployeeController extends Controller
 
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
-
-         
-                
-                if ($employee->employment_type == 1) 
-                    $scheduleID = $employee->schedule_id;
              
-                return view('Employee.edit', compact('employee','departments','campuses','age','role','roles', 'partimeScheds','scheduleID'));
+                return view('Employee.edit', compact('employee','departments','campuses','age','role','roles', 'partimeScheds'));
             }
 
         }

@@ -1618,7 +1618,7 @@ class Employee {
         $("#employee_table_wrapper .toolbar").html('Campus:&nbsp;' +
             '<select id="select-campus" name="select-campus" aria-controls="department_table" style="width:150px;">'+
                 '<option value="">Select Campus</option>'+
-                '</select>&nbsp;&nbsp; Type: <select id="employment_filter" style="width:140px;"><option value="">Employment Type</option><option value="1">Full Time</option><option value="0">Part time</option></select>');
+                '</select>&nbsp;&nbsp; Type: <select id="employment_filter" style="width:160px;"><option value="">Employment Type</option><option value="1">Full Time</option><option value="0">Part time</option></select>');
 
         $("#employee_table_filter input[type='search']").keyup(function() {
             employeeTable.columns(7).search('');

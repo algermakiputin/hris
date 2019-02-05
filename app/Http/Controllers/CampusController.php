@@ -135,8 +135,7 @@ public function update(Request $request) {
 
   $update = Campus::where('id', $id)->update([
     'name' => $request->input('name'),
-    'description' => $request->input('description'),
-    'head' => $request->input('head')
+    'description' => $request->input('description')
     ]);
 
   if ($update)
