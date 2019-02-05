@@ -10,7 +10,7 @@
           <h1>Login </h1>
            <input autocomplete="false" name="hidden" type="text" style="display:none;">
           <div class="form-group">
-            <input type="email" required="required" class="form-control" id="email" placeholder="email" required=""  name="email" />
+            <input type="email" autocomplete="off" required="required" class="form-control" id="email" placeholder="email" required=""  name="email" />
             @if ($errors->has('email'))
                 <span class="invalid-feedback text-danger" role="alert">
                     <strong>{{ $errors->first('email') }}</strong>
