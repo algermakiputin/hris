@@ -208,7 +208,7 @@ class AttendanceController extends Controller
 		$id = $request->input('employee_id');
 		$campus_id = $request->input('campus_id');
 		$employee = employee::where(['employee_id' => $id, 'campus_id' => $campus_id])->first();
-		$schedule_id = $employee->schedule_id;
+ 	
 		$leaves = leave::where(['employee_id' => $id, 'status' => 1])->get();
 
 		$leaves = $this->getLeaves($leaves);
@@ -495,7 +495,7 @@ class AttendanceController extends Controller
 
 							$data[] = array(
 								'employee_id' => $row['account_no'], 
-								'date' => Carbon::parse($row['date']->format('Y-m-d') . ' ' . $row['time']),
+								'date' => Carbon::parse(date('Y-m-d', strtotime($row['date'])) . ' ' . $row['time']),
 								'campus_id' => $this->campus_id
 							);
 

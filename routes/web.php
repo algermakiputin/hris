@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::post('calendar/destroy','CalendarController@destroy');
 		//Attendance
 		Route::get('reports/attendance','AttendanceController@index'); 
-		Route::get('attendance/upload','AttendanceController@upload');
+		Route::get('attendance/import','AttendanceController@upload');
 		Route::post('attendance/file_upload','AttendanceController@file_upload');
 		Route::post('attendance/data','AttendanceController@data');
 		Route::post('attendance/report','AttendanceController@report');
