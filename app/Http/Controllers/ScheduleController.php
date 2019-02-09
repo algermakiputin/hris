@@ -18,6 +18,7 @@ class ScheduleController extends Controller
     public function insert(Request $request) {
         $startTime = Carbon::parse($request->input('start_time'))->format('G:i:s');
         $endTime = Carbon::parse($request->input('end_time'))->format('G:i:s');
+        $newEndTime = Carbon::parse($request->input('end_time'))->addHour(5)->format('G:i:s');
         $empID = $request->input('employee_id');
         $campusID = $request->input('campus_id');
         $sched = [
@@ -27,15 +28,10 @@ class ScheduleController extends Controller
                 'employee_id' => $empID,
                 'campus_id' => $campusID
             ];
- 
-        $validate = Schedule::where('start', '>=', $startTime)
-                                    ->where('end', '<=', $endTime)
-                                    ->where('day', $request->input('day'))
-                                    ->where('employee_id', $request->input('employee_id'))
-                                    ->where('campus_id', $campusID)
-                                    ->count();    
+        
+        $validate = $this->validateSchedule($sched);
 
-        if (!$validate) {
+        if ($validate == TRUE) {
             Schedule::create($sched);
             return redirect()->back()->with('update','schedule')
                                     ->with('success', 'Schedule added successfully');
@@ -44,6 +40,28 @@ class ScheduleController extends Controller
         return redirect()->back()->with('error','error')
                                 ->with('update', 'schedule');
 
+    }
+
+    public function validateSchedule($data) {
+        
+        $scheds = Schedule::where('day', $data['day'])
+                            ->where('employee_id', $data['employee_id'])
+                            ->where('campus_id', $data['campus_id'])
+                            ->get();
+        $start = Carbon::parse($data['start']);
+        $end = Carbon::parse($data['end']);
+
+        foreach ($scheds as $sched)  {
+
+            if ($start->between(Carbon::parse($sched['start']), Carbon::parse($sched['end'])))
+                return false;
+
+            if ($end->between(Carbon::parse($sched['start']), Carbon::parse($sched['end'])))
+                return false;
+           
+        }
+
+        return true;
     }
 
     public function getEmployeeSchedule(Request $request) {

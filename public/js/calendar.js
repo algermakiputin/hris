@@ -46,10 +46,11 @@ $(document).ready(function() {
 	        element.attr('title', event.type + ': ' + event.title);
 	    },
 	    viewRender : function() {
+
 	    	  	var d = $("#holidays").fullCalendar('getDate');
-	     	var date = d.format('MM');
-	     	var longD = d.format('MMMM'); 
-	     	var year = d.format('YYYY'); 
+		     	var date = d.format('MM');
+		     	var longD = d.format('MMMM'); 
+		     	var year = d.format('YYYY'); 
 	    	  	$("#holiday-list").empty();
 	    	  	$("#event-list").empty();
 	    	  	$("#e-month").text(longD);
@@ -87,12 +88,12 @@ $(document).ready(function() {
 		    	  			destroy: true
 		    	  		});
 		    	  		var data = JSON.parse(data);
-						console.log(data)
-		    	  		if (data.length) {
-
+					 
+		    	   
+		    	  			console.log(data.calendar);
 							holidays.fullCalendar( 'removeEvents');
 							holidays.fullCalendar( 'addEventSource', data.calendar);
-						}
+					 
 
 						if (data.holiday) {
 							$.each(data.holiday, function(key,value) {
@@ -110,10 +111,6 @@ $(document).ready(function() {
 						}else {
 							$("#event-list").append('<li>No events</li>');
 						}
-
-
-
-
 
 		    	  	}
 		    	  });
