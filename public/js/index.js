@@ -481,22 +481,30 @@ $(document).ready(function() {
                     $.each(heads, function(key, value) {
                         var status = "";
                         var view = "";
-                        if (value.status === "pending") {
-                            status = '<span class="label label-info">Pending</span>';
-                        }else if (value.status === "declined") {
-                            status = '<span class="label label-danger">Declined</span>';
-                            if (value.note)
-                                view = "<i class='fa fa-envelope-o'></i> View reason";
-                        }else if (value.status === "approved") {
-                            status = '<span class="label label-success">Approved</span>';
-                            if (value.note)
-                                view = "<i class='fa fa-envelope-o'></i> View note";
-                        }else {
-                            status = '<span class="label label-default">Closed</span>';
-                        }
+                        if (summary.status != "Approved") {
+                            if (value.status === "pending") {
+                                status = '<span class="label label-info">Pending</span>';
+                            }else if (value.status === "declined") {
+                                status = '<span class="label label-danger">Declined</span>';
+                                if (value.note)
+                                    view = "<i class='fa fa-envelope-o'></i> View reason";
+                            }else if (value.status === "approved") {
+                                status = '<span class="label label-success">Approved</span>';
 
-                        if (summary.status == "Approved")
-                            status = '<span class="label label-success">Approved</span>'; 
+                                if (value.note)
+                                    view = "<i class='fa fa-envelope-o'></i> View note";
+                            }
+                        }else {
+
+                            status = '<span class="label label-success">Approved</span>';
+                            if (value.status != "approved") {
+                                status = '<span class="label label-default">closed</span>';
+
+                            }
+
+                            if (value.note)
+                                    view = "<i class='fa fa-envelope-o'></i> View note";
+                        }
 
                         $("#department-heads-approval").append(
                             '<div class="col-md-6 col-md-12">' +

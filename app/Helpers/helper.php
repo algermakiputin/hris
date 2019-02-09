@@ -2,10 +2,11 @@
 	use App\Notification;
 	use App\employee;
 	use Carbon\Carbon;
+	use App\departmentHeads;
 
 	function checkDepartmentHead() {
 
-		$departmentHeads = Session::get('heads');
+		$departmentHeads = departmentHeads::select('employee_id','campus_id','department_id')->get()->toArray();
 
 		if ($departmentHeads) {
 			$userCampusID = Auth()->user()->campus_id;

@@ -57,8 +57,8 @@ class LoginController extends Controller
     }
 
     public function authenticated(Request $request, $user) {
-        $heads = departmentHeads::select('employee_id','campus_id','department_id')->get()->toArray();
-        Session::put('heads', $heads);
+        
+    
     }
 
     public function not_active($email) {
