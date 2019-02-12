@@ -99,6 +99,7 @@ class LeaveController extends Controller
 		$employee = employee::select('employee_id','campus_id','department_id')
 		->where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
 		->first();
+
 		$department_id = $employee->department_id;
 		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
 
@@ -537,6 +538,28 @@ class LeaveController extends Controller
 		return Leave::where($data)->get();
 	}
 
+	public function search ()
+	{
+		$leave = new LeaveController;
+        $start_sy = sy_start();
+        $end_sy = sy_end();
+        $employees = employee::where(DB::raw('CONCAT first_name, " " , last_name'), 'LIKE', '%'. $search)
+        					->get();
+
+        foreach ($employees as $employee) {
+            $leave_types = $leave->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id, $start_sy, $end_sy);
+            if (!$leave_types) {
+                $datasets[] = [0,$employee->first_name . ' ' . $employee->last_name];
+                continue;
+            }
+            $leave_types[0] = $leave_types[0] + ['employee' => $employee->first_name . ' ' . $employee->last_name];
+            
+            $datasets[] = $leave_types;
+           
+        }
+
+        return json_encode($datasets);
+	} 
 	public function getUsedLeave($minutes) {
 		$used = "";
 		if ($minutes >= 480) {
@@ -813,21 +836,24 @@ class LeaveController extends Controller
 				$employee = employee::where(['campus_id' => $leave->campus_id, 'employee_id' => $leave->employee_id])->first();
 				
 				if ($employee) {
-					$dateFormat = "Y-m-d";
-					$nestedData = [
-					Carbon::parse($leave->date)->format($dateFormat),
-					ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-					ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
-					Carbon::parse($leave->start)->format($dateFormat), 
-					Carbon::parse($leave->end)->format($dateFormat), 
-					$this->labeledStatus($leave->status, $leave->pending),
-					'
-					<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
+					
+					if ($leave->leave_type_id) {
+						$dateFormat = "Y-m-d";
+						$nestedData = [
+						Carbon::parse($leave->date)->format($dateFormat),
+						ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
+						ucfirst($leaveType->getLeaveType($leave->leave_type_id)),
+						Carbon::parse($leave->start)->format($dateFormat), 
+						Carbon::parse($leave->end)->format($dateFormat), 
+						$this->labeledStatus($leave->status, $leave->pending),
+						'
+						<a data-id="'.$leave->id.'" class="btn-success btn-link view" type="button" style="padding:3px 7px;border-radius:5px; " data-toggle="modal" data-target="#summary" data-id="'.$leave->id.'" data-employee="'.$leave->employee_id.'" data-campus="'.$leave->campus_id.'">View</a>
 
-					'
-					];
+						'
+						];
 
-					$data[] = $nestedData;
+						$data[] = $nestedData;
+					}
 				}
 
 				continue;

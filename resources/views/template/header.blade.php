@@ -14,5 +14,6 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-loading.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/custom.min.css') }}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
  

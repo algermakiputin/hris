@@ -64,10 +64,12 @@ $("#my_leaves").on('click', '.view', function() {
             var campus_id = summary.campus_id;
             var leave_id = summary.leave_id;
             console.log(summary.summary[0].name);
+         
             $("#name").text('Name: ' + summary.summary[0].name);
             $("#duration").text('Date: ' + summary.summary[0].duration);
             $("#status").text('Status: ' + summary.status);
-            $("#document").html('Document: ' + 'Download Attachment');
+            if (summary.summary[0].document)
+                    $("#document").html('Document: ' + '<a href="' + summary.summary[0].document + '" target="__blank">Download attachment</a>');
             $("#reason").text('Reason: ' + summary.summary[0].reason);
             $("#leave_type").text(summary.summary[0].leave_type);
             $("#interval").text(summary.summary[0].interval);

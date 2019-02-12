@@ -32,7 +32,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content relative">
-                    <form method="POST" action="#" id="general-reports-form">
+                    <form autocomplete="OFF" method="POST" action="#" id="general-reports-form">
                         <div class="form-group">
                             <select required="required" data-parsley-errors-container="#a" class="form-control selectpicker" name="report" id="report-type">
                                 <option value="">Select Report</option>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success" id="run">Run reports</button>
-                            <button class="btn btn-info" disabled="disabled"><i class="fa fa-file-excel-o"></i> Export</button>
+                             
                         </div>
                     </form>
 
@@ -90,7 +90,7 @@
         <div class="col-md-8 col-sm-8 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">    
-                    <h2>Results<span id="range"></span></h2>
+                    <h2>Result: <span id="range"></span></h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content relative">
@@ -110,6 +110,13 @@
                         </table>
                    </div>
                    <div id="leaves" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-3 pull-right">
+                                <div class="form-group">
+                                    <input type="text" name="search" placeholder="Search.." id="leave-search" class="form-control">
+                                </div>
+                            </div>
+                        </div>
                        <table class="table table-bordered table-stripped" id="general-leave">
                            <thead>
                                <th>Employee Name</th>

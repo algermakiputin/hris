@@ -111,6 +111,10 @@ $(document).ready(function() {
     sy_options();
 
     $("#general-reports-form").parsley();
+
+    $("#leave-search").keyup(function() {
+        alert('test');
+    })
    
     $("#general-reports-form").submit(function(e) {
         var type = $("[name='report']").val();
@@ -140,8 +144,10 @@ $(document).ready(function() {
             },
             success : function(data) {
                 var result = JSON.parse(data);
-                
+               
+          
                 if (type == "attendance") {
+                     $("#general-attendance").DataTable().destroy();
                     $("#range").text(from + ' - ' + to);
                     var tbody = $("#general-attendance tbody");
                     tbody.empty();
@@ -154,13 +160,21 @@ $(document).ready(function() {
                                     '<td>' + value.worked + '</td>' +
                                     '<td>' + value.total_hours + '</td>' +
                                     '<td>' + value.total_absent + '</td>' +
-                                    '<td>' + value.total_late + '</td>' +
+                                    '<td>' + value.total_late + ' mins</td>' +
                                     '<td>' + value.total_overtime + '</td>' +
                                 '</tr>');
 
                         });
+
+                        $("#general-attendance").DataTable({
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'copy', 'excel', 'pdf'
+                            ],
+                            processing : true
+                        });
                     }else {
-                        tbody.append("<tr><td colspan='5' class='text-center'>No result found...</td></tr>");
+                        alert('No employee found');
                     }
                     $("#leaves").hide();
                     $("#attendance").show();
@@ -168,15 +182,16 @@ $(document).ready(function() {
                 }else if (type == "leave") {
                     var tbody = $("#general-leave tbody");
                     tbody.empty();
-                
+                   
                     if (result.length) {
                         $.each(result, function(key,value) {
                             if (value[0]) {
                                 if (value.length >= 2) {
                                     $.each(value, function(key, val) {
+
                                         if (key == 0) {
                                             tbody.append('<tr>' +
-                                                        '<td rowspan="2" class="align-middle">' + val.employee + '</td>' +
+                                                        '<td rowspan="'+result[0].length+'" class="align-middle">' + val.employee + '</td>' +
                                                         '<td>' + val.name + '</td>' +
                                                         '<td>' + val.allowance + '</td>' +
                                                         '<td>' + val.used + '</td>' +
@@ -193,6 +208,8 @@ $(document).ready(function() {
                                             );
                                         }
                                     });
+
+
                                 }
                             }else {
                                 tbody.append("<tr><td>"+value[1]+"</td><td colspan='4' class='text-center'>Leave not set.</td></tr>");
@@ -331,7 +348,8 @@ $(document).ready(function() {
                 orderable: false
             }
         ],
-        fnDrawCallback : function() {
+        fnDrawCallback : function(value) {
+         
             var table = $(this);
             table.find("tbody tr").each(function(){
                 var tr = $(this);

@@ -88,6 +88,7 @@ Route::group(['middleware' => ['auth']],function() {
 		Route::post('departmentHeads/order','DepartmentHeadsController@order');
 		//Leaves
 		Route::get('leave/setting','LeaveController@setting');
+		Route::post('leave/search', 'LeaveController@search');
 		
 		Route::get('reports/leaves', 'LeaveController@report');
 		Route::post('leave/reports','LeaveController@reportsData');

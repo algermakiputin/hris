@@ -47,21 +47,24 @@ class employee extends Model
     	}
 
     	public function update_personal_details($request) {
+            
 
     		$update = $this->where('id', $request['_id'])->update([
     				'first_name' => $request['first_name'],
-				'last_name' => $request['last_name'],
-				'middle_name' => $request['middle_name'], 
-				'gender' => $request['gender'],
-				'birthday' => $request['birthday'],
-				'email_address' => $request['email'],
-				'mobile' => $request['mobile'],
-				'telephone' => $request['telephone'],
-				'marital_status' => $request['marital_status'],
-				'education' => $request['education']
+    				'last_name' => $request['last_name'],
+    				'middle_name' => $request['middle_name'], 
+    				'gender' => $request['gender'],
+    				'birthday' => $request['birthday'],
+    				'email_address' => $request['email'],
+    				'mobile' => $request['mobile'],
+    				'telephone' => $request['telephone'],
+    				'marital_status' => $request['marital_status'],
+    				'education' => $request['education']
     			]);
+
+            
     		
-		return $update;
+	           return $update;
     	}
 
     	public function update_employment_details($request) {
