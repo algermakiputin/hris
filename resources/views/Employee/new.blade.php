@@ -201,9 +201,7 @@
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" name="employee_id" class="form-control col-md-7 col-xs-12" placeholder="Employee ID" data-parsley-group='block2' required="required"
-							data-parsley-remote="{{ url('employee/validate/id') }}"
-							data-parsley-remote-options='{ "type": "POST", "dataType": "jsonp", "data": { "_token": "{{ csrf_token() }}" } }'
-							data-parsley-remote-message="Employee ID already used"
+							 
 							>
 						</div>
 						

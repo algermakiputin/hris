@@ -7,6 +7,7 @@ use App\Roles;
 use App\Attendance;
 use App\employee;
 use Illuminate\Http\Request;
+use DB;
 
 
 class ReportsController extends Controller
@@ -16,6 +17,34 @@ class ReportsController extends Controller
     		$roles = Roles::all();
            
         	return view('Reports.general',compact('campuses','roles'));
+    }
+
+    public function leaveSearch(Request $request) {
+        $datasets = [];
+        $leave = new LeaveController;
+        $start_sy = $request->input('sy') . '-' . config('config.school_year.start') . '-1';
+      
+        $end_sy = (int)$request->input('sy') + 1 . '-' . config('config.school_year.end') . '-31';
+        $employees = employee::where([
+                                'status' => 1, 
+                                'campus_id' => $request->input('campus'),
+                                'department_id' => $request->input('department')
+                            ])->where(DB::raw('CONCAT(first_name, " ", last_name)'), 'LIKE', '%'. $request->input('q') . '%')
+                            ->get();
+
+        foreach ($employees as $employee) {
+            $leave_types = $leave->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id, $start_sy, $end_sy);
+            if (!$leave_types) {
+                $datasets[] = [0,$employee->first_name . ' ' . $employee->last_name];
+                continue;
+            }
+            $leave_types[0] = $leave_types[0] + ['employee' => $employee->first_name . ' ' . $employee->last_name];
+            
+            $datasets[] = $leave_types;
+           
+        }
+
+        return json_encode($datasets);
     }
 
     public function all(Request $request) {
@@ -59,9 +88,11 @@ class ReportsController extends Controller
         		return json_encode($datasets);
 
         	}else if ($type == "leave") { 
+
                 $leave = new LeaveController;
-                $start_sy = sy_start();
-                $end_sy = sy_end();
+                $start_sy = $request->input('sy') . '-' . config('config.school_year.start') . '-1';
+              
+                $end_sy = (int)$request->input('sy') + 1 . '-' . config('config.school_year.end') . '-31';
                 $employees = employee::where([
                                         'status' => 1, 
                                         'campus_id' => $campus,

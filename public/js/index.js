@@ -113,7 +113,66 @@ $(document).ready(function() {
     $("#general-reports-form").parsley();
 
     $("#leave-search").keyup(function() {
-        alert('test');
+        var q = $(this).val();
+        var sy = $('[name="sy"]').val();
+        var campus = $("[name='campus']").val();
+        var department = $("[name='department']").val();
+        if (q && sy && campus && department) {
+            $.ajax({
+                type : 'POST',
+                url : base_url + '/leave/search',
+                data : {
+                    _token : token,
+                    sy : sy,
+                    q : q,
+                    campus : campus,
+                    department : department
+                },
+                success : function(data) {
+                    var result = JSON.parse(data);
+                    var tbody = $("#general-leave tbody");
+                        tbody.empty();
+                       
+                        if (result.length) {
+                            $.each(result, function(key,value) {
+                                if (value[0]) {
+                                    if (value.length >= 2) {
+                                        $.each(value, function(key, val) {
+
+                                            if (key == 0) {
+                                                tbody.append('<tr>' +
+                                                            '<td rowspan="'+result[0].length+'" class="align-middle">' + val.employee + '</td>' +
+                                                            '<td>' + val.name + '</td>' +
+                                                            '<td>' + val.allowance + '</td>' +
+                                                            '<td>' + val.used + '</td>' +
+                                                            '<td>' + val.balance + '</td>' +
+                                                        '</tr>'
+                                                );
+                                            }else {
+                                                tbody.append('<tr>' + 
+                                                            '<td>' + val.name + '</td>' +
+                                                            '<td>' + val.allowance + '</td>' +
+                                                            '<td>' + val.used + '</td>' +
+                                                            '<td>' + val.balance + '</td>' +
+                                                        '</tr>'
+                                                );
+                                            }
+                                        });
+
+
+                                    }
+                                }else {
+                                    tbody.append("<tr><td>"+value[1]+"</td><td colspan='4' class='text-center'>Leave not set.</td></tr>");
+                                }
+                                
+                            });
+                        }else {
+                            tbody.append("<tr><td colspan='5' class='text-center'>No employee found.</td></tr>");
+                        
+                        }
+                }
+            })
+        }
     })
    
     $("#general-reports-form").submit(function(e) {
@@ -125,6 +184,7 @@ $(document).ready(function() {
         var to = $('[name="to"]').val();
         var sy = $('[name="sy"]').val();
         var employmentType = $('[name="employment-type"]').val();
+        var sy = $("#sy").val();
         $.ajax({
             type : 'POST',
             data : {
@@ -136,7 +196,8 @@ $(document).ready(function() {
                 from : from,
                 to : to,
                 sy : sy,
-                employmentType : employmentType
+                employmentType : employmentType,
+
             },
             url : '/reports/all',
             beforeSend : function() {

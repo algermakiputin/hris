@@ -162,7 +162,6 @@ class LeaveController extends Controller
 	public function myLeaveData(Request $request) {
 		$totalData = Leave::where('id',Auth()->user()->id)->count();
 		$leaveType = new Leave_type;
-
 		$limit = intval($request->input('length'));
 		$start = intval($request->input('start'));
 		$order = intval($request->input('order.0.column'));
