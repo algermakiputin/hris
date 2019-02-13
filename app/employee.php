@@ -68,7 +68,7 @@ class employee extends Model
     	}
 
     	public function update_employment_details($request) {
-  	 
+  	         
     		$data = array(
     				'campus_id' => $request['campus_id'],
     				'role_id' => $request['designation'],

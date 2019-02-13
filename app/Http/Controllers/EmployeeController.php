@@ -117,11 +117,21 @@ class EmployeeController extends Controller
     }
 
     public function updateEmploymentdetails(Request $request, employee $employee) {
-     
+       
+        if ($request->input('current_campus') != $request->input('campus_id')) {
+            
+            $user = Users::where('campus_id', $request->input('current_campus'))
+                    ->where('employee_id', $request->input('current_employee_id')) 
+                    ->first();
+                 
+            $user->campus_id = $request->input('campus_id');
+            $user->save();    
+        }
+
+
         if ($employee->update_employment_details($request->all()))
             return redirect()->back()->with('update','employment');
 
-        
         
         return redirect()->back()->with('update','employment')
                                 ->with('error', 'Cannot update employee id');

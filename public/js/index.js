@@ -354,10 +354,21 @@ $(document).ready(function() {
             table.find("tbody tr").each(function(){
                 var tr = $(this);
                 var next =  tr.next("tr");
+                var nexttr = next.next('tr');
                 var trCol = tr.find('td').eq(0);
                 var nextCol = next.find('td').eq(0);
-                
+                var nextnextCol = nexttr.find('td').eq(0);
+
                 if (trCol.text() == nextCol.text()) {
+
+                    if (trCol.text() == nextCol.text() && trCol.text() == nextnextCol.text() ) {
+                     
+                        trCol.attr('rowspan','3');
+                        trCol.addClass('align-middle');
+                        nextCol.remove();
+                        nextnextCol.remove();
+                        return;
+                    }
                     trCol.attr('rowspan','2');
                     trCol.addClass('align-middle');
                     nextCol.remove();     
