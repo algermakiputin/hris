@@ -1614,12 +1614,16 @@ class DatePicker {
 class Employee {
 
     dataTables() {
+        var dom = '<"toolbar">frtBp';
+        if (actions == false) 
+            dom = '<"toolbar">frtip'; 
+
         var employeeTable = $("#employee_table").DataTable({
             responsive : true,
             'processing': true,
             'serverSide': true,
             bLengthChange : false,
-            dom : '<"toolbar">frtip',
+            dom : dom,
             'order': [
                 [7, 'desc']
             ],
@@ -1631,6 +1635,38 @@ class Employee {
                 }
 
             },
+             buttons: [
+                 {
+                    extend : 'copy',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5,6,7]
+                    }
+                },
+                {
+                    extend : 'csv',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5,6,7]
+                    }
+                },
+                 {
+                    extend : 'pdf',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5,6,7]
+                    }
+                },
+                
+                 {
+                    extend : 'print',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5,6,7]
+                    }
+                } 
+
+            ],
             searchDelay: 800,
             'columns': [
                 {
@@ -1735,6 +1771,7 @@ class Leave {
             responsive : true,
             'processing': true,
             'serverSide': true,
+            dom : 'lfrtBp',
             'order': [
                 [0, 'desc']
             ],
@@ -1769,6 +1806,9 @@ class Leave {
                     "visible": leaveActions
                 }
             ],
+            buttons: [
+            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
+        ],
             initComplete : function() {
                 $("#leave_table_length").append("&nbsp;&nbsp; <select style='width:100px;' id='leave-status'>" +
                             "<option value=''>Status</option>" +
