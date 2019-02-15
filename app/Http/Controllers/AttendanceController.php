@@ -483,7 +483,7 @@ class AttendanceController extends Controller
 				$data = Excel::load($path, function($reader) {
 
 					$results =$reader->get()->toArray();
-
+					
 					foreach ($results as $result) {
 
 						$row[] = $result;
@@ -495,7 +495,7 @@ class AttendanceController extends Controller
 
 							$data[] = array(
 								'employee_id' => $row['account_no'], 
-								'date' => Carbon::parse(date('Y-m-d', strtotime($row['date'])) . ' ' . $row['time']),
+								'date' => Carbon::parse(date('Y-m-d', strtotime($row['date'])) . ' ' . date('h:i:s a', strtotime($row['time']))),
 								'campus_id' => $this->campus_id
 							);
 
@@ -506,6 +506,7 @@ class AttendanceController extends Controller
 						}
 
 					}
+					
 
 					if ($data) {
 						$insert = Attendance::insert($data);
