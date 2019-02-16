@@ -245,7 +245,6 @@ class AttendanceController extends Controller
 			}
             	//Increment Working Days
 			 
-			 
 			$sched = Schedule::where(['employee_id' => $id, 'campus_id' => $campus_id])
 									->where('day', $dayOfWeek)
 									->orderBy('start', 'ASC')
@@ -263,9 +262,9 @@ class AttendanceController extends Controller
 
 				$attendances = Attendance::whereBetween('date', [Carbon::parse($date . ' ' . $timeIn)->subHours(1),
 					Carbon::parse($date . ' ' . $timeOut)->addHours(5)
-				])
-				->where(['employee_id' => $id, 'campus_id' => $campus_id])
-				->get()->toArray();
+											])
+											->where(['employee_id' => $id, 'campus_id' => $campus_id])
+											->get()->toArray();
 
 				foreach ($attendances as $attendance) {
 					$dates[] = $attendance['date'];
@@ -326,36 +325,38 @@ class AttendanceController extends Controller
 			
 			$totalMinutesToday = 0;
 
-			if (Carbon::parse($outTime)->lt(Carbon::parse($timeOut))){
+			if (Carbon::parse($outTime)->lte(Carbon::parse($timeOut))){
 
 				foreach ($sched as $key => $schedTime) {
 
 					if ($this->isInLeave($schedTime, $date))
 						continue;
 
-					if (Carbon::parse($schedTime['start'])->gte(Carbon::parse($inTime)->subHours(1)) && Carbon::parse($schedTime['end'])->lte(Carbon::parse($outTime)) ) { 
+					$scheduleForTimeIn = Carbon::parse($schedTime['start']);
+					$scheduleForTimeOut = Carbon::parse($schedTime['end']);
 
-						$totalMinutesToday += Carbon::parse($schedTime['start'])->diffInMinutes(Carbon::parse($schedTime['end']));
-						if (Carbon::parse($inTime)->gt(Carbon::parse($schedTime['start']))) {
-							$totalMinutesToday -= Carbon::parse($inTime)->diffInMinutes(Carbon::parse($schedTime['start']));
+					if ($scheduleForTimeIn->gte(Carbon::parse($inTime)->subHours(1)) && $scheduleForTimeOut->lte(Carbon::parse($outTime)) ) { 
+
+						$totalMinutesToday += $scheduleForTimeIn->diffInMinutes(Carbon::parse($schedTime['end']));
+
+						if (Carbon::parse($inTime)->gt($scheduleForTimeIn)) {
+							$totalMinutesToday -= Carbon::parse($inTime)->diffInMinutes($scheduleForTimeIn);
 
 						}
 
-					}else  if (Carbon::parse($schedTime['end'])->diffInHours(Carbon::parse($outTime)) <= 1) 
+					}else  if ($scheduleForTimeOut->diffInHours(Carbon::parse($outTime)) <= 1) 
 					{
-						 $totalMinutesToday += Carbon::parse($schedTime['start'])->diffInMinutes(Carbon::parse($schedTime['end']));
-						 $totalMinutesToday -= Carbon::parse($outTime)->diffInMinutes(Carbon::parse($schedTime['end']));
+						 $totalMinutesToday += $scheduleForTimeIn->diffInMinutes($scheduleForTimeOut);
+						 $totalMinutesToday -= Carbon::parse($outTime)->diffInMinutes($scheduleForTimeOut);
 					}
 					continue;
 				}
-
-
 
 				$timeDiff = Carbon::parse($outTime)->diffInMinutes(Carbon::parse($timeOut));
 				$newTimeOut = Carbon::parse($timeOut)->subMinutes($timeDiff);
 				$totalMinutes += $totalMinutesToday; 
 
-			}else if (Carbon::parse($outTime)->gte(Carbon::parse($timeOut))){
+			}else if (Carbon::parse($outTime)->gt(Carbon::parse($timeOut))){
 				$totalMinutes += $maxHours * 60;
 				$totalMinutesToday = $maxHours * 60;
 

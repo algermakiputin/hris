@@ -33,6 +33,8 @@ if (typeof balance != 'undefined') {
 }
 
 $(document).ready(function() {
+ 
+ 
 
     $("body").on('click','.notify', function(e) {
  
@@ -228,9 +230,38 @@ $(document).ready(function() {
                         });
 
                         $("#general-attendance").DataTable({
-                            dom: 'Bfrtip',
-                            buttons: [
-                                'copy', 'excel', 'pdf'
+                            dom: 'lfrtBp',
+                             buttons: [
+                                 {
+                                    extend : 'copy',
+                                    footer : true,
+                                    exportOptions : {
+                                        columns : [0,1,2,3,4,5,6]
+                                    }
+                                },
+                                {
+                                    extend : 'csv',
+                                    footer : true,
+                                    exportOptions : {
+                                        columns : [0,1,2,3,4,5,6]
+                                    }
+                                },
+                                 {
+                                    extend : 'pdf',
+                                    footer : true,
+                                    exportOptions : {
+                                        columns : [0,1,2,3,4,5,6]
+                                    }
+                                },
+                                
+                                 {
+                                    extend : 'print',
+                                    footer : true,
+                                    exportOptions : {
+                                        columns : [0,1,2,3,4,5,6]
+                                    }
+                                } 
+
                             ],
                             processing : true
                         });
@@ -1807,8 +1838,37 @@ class Leave {
                 }
             ],
             buttons: [
-            { extend:'copy', attr: { id: 'allan' } }, 'csv', 'excel', 'pdf', 'print'
-        ],
+                 {
+                    extend : 'copy',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5]
+                    }
+                },
+                {
+                    extend : 'csv',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5]
+                    }
+                },
+                 {
+                    extend : 'pdf',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5]
+                    }
+                },
+                
+                 {
+                    extend : 'print',
+                    footer : true,
+                    exportOptions : {
+                        columns : [0,1,2,3,4,5]
+                    }
+                } 
+
+            ],
             initComplete : function() {
                 $("#leave_table_length").append("&nbsp;&nbsp; <select style='width:100px;' id='leave-status'>" +
                             "<option value=''>Status</option>" +

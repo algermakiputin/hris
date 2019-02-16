@@ -48,15 +48,25 @@ class ScheduleController extends Controller
                             ->where('employee_id', $data['employee_id'])
                             ->where('campus_id', $data['campus_id'])
                             ->get();
+
         $start = Carbon::parse($data['start']);
         $end = Carbon::parse($data['end']);
 
         foreach ($scheds as $sched)  {
+            $scheduleTimeIn = Carbon::parse($sched['start']);
+            $scheduleTimeOut = Carbon::parse($sched['end']);
 
-            if ($start->between(Carbon::parse($sched['start']), Carbon::parse($sched['end'])))
+            if ($start->between($scheduleTimeIn, $scheduleTimeOut)) {
+
+                if ($start->equalTo($scheduleTimeOut))
+                    return true;
+                
+
                 return false;
+            }
+                
 
-            if ($end->between(Carbon::parse($sched['start']), Carbon::parse($sched['end'])))
+            if ($end->between($scheduleTimeIn, $scheduleTimeOut))
                 return false;
            
         }
