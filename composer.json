@@ -12,7 +12,6 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "~5.0",
         "maatwebsite/excel": "~2.1.0",
-        "php-ai/php-ml": "^0.6.2",
         "rubix/ml": "^0.0.5@alpha"
     },
     "require-dev": {
