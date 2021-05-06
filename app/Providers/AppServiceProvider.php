@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
     { 
         $this->registerPolicies();
 
+        if(config('app.env') === 'production') {
+            \URL::forceScheme('https');
+        }
+        
         Gate::define('show','App\Policies\EmployeePolicy@show');
         Gate::define('edit','App\Policies\EmployeePolicy@edit');
     }
