@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");
+
+body {
+    font-family: 'Nunito Sans', Verdana, sans-serif !important;
+    font-weight: 400;
+    font-size: 1.3rem; 
+} 
+body .container.body .right_col {
+    /* background: #eee!important; */
+}
+.left_col {
+    background-color: #fff;
+}
+
+.sidebar-footer {
+    display: none;
+}
+.nav.child_menu>li>a, .nav.side-menu>li>a {
+    color: #212529;
+    font-weight: bold;
+    opacity: 0.6; 
+}
+
+.nav_menu {
+    background: #414755!important;
+}
+
+.nav_title {
+    background: #414755!important;
+}
+
+.nav.side-menu>li.active, .nav.side-menu>li.current-page {
+    border-right: 5px solid #ddd;
+}
+
+.nav.side-menu>li.active>a {
+    background: #eee;
+    border-bottom-color: #ddd;
+    opacity: 1;
+}
+
+.nav.side-menu>li>a:hover {
+    opacity: 1;
+    color: #212529!important;
+}
+
+.profile_info h2,
+.profile_info span {
+    color: #212529!important;
+    font-weight: bold;
+}
+
+.nav.navbar-nav>li>a {
+    color: #fff!important;
+}
+#menu_toggle {
+    color: #fff;
+}
+.nav li li.current-page a, .nav.child_menu li li a.active, .nav.child_menu li li a {
+    color: #212529;
+    opacity: 0.6;
+}
+.nav li li.current-page a, .nav.child_menu li li a.active, .nav.child_menu li li a:hover {
+    opacity: 1;
+}
+
+.menu_section h3 {
+    color: #212529;
+    text-shadow: none;
+    
+}
