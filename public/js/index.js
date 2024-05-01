@@ -408,6 +408,10 @@ $(document).ready(function() {
         }
     });
 
+    $("#add-work-exp-btn").click(function() {
+        $("#add-exp-modal").modal('toggle');
+    });
+
 
     var leaves_report_table = $("#leaves_report_table").DataTable({
         searchDelay: 800,
@@ -483,7 +487,42 @@ $(document).ready(function() {
         }
     });
 
-   
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${day}-${month}-${year}`;
+    var employeeReportsTable = $("#employees-report-table").DataTable({
+        searchDelay: 800,
+        processing: true,
+        serverSide: true, 
+        buttons: [
+            {
+                extend: 'pdf',
+                title: "List of Employees",
+                text: `<p>${currentDate}</p>`
+            }
+        ],
+        dom: 'tlpr',
+        'ajax': {
+            'type': 'GET',
+            'url': '/reports/employeesDatatable',
+            'data': {
+                '_token': $("meta[name=csrf-token]").attr('content')
+            }
+
+        }
+    });
+
+    $("#employee-reports-sorting").change(function() {
+        employeeReportsTable.columns(0).search($(this).val()).draw();
+    }); 
+
+    $("#employeesExportToPDF").click(function() {
+        employeeReportsTable.buttons('.buttons-pdf').trigger();
+    });
+    
 
     $("#leaves-report").on('change', '#employee', function() {
         var id = $(this).val();
@@ -2349,6 +2388,104 @@ $("#view-schedule").click(function() {
 
     });
 })
+
+$("#work-submit-btn").click(function(e) {
+    e.preventDefault();
+    const from = $("#exp-from").val();
+    const to = $("#exp-to").val();
+    const title = $("#exp-title").val();
+    const company = $("#exp-company").val();
+    const salary = $("#exp-salary").val();
+    const service = $("#exp-service").val();
+    const employmentStatus = $("#exp-employmentStatus").val();
+    const expData =  $("#current_exp_data").val() ? JSON.parse($("#current_exp_data").val()) : null;
+    let data = [{
+        from,
+        to,
+        title,
+        company,
+        salary,
+        service,
+        employmentStatus
+    }];
+
+    if (expData?.length) data = [...data, ...expData];
+    $("#exp_data").val(JSON.stringify(data));
+    $("#work-exp-form").submit();
+});
+
+window.workIndex;
+window.workExpData;
+$("body").on('click', "#work-list-table tbody tr", function() {
+    $("#update-exp-modal").modal('toggle');
+    var from = $(this).find('td').eq(0).text();
+    var to = $(this).find('td').eq(1).text();   
+    var position = $(this).find('td').eq(2).text();
+    var company = $(this).find('td').eq(3).text();
+    var salary = $(this).find('td').eq(4).text();
+    var employmentStatus = $(this).find('td').eq(5).text();
+    var serviceLength= $(this).find('td').eq(6).text(); 
+    var index = $("#work-list-table tbody tr").index(this);
+    window.workExpData = JSON.parse($("#update_current_exp_data").val());
+    window.workIndex = index;
+    $("#update-exp-from").val(from);
+    $("#update-exp-to").val(to);
+    $("#update-exp-title").val(position);
+    $("#update-exp-company").val(company);
+    $("#update-exp-salary").val(salary);
+    $("#update-exp-employmentStatus").val(employmentStatus);
+    $("#update-exp-service").val(serviceLength); 
+});
+
+$("#work-update-btn").click(function() {
+    const from = $("#update-exp-from").val()
+    const to = $("#update-exp-to").val();
+    const title = $("#update-exp-title").val();
+    const company = $("#update-exp-company").val();
+    const salary = $("#update-exp-salary").val();
+    const employmentStatus = $("#update-exp-employmentStatus").val();
+    const service = $("#update-exp-service").val();
+    window.workExpData[window.workIndex] = {
+        from,
+        to,
+        title,
+        company,
+        salary,
+        service,
+        employmentStatus
+    }; 
+
+    $("#update_exp_data").val(JSON.stringify(window.workExpData));
+    $("#update-exp-form").submit();
+});
+
+$("#add-training-btn").click(function() {
+    
+    $("#add-training-modal").modal('toggle');
+});
+
+$("#training-submit-btn").click(function() {
+    const trainingTitle = $("#training-title").val();
+    const trainingFrom = $("#training-from").val();
+    const trainingTo = $("#training-to").val();
+    const trainingHours = $("#training-hours").val();
+    const trainingSponsor = $("#training-sponsor").val();
+    const trainingData = $("#current_training_data").val();
+    const data = trainingData ? JSON.parse(trainingData) : null;
+    var training = [{
+        trainingTitle,
+        trainingFrom,
+        trainingTo,
+        trainingHours,
+        trainingSponsor
+    }];
+
+    if (data) training = [...training, ...data];
+    $("#training_data").val(JSON.stringify(training));
+    $("#training-form").submit();
+});
+
+
 
 function groupBy(list, keyGetter) {
     const map = new Map();

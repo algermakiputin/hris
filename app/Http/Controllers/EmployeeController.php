@@ -156,7 +156,8 @@ class EmployeeController extends Controller
                             ->orderBy('start', 'ASC')
                             ->get()->toArray();
            
-
+                $employee->work = json_decode($employee->work);
+                $employee->training = json_decode($employee->training);
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
              
@@ -469,5 +470,24 @@ class EmployeeController extends Controller
 
     public function getEmployeesByCampus(Request $request) {
         return json_encode(employee::where('campus_id', $request->campus_id)->get());
+    }
+
+    public function storeWorkExp(Request $request) {
+        //dd($request->all());
+        $id = $request->input('id');
+        $work = $request->input('exp_data');
+        $employee = employee::find($id);
+        $employee->work = $work;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeTrainingProgram(Request $request) {
+        $id = $request->input('id');
+        $training = $request->input('training_data');
+        $employee = employee::find($id);
+        $employee->training = $training;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
     }
 }

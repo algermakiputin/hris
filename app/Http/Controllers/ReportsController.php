@@ -6,8 +6,11 @@ use App\Campus;
 use App\Roles;
 use App\Attendance;
 use App\employee;
+use App\address;
+use App\Department;
 use Illuminate\Http\Request;
 use DB;
+use Carbon\Carbon;
 
 
 class ReportsController extends Controller
@@ -17,6 +20,51 @@ class ReportsController extends Controller
     		$roles = Roles::all();
            
         	return view('Reports.general',compact('campuses','roles'));
+    }
+
+    public function employees() {
+        $employees = employee::all();
+        return view('Reports.employees');
+    }
+
+    public function datatable(Request $request) {
+        $draw = $request->input('draw');
+        $limit = $request->input('length');
+		$start = $request->input('start');
+        $sort = $request->input('columns.0.search.value') ? $request->input('columns.0.search.value') : "first_name";
+        $employees = employee::orderBy($sort, 'ASC')
+                            ->offset($start)
+                            ->limit($limit)
+                            ->get();
+        $count = employee::count();
+        $data = [];
+
+        foreach ($employees as $employee) {
+            $address = address::where('employee_id', $employee->id)->first();
+            $role = Roles::where('id', $employee->role_id)->first();
+            $department = Department::where('id', $employee->department_id)->first();
+            $birthDate = Carbon::parse($employee->birthday);
+            $today = Carbon::now();
+            $age = $birthDate->diffInYears($today);
+            $data[] = [
+                $employee->id,
+                $employee->first_name . " " . $employee->last_name,
+                $address ? $address->address : '',
+                $employee->gender === 0 ? "F" : "M",
+                $age,
+                $employee->mobile,
+                $department ? $department->name : '',
+                $role ? $role->name : '',
+                $employee->employment_type === 1 ? "Full Time" : "Part Time" 
+            ];
+        }
+
+        echo json_encode(array(
+            'draw' => $draw,
+            'recordsTotal' => $count,
+			'recordsFiltered' => $count,
+			'data' => $data
+        ));
     }
 
     public function leaveSearch(Request $request) {

@@ -15,26 +15,35 @@
 </div>
 <div class="row">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<div class="x_panel">
 				<div class="x_title">
 					<a href="{{ url('employee') }}"><i class="fa fa-link"></i> Return</a>
 					<div class="clearfix"></div>
 				</div>
 				<div class="x_content">
-					<div class="" role="tabpanel" data-example-id="togglable-tabs">
+					<div class="" role="tabpanel" data-example-id="togglable-tabs"> 
 						<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="{{ Session()->has('update') == "" ? 'active in' : ''  }}"><a href="#personal" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">Personal Details</a>
+							<li role="presentation" class="{{ Session()->has('update') == "" ? 'active in' : ''  }}">
+								<a href="#personal" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">Personal Details</a>
 							</li>
-							<li role="presentation" class="{{ Session()->get('update') == "employment" ? 'active in' : ''  }}"><a href="#employment" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Employment Details</a>
+							<li role="presentation" class="{{ Session()->get('update') == "employment" ? 'active in' : ''  }}">
+								<a href="#employment" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Employment Details</a>
 							</li>
-							<li role="presentation" class="{{ Session()->get('update') == "resume" ? 'active in' : ''  }}" ><a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
+							<li role="presentation" class="{{ Session()->get('update') == "resume" ? 'active in' : ''  }}" >
+								<a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
 							</li>
 						 	@if (Auth()->user()->role)
 							<li role="presentation" class="{{ Session()->get('update') == "schedule" ? 'active in' : ''  }}">
 								<a href="#scheds" role="tab" id="sched-tab3" data-toggle="tab" aria-expanded="true">Schedules</a>
 							</li>
 						 	@endif
+							 <li role="presentation" class="{{ Session()->get('update') == "education" ? 'active in' : ''  }}">
+								<a href="#education" role="tab" id="education-tab" data-toggle="tab" aria-expanded="true">Education</a>
+							</li>
+							<li role="presentation" class="{{ Session()->get('update') == "work" ? 'active in' : ''  }}">
+								<a href="#work" role="tab" id="work-tab" data-toggle="tab" aria-expanded="true">Work</a>
+							</li>
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							@if (Auth()->user()->role)
@@ -46,7 +55,23 @@
 									</div>
 								</div> 
 							</div>
-							@endif
+							@endif 
+							<div role="tabpanel" class="tab-pane fade {{ Session()->get('update') == "education" ? 'active in' : ''  }}" id="education" aria-labelledby="education-tab">
+								<div class="col-xs-12">
+									<div class="x_content">
+										<br>
+										@include('Employee.edit_content_parts.education')
+									</div>
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane fade {{ Session()->get('update') == "work" ? 'active in' : ''  }}" id="work" aria-labelledby="work-tab">
+								<div class="col-xs-12">
+									<div class="x_content">
+										<br>
+										@include('Employee.edit_content_parts.work')
+									</div>
+								</div>
+							</div>
 							<div role="tabpanel" class="tab-pane fade {{ Session()->has('update') ? '' : 'active in'  }}" id="personal" aria-labelledby="home-tab">
 								<div class=" col-xs-12">
 									<div class="x_content">
@@ -107,7 +132,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="x_panel">
 			<div class="x_content">
 				<form class="form-horizontal form-label-left input_mask" method="POST" action="{{ url('employee/upload-avatar') }}" enctype="multipart/form-data">
@@ -132,7 +157,7 @@
 							</div>
 						</div>
 						<div class="input-group">
-							<span class="form-control" style="width: 80%;" onclick="document.getElementById('avatar').click();"> <span id="p-holder">Choose image</span>
+							<span class="form-control" style="width: 150px;" onclick="document.getElementById('avatar').click();"> <span id="p-holder">Choose image</span>
 							<input type="file" style="opacity: 0;" name="avatar" id="avatar" placeholder="Upload image">
 						</span>
 						<span class="input-group-btn" style="display: inline-block;width: 20%">

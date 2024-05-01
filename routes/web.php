@@ -55,10 +55,14 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::post('leaves-approval/insert', 'LeaveApprovalsController@insert');
 	
 	Route::get('reports/general','ReportsController@general');
+	Route::get('reports/employees','ReportsController@employees');
+	Route::get('reports/employeesDatatable','ReportsController@datatable');
 	Route::post('reports/all','ReportsController@all');
 
 	Route::get('calendar','CalendarController@calendar');
 	Route::get('calendar/events','CalendarController@events');
+	Route::post('workExp/store','EmployeeController@storeWorkExp');
+	Route::post('trainingProgram/store','EmployeeController@storeTrainingProgram');
 
 	Route::group(['middleware' => ['CheckRole']], function() {
 		//Employee
