@@ -63,7 +63,10 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('calendar/events','CalendarController@events');
 	Route::post('workExp/store','EmployeeController@storeWorkExp');
 	Route::post('trainingProgram/store','EmployeeController@storeTrainingProgram');
-
+	Route::post('employeeInfo/store','EmployeeController@storeEmployeeInfo');
+	Route::post('career/store','EmployeeController@storeCareer');
+	Route::post('involvement/store','EmployeeController@storeInvolvement');
+	Route::post('voluntary/store','EmployeeController@storeVoluntary');
 	Route::group(['middleware' => ['CheckRole']], function() {
 		//Employee
 		Route::get('employee/new', 'EmployeeController@new');

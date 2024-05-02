@@ -142,7 +142,7 @@ class EmployeeController extends Controller
 
         if ($id) {
             $employee = employee::where('id',$id)->first();
-
+        
             if ($employee) {
                 $scheduleID = 0;
                 $this->authorize('edit',$employee);
@@ -158,6 +158,9 @@ class EmployeeController extends Controller
            
                 $employee->work = json_decode($employee->work);
                 $employee->training = json_decode($employee->training);
+                $employee->civil_service = json_decode($employee->civil_service);
+                $employee->involvement = json_decode($employee->involvement);
+                $employee->voluntary = json_decode($employee->voluntary);
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
              
@@ -483,10 +486,51 @@ class EmployeeController extends Controller
     }
 
     public function storeTrainingProgram(Request $request) {
+        //dd($request->all());
         $id = $request->input('id');
         $training = $request->input('training_data');
         $employee = employee::find($id);
         $employee->training = $training;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeEmployeeInfo(Request $request) {
+        $id = $request->input('id');
+        $hobbies = $request->input('hobbies');
+        $awards = $request->input('awards');
+        $employee = employee::find($id);
+        $employee->hobbies = $hobbies;
+        $employee->awards = $awards;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeCareer(Request $request) {
+        $id = $request->input('id');
+        $data = $request->input('civil_service_data');
+        $employee = employee::find($id);
+        $employee->civil_service = $data;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeInvolvement(Request $request) { 
+        // dd($request->all());
+        $id = $request->input('id');
+        $data = $request->input('involvement_data');
+        $employee = employee::find($id);
+        $employee->involvement = $data;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeVoluntary(Request $request) { 
+        //dd($request->all());
+        $id = $request->input('id');
+        $data = $request->input('voluntary_data');
+        $employee = employee::find($id);
+        $employee->voluntary = $data;
         $employee->save();
         return redirect()->back()->with('success','Updated successfully.');
     }

@@ -2485,7 +2485,231 @@ $("#training-submit-btn").click(function() {
     $("#training-form").submit();
 });
 
+window.trainingProgram;
+window.trainingIndex;
+$("body").on('click', "#training-list-table tbody tr", function() {
+    $("#update-training-modal").modal('toggle');
+    var title = $(this).find('td').eq(0).text();
+    var from = $(this).find('td').eq(1).text();   
+    var to = $(this).find('td').eq(2).text();
+    var hours = $(this).find('td').eq(3).text();
+    var sponsor = $(this).find('td').eq(4).text(); 
+    var index = $("#training-list-table tbody tr").index(this);
+    window.trainingProgram = JSON.parse($("#update_current_training_data").val());
+    window.trainingIndex = index;
+    $("#update-training-from").val(from);
+    $("#update-training-to").val(to);
+    $("#update-training-title").val(title);
+    $("#update-training-hours").val(hours);
+    $("#update-training-sponsor").val(sponsor); 
+});
 
+$("#training-update-btn").click(function() {
+    const trainingTitle = $("#update-training-title").val();
+    const trainingFrom = $("#update-training-from").val();
+    const trainingTo = $("#update-training-to").val();
+    const trainingHours = $("#update-training-hours").val();
+    const trainingSponsor = $("#update-training-sponsor").val();
+    const training = {
+        trainingTitle,
+        trainingFrom,
+        trainingTo,
+        trainingHours,
+        trainingSponsor
+    }
+
+    window.trainingProgram[trainingIndex] = training; 
+    $("#update-training_data").val(JSON.stringify(window.trainingProgram));
+    $("#update-training-form").submit();
+})
+
+$("#add-career-service-btn").click(function() {
+    $("#add-career-service-modal").modal('toggle');
+});
+
+$("#civil-service-submit-btn").click(function() {
+    const careerService = $("#career-service").val();
+    const rating = $("#rating").val();
+    const date = $("#date").val();
+    const place = $("#place").val();
+    const number = $("#number").val();
+    const releaseDate = $("#release-date").val();
+    const current_civil_service_data = $("#current_civil_service").val() ? JSON.parse($("#current_civil_service").val()) : null;
+    var civilService = [{
+        careerService,
+        rating,
+        date,
+        place,
+        number,
+        releaseDate,
+    }];
+    if (current_civil_service_data) civilService = [...current_civil_service_data, ...civilService];
+    $("#civil_service_data").val(JSON.stringify(civilService));
+    $("#civil-service-form").submit();
+});
+
+window.civilService;
+window.civilServiceIndex;
+$("body").on('click', "#civil-service-table tbody tr", function() {
+    $("#update-civil-service-modal").modal('toggle');
+    var careerService = $(this).find('td').eq(0).text();
+    var rating = $(this).find('td').eq(1).text();   
+    var date = $(this).find('td').eq(2).text();
+    var place = $(this).find('td').eq(3).text();
+    var number = $(this).find('td').eq(4).text(); 
+    var releaseDate = $(this).find('td').eq(5).text();
+    var index = $("#civil-service-table tbody tr").index(this);
+    window.civilService = JSON.parse($("#update_current_civil_service").val());
+    window.civilServiceIndex = index;
+    $("#update-career-service").val(careerService);
+    $("#update-rating").val(rating);
+    $("#update-date").val(date);
+    $("#update-place").val(place);
+    $("#update-number").val(number); 
+    $("#update-release-date").val(releaseDate); 
+});
+
+$("#civil-service-update-btn").click(function() {
+    const careerService = $("#update-career-service").val();
+    const rating = $("#update-rating").val();
+    const date = $("#update-date").val();
+    const place = $("#update-place").val();
+    const number = $("#update-number").val(); 
+    const releaseDate = $("#update-release-date").val();
+    var civilServiceData = {
+        careerService,
+        rating,
+        date,
+        place,
+        number,
+        releaseDate
+    };
+  
+    window.civilService[window.civilServiceIndex] = civilServiceData; 
+    const data = JSON.stringify(window.civilService); 
+    $("#update_civil_service_data").val(data);
+    $("#update-civil-service-form").submit();
+});
+
+$("#add-involvement-btn").click(function() {
+    $("#add-involvement-modal").modal('toggle');
+});
+
+$("#involvement-submit-btn").click(function() {
+    const organization = $("#organization").val();
+    const address = $("#address").val();
+    const from = $("#involvement-from").val();
+    const to = $("#involvement-to").val();
+    const position = $("#position").val();
+    const currentData = $("#current_involvement_data").val() ? JSON.parse($("#current_involvement_data").val()) : null;
+    var involvement = [{
+        organization,
+        address,
+        from,
+        to,
+        position
+    }];
+    if (currentData) involvement = [...involvement, ...currentData];
+    $("#involvement_data").val(JSON.stringify(involvement));
+    $("#involvement-form").submit();
+});
+
+$("#add-voluntary-btn").click(function() {
+    $("#add-voluntary-modal").modal('toggle');
+});
+
+$("#voluntary-submit-btn").click(function() {
+    var organization = $("#voluntary-organization").val();
+    var address = $("#voluntary-address").val();
+    var from = $("#voluntary-from").val();
+    var to = $("#voluntary-to").val();
+    var position = $("#voluntary-position").val();
+    var currentData = $("#current_voluntary_data").val() ? JSON.parse($("#current_voluntary_data").val()) : null;
+    var voluntary = [{
+        organization,
+        address,
+        from,
+        to,
+        position
+    }];
+   
+    if (currentData) voluntary = [...voluntary, ...currentData];
+    $("#voluntary_data").val(JSON.stringify(voluntary));
+    $("#voluntary-form").submit();
+});
+
+window.voluntary;
+window.voluntaryIndex;
+$("body").on('click', "#voluntary-list-table tbody tr", function() {
+    $("#update-voluntary-modal").modal('toggle');
+    var organizationName = $(this).find('td').eq(0).text();
+    var address = $(this).find('td').eq(1).text();   
+    var from = $(this).find('td').eq(2).text();
+    var to = $(this).find('td').eq(3).text();
+    var position = $(this).find('td').eq(4).text();  
+    var index = $("#voluntary-list-table tbody tr").index(this);
+    window.voluntary = JSON.parse($("#update_current_voluntary_data").val());
+    window.voluntaryIndex = index;
+    $("#update-voluntary-organization").val(organizationName);
+    $("#update-voluntary-address").val(address);
+    $("#update-voluntary-from").val(from);
+    $("#update-voluntary-to").val(to);
+    $("#update-voluntary-position").val(position);
+});
+
+$("#update-voluntary-btn").click(function() {
+    var organization = $("#update-voluntary-organization").val();
+    var address = $("#update-voluntary-address").val();
+    var from = $("#update-voluntary-from").val();
+    var to = $("#update-voluntary-to").val();
+    var position = $("#update-voluntary-position").val(); 
+    window.voluntary[window.voluntaryIndex] = {
+        organization,
+        address,
+        from,
+        to,
+        position
+    }; 
+    $("#update_voluntary_data").val(JSON.stringify(window.voluntary));
+    $("#update-voluntary-form").submit();
+});
+
+window.involvement;
+window.involvementIndex;
+$("body").on('click', "#involvement-list-table tbody tr", function() {
+    $("#update-involvement-modal").modal('toggle');
+    var organizationName = $(this).find('td').eq(0).text();
+    var address = $(this).find('td').eq(1).text();   
+    var from = $(this).find('td').eq(2).text();
+    var to = $(this).find('td').eq(3).text();
+    var position = $(this).find('td').eq(4).text();  
+    var index = $("#involvement-list-table tbody tr").index(this);
+    window.involvement = JSON.parse($("#update_current_involvement_data").val());
+    window.involvementIndex = index;
+    $("#update-organization").val(organizationName);
+    $("#update-address").val(address);
+    $("#update-involvement-from").val(from);
+    $("#update-involvement-to").val(to);
+    $("#update-position").val(position);
+});
+
+$("#involvement-update-btn").click(function() {
+    var organization = $("#update-organization").val();
+    var address = $("#update-address").val();
+    var from = $("#update-involvement-from").val();
+    var to = $("#update-involvement-to").val();
+    var position = $("#update-position").val();
+    window.involvement[window.involvementIndex] = {
+        organization,
+        address,
+        from,
+        to,
+        position
+    }
+    var data = JSON.stringify(window.involvement);
+    $("#update_involvement_data").val(data);
+    $("#update-involvement-form").submit();
+});
 
 function groupBy(list, keyGetter) {
     const map = new Map();
