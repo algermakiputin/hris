@@ -2674,6 +2674,7 @@ $("#update-voluntary-btn").click(function() {
     $("#update-voluntary-form").submit();
 });
 
+
 window.involvement;
 window.involvementIndex;
 $("body").on('click', "#involvement-list-table tbody tr", function() {
@@ -2724,6 +2725,18 @@ function groupBy(list, keyGetter) {
     });
     return map;
 }
+
+$("#administrative-wrapper").hide();
+
+$("#designation").change(function() { 
+    if ($(this).val() === "Faculty") {
+        $("#academic-wrapper").show();
+        $("#administrative-wrapper").hide();
+    } else {
+        $("#administrative-wrapper").show();
+        $("#academic-wrapper").hide();
+    }
+});
 
 function bs_input_file() {
 

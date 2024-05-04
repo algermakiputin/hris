@@ -1,5 +1,78 @@
 <div>
     <div class="card">
+        <div class="card-header"><b>Educational Background</b></div>
+        <div class="card-body">
+            <form action="{{ url('educationalBackground/store') }}" method="POST" id="civil-service-form">
+                    @csrf
+                    @method('post')
+                    <input type="hidden" name="id" value="{{ $employee->id }}" />
+                <table class="table table-stripped table-hover" id="educational-background" width="100%">
+                    <thead>
+                        <th width="5%">Level</th>
+                        <th>School</th>
+                        <th>Degree</th>
+                        <th>Year Graduated</th>
+                        <th>Highes Grade/Level/Units Earned(if not graduated)</th>
+                        <th>Inclusive dates of attendance from - to</th>
+                        <th>Scholarship/Academic honors received</th> 
+                    </thead>
+                    <tbody> 
+                        
+                        <tr>
+                            <td>Elementary</td>
+                            <td><textarea name="elementary-school" rows="5" class="form-control">{{ isset($elementary->school) ? $elementary->school : '' }}</textarea></td>
+                            <td><textarea name="elementary-degree" rows="5" class="form-control hidden">{{ isset($elementary->degree) ? $elementary->degree : ''  }}</textarea></td>
+                            <td><textarea name="elementary-year" rows="5" class="form-control">{{ isset($elementary->year) ? $elementary->year : '' }}</textarea></td>
+                            <td><textarea name="elementary-highestGrade" rows="5" class="form-control">{{ isset($elementary->highestGrade) ? $elementary->highestGrade : '' }}</textarea></td>
+                            <td><textarea name="elementary-inclusiveDates" rows="5" class="form-control">{{ isset($elementary->inclusiveDates) ? $elementary->inclusiveDates : '' }}</textarea></td>
+                            <td><textarea name="elementary-scholarship" rows="5" class="form-control">{{ isset($elementary->scholarship) ? $elementary->scholarship : '' }}</textarea></td>
+                        </tr>  
+                        <tr>
+                            <td>Secondary</td>
+                            <td><textarea name="secondary-school" rows="5" class="form-control">{{ isset($secondary->school) ? $secondary->school : '' }}</textarea></td>
+                            <td><textarea hidden name="secondary-degree" name="" rows="5" class="form-control hidden">{{ isset($secondary->degree) ? $secondary->degree : '' }}</textarea></td>
+                            <td><textarea name="secondary-year" rows="5" class="form-control">{{ isset($secondary->year) ? $secondary->year : '' }}</textarea></td>
+                            <td><textarea name="secondary-highestGrade" rows="5" class="form-control">{{ isset($secondary->highestGrade) ? $secondary->highestGrade : '' }}</textarea></td>
+                            <td><textarea name="secondary-inclusiveDates" rows="5" class="form-control">{{ isset($secondary->inclusiveDates) ? $secondary->inclusiveDates : '' }}</textarea></td>
+                            <td><textarea name="secondary-scholarship" rows="5" class="form-control">{{ isset($secondary->scholarship) ? $secondary->scholarship : '' }}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Vocational/Trade Course</td>
+                            <td><textarea name="vocational-school" rows="5" class="form-control">{{ isset($vocational->school) ? $vocational->school : '' }}</textarea></td>
+                            <td><textarea  name="vocational-degree" rows="5" class="form-control hidden">{{ isset($vocational->degree) ? $vocational->degree : '' }}</textarea></td>
+                            <td><textarea  name="vocational-year" rows="5" class="form-control">{{ isset($vocational->year) ? $vocational->year : '' }}</textarea></td>
+                            <td><textarea  name="vocational-highestGrade" rows="5" class="form-control">{{ isset($vocational->highestGrade) ? $vocational->highestGrade : '' }}</textarea></td>
+                            <td><textarea name="vocational-inclusiveDates" rows="5" class="form-control">{{ isset($vocational->inclusiveDates) ? $vocational->inclusiveDates : '' }}</textarea></td>
+                            <td><textarea  name="vocational-scholarship" rows="5" class="form-control">{{ isset($vocational->scholarship) ? $vocational->scholarship : '' }}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>College</td>
+                            <td><textarea  name="college-school" rows="5" class="form-control">{{ isset($college->school) ? $college->school : '' }}</textarea></td>
+                            <td><textarea name="college-degree" rows="5" class="form-control">{{ isset($college->degree) ? $college->degree : '' }}</textarea></td>
+                            <td><textarea name="college-year" rows="5" class="form-control">{{ isset($college->year) ? $college->year : ''  }}</textarea></td>
+                            <td><textarea  name="college-highestGrade" rows="5" class="form-control">{{ isset($college->highestGrade) ? $college->highestGrade : '' }}</textarea></td>
+                            <td><textarea name="college-inclusiveDates" rows="5" class="form-control">{{ isset($college->inclusiveDates) ? $college->inclusiveDates :'' }}</textarea></td>
+                            <td><textarea name="college-scholarship" rows="5" class="form-control">{{ isset($college->scholarship) ? $college->scholarship : '' }}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Graduate Studies</td>
+                            <td><textarea  name="graduate-school" rows="5" class="form-control">{{ isset($graduate->school) ? $graduate->school : '' }}</textarea></td>
+                            <td><textarea  name="graduate-degree" rows="5" class="form-control">{{ isset($college->degree) ? $college->degree : '' }}</textarea></td>
+                            <td><textarea   name="graduate-year" rows="5" class="form-control">{{ isset($college->year) ? $college->year : '' }}</textarea></td>
+                            <td><textarea  name="graduate-highestGrade" rows="5" class="form-control">{{ isset($college->highestGrade) ? $college->highestGrade : '' }}</textarea></td>
+                            <td><textarea  name="graduate-inclusiveDates" rows="5" class="form-control">{{ isset($college->inclusiveDates) ? $college->inclusiveDates : '' }}</textarea></td>
+                            <td><textarea  name="graduate-scholarship" rows="5" class="form-control">{{ isset($college->scholarship) ? $college->scholarship : '' }}</textarea></td>
+                        </tr>                  
+                    </tbody>
+                </table>
+                <input type="submit" class="btn btn-primary" value="Save"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="card">
         <div class="card-header"><b>Civil Service Eligiblity</b> <button class="btn btn-success pull-right" id="add-career-service-btn">Add</button></div>
         <div class="card-body">
             <table class="table table-stripped table-hover" id="civil-service-table">

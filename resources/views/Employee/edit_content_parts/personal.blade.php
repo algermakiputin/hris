@@ -99,6 +99,54 @@
 		</select>
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Citizenship:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Citizenship" name="citizenship" value="{{ $employee->citizenship }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Religious Affiliation:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Religious Affiliation" name="religiousAffiliation" value="{{ $employee->religiousAffiliation }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Height:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Height" name="height" value="{{ $employee->height }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Weight:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Weight" name="weight" value="{{ $employee->weight }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Blood Type:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Blood Type" name="bloodType" value="{{ $employee->bloodType }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Tin No:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Tin No." name="tin" value="{{ $employee->tin }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">SSS No.:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="SSS No." name="sss" value="{{ $employee->sss }}">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Philhealth:</label>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<input type="text" class="form-control" placeholder="Philhealth" name="philhealth" value="{{ $employee->philhealth }}">
+		</div>
+	</div>
 	<div class="ln_solid"></div>
 	<div class="form-group">
 		<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">

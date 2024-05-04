@@ -40,8 +40,12 @@ class employee extends Model
 		$this->resume = $resume; 
 		$this->status = $request['status']; 
 		$this->tenure = $request['tenure'];
-		$this->education = $request['education'];
-
+		$this->employment_status = $request['employment_status'];
+		$this->designation2 = $request['designation2'];
+		$this->academic_rank = $request['academic_rank'];
+		$this->administrative_rank = $request['administrative_rank'];
+		$this->honorarium = $request['honorarium'];
+		$this->honorarium_expiry = $request['honorarium_expiry'];
 		$this->save();
 		return $this->id;
     	}
@@ -59,16 +63,20 @@ class employee extends Model
     				'mobile' => $request['mobile'],
     				'telephone' => $request['telephone'],
     				'marital_status' => $request['marital_status'],
-    				'education' => $request['education']
-    			]);
-
-            
-    		
+    				'education' => $request['education'],
+					'religiousAffiliation' => $request['religiousAffiliation'],
+					'height' => $request['height'],
+					'weight' => $request['weight'],
+					'bloodType' => $request['bloodType'],
+					'tin' => $request['tin'],
+					'sss' => $request['sss'],
+					'philhealth' => $request['philhealth'],
+					'citizenship' => $request['citizenship']
+    			]); 
 	           return $update;
     	}
 
-    	public function update_employment_details($request) {
-  	         
+    	public function update_employment_details($request) { 
     		$data = array(
     				'campus_id' => $request['campus_id'],
     				'role_id' => $request['designation'],
@@ -79,12 +87,10 @@ class employee extends Model
     				'status' => $request['status'], 
     				'tenure' => $request['tenure'],
                     'employee_id' => $request['_id']
-    			);
-
+    			); 
     		if ($this->where('id', $request['id'])->update($data)) {
                 return true;
-            }
-
+            } 
             return false;
 
     	}

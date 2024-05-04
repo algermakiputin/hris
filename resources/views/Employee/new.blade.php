@@ -152,8 +152,7 @@
 							<div class="clearfix"></div>
 							<div id="m-status-error"></div>
 						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12">
-							
+						<div class="col-md-3 col-sm-3 col-xs-12"> 
 							<select name="education" id="education" class="form-control selectpicker" required="required" data-parsley-group='block1' data-parsley-errors-container="#e-status-error">
 								<option value="">Select Education Level</option>
 								<option value="Associate Degree">Associate Degree</option>
@@ -173,7 +172,7 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-step" step-no = '2'>
+				<fieldset class="form-step " step-no = '2'>
 					<div class="form-group">
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Campus Assign</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
@@ -217,8 +216,7 @@
 							<div class="clearfix"></div>
 							<div id="role-error"></div>
 						</div>
-					</div>
-					
+					</div> 
 					<div class="form-group">
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Date Joining</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
@@ -241,8 +239,7 @@
 							<div id="status-error"></div>
 						</div>
 
-					</div>
-					
+					</div> 
 					<div class="form-group">
 						<label for="employment_type" class="control-label col-md-2 col-sm-2 col-xs-12">Employment Type</label>
 						<div class="col-md-4 col-sm-4 col-xs-12" >
@@ -259,8 +256,7 @@
 							<input id="salary" class="form-control salary col-md-7 col-xs-12" type="text" name="salary" placeholder="Salary" data-parsley-group='block2' required="required">
 						</div>
 					</div>
-					<div class="form-group">
-						
+					<div class="form-group"> 
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Permanent</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select class="form-control" name="tenure">
@@ -270,44 +266,90 @@
 							</select>
 						</div>
 					</div>
-					<div class="clearfix"></div>
-				     <div class="ln_solid"></div>
-				<div class="form-group">
-					<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2 text-right">
-						<button class="btn btn-primary prev" >Previous</button>
-						<button type="submit" class="btn btn-success next">Next</button>
-					</div>
-				</div>
-
-				
-			</fieldset>
-
-			<fieldset class="form-step" step-no = '3'>
-				<p>Select file and click submit to complete employee registration.</p>
-				<div class="file-upload">
-					<div class="form-group" id="resume-wrapper">
-						<div class="input-group input-file" name="resume">
-							<input type="text" class="form-control" placeholder='Choose a file...' />
-							<span class="input-group-btn">
-								<button class="btn btn-default btn-choose" type="button">Choose</button>
-							</span>
+					<div class="form-group"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Employment Status</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="employment_status"> 
+								<option>Project Based</option>
+								<option>Contractual</option>
+								<option>Permanent</option>
+								<option>Provisionary</option>
+								<option>Part Time</option>
+							</select>
 						</div>
 					</div>
-				</div>
-				<div class="ln_solid"></div>
-				<div class="form-group">
-					<div class="col-md-9 col-sm-9	 col-xs-12 col-md-offset-2 text-right">
-						<button class="btn btn-primary prev">Previous</button>
-						<input type="submit" class="btn btn-success"> 
+					<div class="form-group"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Designation</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="designation2" id="designation"> 
+								<option>Faculty</option>
+								<option>Employee</option> 
+							</select>
+						</div>
 					</div>
-				</div>
-			</fieldset>
+					<div class="form-group" id="academic-wrapper"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Academic Rank</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<input type="text" name="academic_rank" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group" id="administrative-wrapper"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12" >Administrative Rank</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<input type="text" name="administrative_rank" class="form-control" />
+						</div>
+					</div>
+					<div class="form-group"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Honorarium</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="honorarium"> 
+								<option>Faculty</option>
+								<option>Employee</option> 
+							</select>
+						</div>
+					</div>
+					<div class="form-group"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Honorarium Expiration Date</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<input type="date" class="form-control" name="honorarium_expiry" />
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				     <div class="ln_solid"></div>
+					<div class="form-group">
+						<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2 text-right">
+							<button class="btn btn-primary prev" >Previous</button>
+							<button type="submit" class="btn btn-success next">Next</button>
+						</div>
+					</div> 
+				</fieldset>
 
-			<fieldset class="form-step" step-no = '4'>
-				<div class="success-page text-center">
-                    <span>Employee Added Successfully</span>
-				</div>
-			</fieldset>
+				<fieldset class="form-step" step-no = '3'>
+					<p>Select file and click submit to complete employee registration.</p>
+					<div class="file-upload">
+						<div class="form-group" id="resume-wrapper">
+							<div class="input-group input-file" name="resume">
+								<input type="text" class="form-control" placeholder='Choose a file...' />
+								<span class="input-group-btn">
+									<button class="btn btn-default btn-choose" type="button">Choose</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="ln_solid"></div>
+					<div class="form-group">
+						<div class="col-md-9 col-sm-9	 col-xs-12 col-md-offset-2 text-right">
+							<button class="btn btn-primary prev">Previous</button>
+							<input type="submit" class="btn btn-success"> 
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset class="form-step" step-no = '4'>
+					<div class="success-page text-center">
+						<span>Employee Added Successfully</span>
+					</div>
+				</fieldset>
 			{{ Form::close() }}
 		</div>
 	</div>

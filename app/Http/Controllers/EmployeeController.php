@@ -30,7 +30,7 @@ class EmployeeController extends Controller
 
 		$departments = Department::select('id','name')->get();
         $campuses = Campus::select('id','name')->get();
-        $roles = Roles::select('id','name')->get();
+        $roles = Roles::select('id','name')->orderBy('name')->get();
         $schedules = $this->getSchedules(Schedule::all());
        
 		return view('Employee.new', compact('departments','campuses','roles','schedules'));
@@ -161,10 +161,31 @@ class EmployeeController extends Controller
                 $employee->civil_service = json_decode($employee->civil_service);
                 $employee->involvement = json_decode($employee->involvement);
                 $employee->voluntary = json_decode($employee->voluntary);
+                $employee->educational_background = json_decode($employee->educational_background);
+                $elementary = $employee->educational_background->elementary;
+                $secondary = $employee->educational_background->secondary;
+                $vocational = $employee->educational_background->vocational;
+                $college = $employee->educational_background->college;
+                $graduate = $employee->educational_background->graduate;
+                // dd($elementary);
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
-             
-                return view('Employee.edit', compact('employee','departments','campuses','age','role','roles', 'partimeScheds'));
+                 
+               // dd(isset($graduate->degree) ? $graduate->degree : '');
+                return view('Employee.edit', compact(
+                    'employee',
+                    'departments',
+                    'campuses',
+                    'age',
+                    'role',
+                    'roles', 
+                    'partimeScheds',
+                    'elementary',
+                    'secondary',
+                    'vocational',
+                    'college',
+                    'graduate'
+                ));
             }
 
         }
@@ -232,32 +253,22 @@ class EmployeeController extends Controller
             'date_joining' => 'required|max:50',
             'resume' => 'max:2500',
             'status' => 'required'
-        ]);
-
+        ]); 
         $employee = new employee;
         $avatar = null;
 
-        if (Input::hasFile('resume')) {
-
+        if (Input::hasFile('resume')) { 
             $file = Input::file('resume');
             $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $extention = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
-
-            do {
-
-                $fileName .= rand(0, 100);
-
-            }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
-
-            $file->storeAs('public/resume/', $fileName . '.' . $extention);
-
+            $extention = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION); 
+            do { 
+                $fileName .= rand(0, 100); 
+            }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention)); 
+            $file->storeAs('public/resume/', $fileName . '.' . $extention); 
             $avatar = $fileName . '.' . $extention;
-        }
-        
-
+        }  
         DB::transaction(function() use ($request, $avatar, $employee) {
-            $store = $employee->store($request->all(), $avatar);
-        
+            $store = $employee->store($request->all(), $avatar); 
             address::create([
                     'employee_id' => $store,
                     'address' => $request->input('street_address'),
@@ -285,13 +296,71 @@ class EmployeeController extends Controller
         
 	}
 
+    public function storeEducationalBackground(Request $request) {
+     //  dd($request->all());
+        $elementary = array(
+            'school' => $request->input('elementary-school'),
+            'degree' => $request->input('elementary-degree'),
+            'year' => $request->input('elementary-year'),
+            'highestDegree' => $request->input('elementary-highestDegree'),
+            'inclusiveDates' => $request->input('elementary-inclusiveDates'),
+            'scholarship' => $request->input('elementary-scholarship'),
+        ); 
+        $secondary = array(
+            'school' => $request->input('secondary-school'),
+            'degree' => $request->input('secondary-degree'),
+            'year' => $request->input('secondary-year'),
+            'highestDegree' => $request->input('secondary-highestDegree'),
+            'inclusiveDates' => $request->input('secondary-inclusiveDates'),
+            'scholarship' => $request->input('secondary-scholarship'),
+        ); 
+        $vocational = array(
+            'school' => $request->input('vocational-school'),
+            'degree' => $request->input('vocational-degree'),
+            'year' => $request->input('vocational-year') ,
+            'highestDegree' => $request->input('vocational-highestDegree'),
+            'inclusiveDates' => $request->input('vocational-inclusiveDates'),
+            'scholarship' => $request->input('vocational-scholarship'),
+        );
+        $college = array(
+            'school' => $request->input('college-school') ,
+            'degree' => $request->input('college-degree'),
+            'year' => $request->input('college-year'),
+            'highestDegree' => $request->input('college-highestDegree'),
+            'inclusiveDates' => $request->input('college-inclusiveDates'),
+            'scholarship' => $request->input('college-scholarship'),
+        );
+        $graduate = array(
+            'school' => $request->input('graduate-school'),
+            'degree' => $request->input('graduate-degree') ,
+            'year' => $request->input('graduate-year') ,
+            'highestDegree' => $request->input('graduate-highestDegree'),
+            'inclusiveDates' => $request->input('graduate-inclusiveDates'),
+            'scholarship' => $request->input('graduate-scholarship') ,
+        );
+        $data = json_encode(array(
+            'elementary' => $elementary,
+            'secondary' => $secondary,
+            'vocational' => $vocational,
+            'college' => $college,
+            'graduate' => $graduate
+        )); 
+        //dd($data);
+        // dd($request->all());
+        $employee = employee::find($request->input('id'));
+       // dd($employee);
+        $employee->educational_background = $data;
+        $employee->save();
+        return redirect()->back()->with('success','Updated successfully.');
+    }
+
     public function profile(Request $request) {
         
         $id = $request->input('id');
 
         if ($id) {
 
-            $profile = employee::select('employees.id','tenure','education','employee_id','employees.campus_id as campus_id','avatar','first_name','last_name','middle_name','gender','birthday','email_address','mobile','telephone','marital_status','role_id','employment_type','salary','date_joining','resume','status', 'roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
+            $profile = employee::select('employees.*','roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
                             ->leftJoin('roles','roles.id','=', 'employees.role_id')
                             ->leftJoin('departments','departments.id','=','employees.department_id')
                             ->leftJoin('campuses','campuses.id','=','employees.campus_id')

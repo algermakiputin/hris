@@ -71,25 +71,25 @@
 							<li role="presentation" class=""><a href="#employment" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Employment Details</a>
 							</li>
 							<li role="presentation" ><a href="#files" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="true">Documents</a>
-							</li>
-							 
+							</li> 
 							<li role="presentation" ><a href="#schedule" role="tab" data-toggle="tab" aria-expanded="true">Schedule </a>
 							</li>
-						 
+							<li role="presentation" ><a href="#education" role="tab" data-toggle="tab" aria-expanded="true">Education </a>
+							</li>
+							<li role="presentation" ><a href="#work" role="tab" data-toggle="tab" aria-expanded="true">Work </a>
+							</li>
 						</ul>
 						<div id="myTabContent" class="tab-content">
 							<div role="tabpanel" class="tab-pane fade" id="schedule">
 								<table class="table table-striped table-bordered table-hover">
 									<tr>
 										<th colspan="3"><i class="fa fa-clock-o"></i> Schedule </th>
-									</tr>
-									 
+									</tr> 
 									@if (count($schedules))
 										@foreach($schedules as $key => $schedule)
 											<tr>
 									 			<th colspan="4">{{  config('config.weekOfDay')[$key - 1] }}</th>
-									 		</tr>
-											
+									 		</tr> 
 											@foreach ($schedule as $sched) 
 											<tr>
 												<td>{{ config('config.weekOfDay')[(int)$sched->day - 1] }}</td>
@@ -141,8 +141,39 @@
 									<tr>
 										<td>Education Level:</td>
 										<td>{{ $profile->education }}</td>
+									</tr> 
+									<tr>
+										<td>Religious Affiliation:</td>
+										<td>{{ $profile->religiousAffiliation }}</td>
 									</tr>
-
+									<tr>
+										<td>Height:</td>
+										<td>{{ $profile->height }}</td>
+									</tr>
+									<tr>
+										<td>Weight:</td>
+										<td>{{ $profile->weight }}</td>
+									</tr>
+									<tr>
+										<td>Blood Type:</td>
+										<td>{{ $profile->bloodType }}</td>
+									</tr>
+									<tr>
+										<td>Tin:</td>
+										<td>{{ $profile->tin }}</td>
+									</tr>
+									<tr>
+										<td>SSS:</td>
+										<td>{{ $profile->sss }}</td>
+									</tr>
+									<tr>
+										<td>Philhealth:</td>
+										<td>{{ $profile->philhealth }}</td>
+									</tr>
+									<tr>
+										<td>Citizenship:</td>
+										<td>{{ $profile->citizenship }}</td>
+									</tr>
 								</table>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="employment" aria-labelledby="profile-tab">
@@ -199,6 +230,10 @@
 										</td>
 									</tr>
 								</table>
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="education" aria-labelledby="education-tab"> 
+							</div>
+							<div role="tabpanel" class="tab-pane fade" id="work" aria-labelledby="work-tab"> 
 							</div>
 						</div>
 					</div>

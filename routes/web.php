@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::post('career/store','EmployeeController@storeCareer');
 	Route::post('involvement/store','EmployeeController@storeInvolvement');
 	Route::post('voluntary/store','EmployeeController@storeVoluntary');
+	Route::post('educationalBackground/store','EmployeeController@storeEducationalBackground');
 	Route::group(['middleware' => ['CheckRole']], function() {
 		//Employee
 		Route::get('employee/new', 'EmployeeController@new');
