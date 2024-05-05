@@ -2726,7 +2726,14 @@ function groupBy(list, keyGetter) {
     return map;
 }
 
-$("#administrative-wrapper").hide();
+
+if ($("#designation").val() === "Faculty") {
+    $("#academic-wrapper").show();
+    $("#administrative-wrapper").hide();
+} else {
+    $("#administrative-wrapper").show();
+    $("#academic-wrapper").hide();
+}
 
 $("#designation").change(function() { 
     if ($(this).val() === "Faculty") {

@@ -135,8 +135,7 @@
             </table>
         </div>
     </div>
-</div> 
-
+</div>  
 <div>
     <div class="card">
         <div class="card-header"><b>Involvement In Other CIVIC (Non Government/People) Voluntary Organization</b> <button class="btn btn-success pull-right" id="add-voluntary-btn">Add</button></div>

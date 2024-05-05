@@ -174,10 +174,13 @@
 										<td>Citizenship:</td>
 										<td>{{ $profile->citizenship }}</td>
 									</tr>
+									<tr>
+										<td>Unit:</td>
+										<td>{{ $profile->unit }}</td>
+									</tr>
 								</table>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="employment" aria-labelledby="profile-tab">
-
 								<table class="table">
 									<tr>
 										<th colspan="2"><i class="fa fa-briefcase"></i> Employment Details</th>
@@ -210,7 +213,30 @@
 										<td>Date Joining:</td>
 										<td>{{ $profile->date_joining }}</td>
 									</tr>
-								 
+									<tr>
+										<td>Employment Status:</td>
+										<td>{{ $profile->employment_status }}</td>
+									</tr>
+									<tr>
+										<td>Designation:</td>
+										<td>{{ $profile->designation2 }}</td>
+									</tr>
+									<tr class="{{ $profile->designation2 !== 'Faculty' ? 'hide' : '' }}">
+										<td>Academic Rank:</td>
+										<td>{{ $profile->academic_rank }}</td>
+									</tr>
+									<tr class="{{ $profile->designation2 !== 'Employee' ? 'hide' : '' }}">
+										<td>Administrative Rank:</td>
+										<td>{{ $profile->administrative_rank }}</td>
+									</tr>
+									<tr>
+										<td>Honorarium:</td>
+										<td>{{ $profile->honorarium }}</td>
+									</tr>
+									<tr>
+										<td>Honorarium Expiry:</td>
+										<td>{{ $profile->honorarium_expiry }}</td>
+									</tr>
 								</table>
 
 							</div>
@@ -232,8 +258,181 @@
 								</table>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="education" aria-labelledby="education-tab"> 
+								<table class="table table-stripped table-hover" id="educational-background" width="100%">
+									<thead>
+										<th width="10%">Level</th>
+										<th width="20%">School</th>
+										<th width="20%">Degree</th>
+										<th width="20%">Year Graduated</th>
+										<th width="10%">Highes Grade/Level/Units Earned(if not graduated)</th>
+										<th width="10%">Inclusive dates of attendance from - to</th>
+										<th width="10%">Scholarship/Academic honors received</th> 
+									</thead>
+									<tbody>  
+										<tr>
+											<td>Elementary</td>
+											<td><textarea name="elementary-school" rows="5" class="form-control">{{ isset($elementary->school) ? $elementary->school : '' }}</textarea></td>
+											<td><textarea name="elementary-degree" rows="5" class="form-control hidden">{{ isset($elementary->degree) ? $elementary->degree : ''  }}</textarea></td>
+											<td><textarea name="elementary-year" rows="5" class="form-control">{{ isset($elementary->year) ? $elementary->year : '' }}</textarea></td>
+											<td><textarea name="elementary-highestGrade" rows="5" class="form-control">{{ isset($elementary->highestGrade) ? $elementary->highestGrade : '' }}</textarea></td>
+											<td><textarea name="elementary-inclusiveDates" rows="5" class="form-control">{{ isset($elementary->inclusiveDates) ? $elementary->inclusiveDates : '' }}</textarea></td>
+											<td><textarea name="elementary-scholarship" rows="5" class="form-control">{{ isset($elementary->scholarship) ? $elementary->scholarship : '' }}</textarea></td>
+										</tr>  
+										<tr>
+											<td>Secondary</td>
+											<td><textarea name="secondary-school" rows="5" class="form-control">{{ isset($secondary->school) ? $secondary->school : '' }}</textarea></td>
+											<td><textarea hidden name="secondary-degree" name="" rows="5" class="form-control hidden">{{ isset($secondary->degree) ? $secondary->degree : '' }}</textarea></td>
+											<td><textarea name="secondary-year" rows="5" class="form-control">{{ isset($secondary->year) ? $secondary->year : '' }}</textarea></td>
+											<td><textarea name="secondary-highestGrade" rows="5" class="form-control">{{ isset($secondary->highestGrade) ? $secondary->highestGrade : '' }}</textarea></td>
+											<td><textarea name="secondary-inclusiveDates" rows="5" class="form-control">{{ isset($secondary->inclusiveDates) ? $secondary->inclusiveDates : '' }}</textarea></td>
+											<td><textarea name="secondary-scholarship" rows="5" class="form-control">{{ isset($secondary->scholarship) ? $secondary->scholarship : '' }}</textarea></td>
+										</tr>
+										<tr>
+											<td>Vocational/Trade Course</td>
+											<td><textarea name="vocational-school" rows="5" class="form-control">{{ isset($vocational->school) ? $vocational->school : '' }}</textarea></td>
+											<td><textarea  name="vocational-degree" rows="5" class="form-control hidden">{{ isset($vocational->degree) ? $vocational->degree : '' }}</textarea></td>
+											<td><textarea  name="vocational-year" rows="5" class="form-control">{{ isset($vocational->year) ? $vocational->year : '' }}</textarea></td>
+											<td><textarea  name="vocational-highestGrade" rows="5" class="form-control">{{ isset($vocational->highestGrade) ? $vocational->highestGrade : '' }}</textarea></td>
+											<td><textarea name="vocational-inclusiveDates" rows="5" class="form-control">{{ isset($vocational->inclusiveDates) ? $vocational->inclusiveDates : '' }}</textarea></td>
+											<td><textarea  name="vocational-scholarship" rows="5" class="form-control">{{ isset($vocational->scholarship) ? $vocational->scholarship : '' }}</textarea></td>
+										</tr>
+										<tr>
+											<td>College</td>
+											<td><textarea  name="college-school" rows="5" class="form-control">{{ isset($college->school) ? $college->school : '' }}</textarea></td>
+											<td><textarea name="college-degree" rows="5" class="form-control">{{ isset($college->degree) ? $college->degree : '' }}</textarea></td>
+											<td><textarea name="college-year" rows="5" class="form-control">{{ isset($college->year) ? $college->year : ''  }}</textarea></td>
+											<td><textarea  name="college-highestGrade" rows="5" class="form-control">{{ isset($college->highestGrade) ? $college->highestGrade : '' }}</textarea></td>
+											<td><textarea name="college-inclusiveDates" rows="5" class="form-control">{{ isset($college->inclusiveDates) ? $college->inclusiveDates :'' }}</textarea></td>
+											<td><textarea name="college-scholarship" rows="5" class="form-control">{{ isset($college->scholarship) ? $college->scholarship : '' }}</textarea></td>
+										</tr>
+										<tr>
+											<td>Graduate Studies</td>
+											<td><textarea  name="graduate-school" rows="5" class="form-control">{{ isset($graduate->school) ? $graduate->school : '' }}</textarea></td>
+											<td><textarea  name="graduate-degree" rows="5" class="form-control">{{ isset($college->degree) ? $college->degree : '' }}</textarea></td>
+											<td><textarea   name="graduate-year" rows="5" class="form-control">{{ isset($college->year) ? $college->year : '' }}</textarea></td>
+											<td><textarea  name="graduate-highestGrade" rows="5" class="form-control">{{ isset($college->highestGrade) ? $college->highestGrade : '' }}</textarea></td>
+											<td><textarea  name="graduate-inclusiveDates" rows="5" class="form-control">{{ isset($college->inclusiveDates) ? $college->inclusiveDates : '' }}</textarea></td>
+											<td><textarea  name="graduate-scholarship" rows="5" class="form-control">{{ isset($college->scholarship) ? $college->scholarship : '' }}</textarea></td>
+										</tr>                  
+									</tbody>
+								</table>
+								<div>
+									<div class="card">
+										<div class="card-header"><b>Involvement In Other Educational Or Professional Organization</b> </div>
+										<div class="card-body">
+											<table class="table table-stripped table-hover" id="involvement-list-table">
+												<thead>
+													<th>Organization Name</th>
+													<th>Organization Address</th>
+													<th>From</th>
+													<th>To</th>
+													<th>Position</th> 
+												</thead>
+												<tbody>
+												@if($profile->involvement)
+													@foreach($profile->involvement as $involvement)
+													<tr>
+														<td>{{ isset($involvement->organization) ? $involvement->organization : '' }}</td>
+														<td>{{ isset($involvement->address) ? $involvement->address : '' }}</td>
+														<td>{{ isset($involvement->from) ? $involvement->from : '' }}</td>
+														<td>{{ isset($involvement->to) ? $involvement->to : '' }}</td>
+														<td>{{ isset($involvement->position) ? $involvement->position : '' }}</td> 
+													</tr>
+													@endforeach
+												@else 
+													<tr><td colspan="7">No data available</td></tr>
+												@endif
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>  
+								<div>
+									<div class="card">
+										<div class="card-header"><b>Involvement In Other CIVIC (Non Government/People) Voluntary Organization</b></div>
+										<div class="card-body">
+											<table class="table table-stripped table-hover" id="voluntary-list-table">
+												<thead>
+													<th>Organization Name</th>
+													<th>Organization Address</th>
+													<th>From</th>
+													<th>To</th>
+													<th>Position</th> 
+												</thead>
+												<tbody>
+												@if($profile->voluntary)
+													@foreach($profile->voluntary as $voluntary)
+													<tr>
+														<td>{{ isset($voluntary->organization) ? $voluntary->organization : '' }}</td>
+														<td>{{ isset($voluntary->address) ? $voluntary->address : '' }}</td>
+														<td>{{ isset($voluntary->from) ? $voluntary->from : '' }}</td>
+														<td>{{ isset($voluntary->to) ? $voluntary->to : '' }}</td>
+														<td>{{ isset($voluntary->position) ? $voluntary->position : '' }}</td> 
+													</tr>
+													@endforeach
+												@else 
+													<tr><td colspan="7">No data available</td></tr>
+												@endif
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div role="tabpanel" class="tab-pane fade" id="work" aria-labelledby="work-tab"> 
+								<div class="card">
+									<div class="card-header"><b>Work Experience</b></div>
+									<div class="card-body">
+										<table class="table table-stripped table-hover" id="work-list-table">
+											<thead>
+												<th>From</th>
+												<th>To</th>
+												<th>Position Title</th>
+												<th>Company/Office</th>
+												<th>Monthly Salary</th>
+												<th>Status of Employment</th>
+												<th>Length of Service</th>
+											</thead>
+											<tbody>
+											@if($profile->work)
+												@foreach($profile->work as $work)
+												<tr>
+													<td>{{ $work->from }}</td>
+													<td>{{ $work->to }}</td>
+													<td>{{ $work->title }}</td>
+													<td>{{ $work->company }}</td>
+													<td>{{ $work->salary }}</td>
+													<td>{{ $work->employmentStatus }}</td>
+													<td>{{ $work->service }}</td> 
+												</tr>
+												@endforeach
+											@else 
+												<tr><td colspan="7">No data available</td></tr>
+											@endif
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-header"><b>Other Information</b></div>
+									<div class="card-body">
+										<form action="{{ url('employeeInfo/store') }}" method="POST" id="work-exp-form">
+											@csrf
+											@method('post')
+											<input type="hidden" value="{{ $profile->id }}" name="id" />
+											<table class="table">
+												<tr>
+													<th>Special Skills/Hobbies</th>
+													<th>Non-Academic Distinction/Recognition/Awards</th>
+												</tr>
+												<tr>
+													<td><textarea readonly name="hobbies" rows="6" class="form-control">{{ $profile->hobbies }}</textarea></td>
+													<td><textarea readonly name="awards" rows="6" class="form-control">{{ $profile->awards }}</textarea></td>
+												</tr>
+											</table> 
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

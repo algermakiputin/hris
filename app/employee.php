@@ -21,38 +21,37 @@ class employee extends Model
     	}
 
     	public function store($request,$resume) {
-		$this->first_name = $request['first_name'];
-		$this->last_name = $request['family_name'];
-		$this->middle_name = $request['middle_initial'];
-		$this->employee_id = $request['employee_id'];
-		$this->gender = $request['gender'];
-		$this->birthday = $request['birthday'];
-		$this->email_address = $request['email_address'];
-		$this->mobile = $request['mobile'];
-		$this->telephone = $request['telephone'];
-		$this->marital_status = $request['marital_status'];
-		$this->role_id = $request['designation'];
-		$this->campus_id = $request['campus'];
-		$this->department_id = $request['department'];
-		$this->employment_type = $request['employment_type'];
-		$this->salary = $request['salary'];
-		$this->date_joining = $request['date_joining'];
-		$this->resume = $resume; 
-		$this->status = $request['status']; 
-		$this->tenure = $request['tenure'];
-		$this->employment_status = $request['employment_status'];
-		$this->designation2 = $request['designation2'];
-		$this->academic_rank = $request['academic_rank'];
-		$this->administrative_rank = $request['administrative_rank'];
-		$this->honorarium = $request['honorarium'];
-		$this->honorarium_expiry = $request['honorarium_expiry'];
-		$this->save();
-		return $this->id;
+			$this->first_name = $request['first_name'];
+			$this->last_name = $request['family_name'];
+			$this->middle_name = $request['middle_initial'];
+			$this->employee_id = $request['employee_id'];
+			$this->gender = $request['gender'];
+			$this->birthday = $request['birthday'];
+			$this->email_address = $request['email_address'];
+			$this->mobile = $request['mobile'];
+			$this->telephone = $request['telephone'];
+			$this->marital_status = $request['marital_status'];
+			$this->role_id = $request['designation'];
+			$this->campus_id = $request['campus'];
+			$this->department_id = $request['department'];
+			$this->employment_type = $request['employment_type'];
+			$this->salary = $request['salary'];
+			$this->date_joining = $request['date_joining'];
+			$this->resume = $resume; 
+			$this->status = $request['status']; 
+			$this->tenure = $request['tenure'];
+			$this->employment_status = $request['employment_status'];
+			$this->designation2 = $request['designation2'];
+			$this->academic_rank = $request['academic_rank'];
+			$this->administrative_rank = $request['administrative_rank'];
+			$this->honorarium = $request['honorarium'];
+			$this->honorarium_expiry = $request['honorarium_expiry'];
+			$this->unit = $request['unit'];
+			$this->save();
+			return $this->id;
     	}
 
     	public function update_personal_details($request) {
-            
-
     		$update = $this->where('id', $request['_id'])->update([
     				'first_name' => $request['first_name'],
     				'last_name' => $request['last_name'],
@@ -72,6 +71,7 @@ class employee extends Model
 					'sss' => $request['sss'],
 					'philhealth' => $request['philhealth'],
 					'citizenship' => $request['citizenship']
+					
     			]); 
 	           return $update;
     	}
@@ -86,7 +86,14 @@ class employee extends Model
     				'date_joining' => $request['date_joining'],
     				'status' => $request['status'], 
     				'tenure' => $request['tenure'],
-                    'employee_id' => $request['_id']
+                    'employee_id' => $request['_id'],
+					'employment_status' => $request['employment_status'],
+					'designation2' =>  $request['designation2'],
+					'academic_rank' => $request['academic_rank'],
+					'administrative_rank' => $request['administrative_rank'],
+					'honorarium' => $request['honorarium'],
+					'honorarium_expiry' => $request['honorarium_expiry'],
+					'unit' => $request['unit']
     			); 
     		if ($this->where('id', $request['id'])->update($data)) {
                 return true;

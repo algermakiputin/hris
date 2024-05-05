@@ -112,6 +112,65 @@
                     </select>
 			</div>
 		</div>
+		<div class="form-group"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<select class="form-control" name="unit" value="{{ $employee->unit }}"> 
+					<option {{ $employee->unit === "OFFICE OF THE PRESIDENT" ? 'selected' : '' }}>OFFICE OF THE PRESIDENT</option>
+					<option {{ $employee->unit === "OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION" ? "selected" : '' }}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
+					<option {{ $employee->unit === "OFFICE OF THE VICE PRESIDENT FOR FINANCE" ? "selected" : "" }}>OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
+					<option {{ $employee->unit === "OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS" ? "selected" : "" }}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option> 
+				</select>
+			</div>
+		</div>
+		<div class="form-group"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Employment Status</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<select class="form-control" name="employment_status" value="{{ $employee->employment_status }}"> 
+					<option>Project Based</option>
+					<option>Contractual</option>
+					<option>Permanent</option>
+					<option>Provisionary</option>
+					<option>Part Time</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Designation</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<select class="form-control" name="designation2" id="designation" value="{{ $employee->designation2 }}"> 
+					<option {{ $employee->designation2 === "Faculty" ? "selected" : "" }}>Faculty</option>
+					<option {{ $employee->designation2 === "Employee" ? "selected" : "" }}>Employee</option> 
+				</select>
+			</div>
+		</div>
+		<div class="form-group" id="academic-wrapper"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Academic Rank</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<input type="text" name="academic_rank" class="form-control" value="{{ $employee->academic_rank }}" />
+			</div>
+		</div>
+		<div class="form-group" id="administrative-wrapper"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12" >Administrative Rank</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<input type="text" name="administrative_rank" value="{{ $employee->administrative_rank }}" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Honorarium</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<select class="form-control" name="honorarium" value="{{ $employee->honorarium }}"> 
+					<option>Faculty</option>
+					<option>Employee</option> 
+				</select>
+			</div>
+		</div>
+		<div class="form-group"> 
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Honorarium Expiration Date</label>
+			<div class="col-md-4 col-sm-4 col-xs-12">
+				<input type="date" class="form-control" name="honorarium_expiry" value="{{ $employee->honorarium_expiry }}" />
+			</div>
+		</div>
 		<div class="ln_solid"></div>
 		<div class="form-group">
 			<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">

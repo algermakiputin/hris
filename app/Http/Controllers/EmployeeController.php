@@ -110,7 +110,7 @@ class EmployeeController extends Controller
     }
 
     public function update(Request $request, employee $employee) {
-        
+        dd($request->all());
         $employee->update_personal_details($request->all());
         return redirect()->back()->with('success-personal','Employee has been updated successfully');
 
@@ -162,11 +162,11 @@ class EmployeeController extends Controller
                 $employee->involvement = json_decode($employee->involvement);
                 $employee->voluntary = json_decode($employee->voluntary);
                 $employee->educational_background = json_decode($employee->educational_background);
-                $elementary = $employee->educational_background->elementary;
-                $secondary = $employee->educational_background->secondary;
-                $vocational = $employee->educational_background->vocational;
-                $college = $employee->educational_background->college;
-                $graduate = $employee->educational_background->graduate;
+                $elementary = isset($employee->educational_background->elementary) ? $employee->educational_background->elementary : null;
+                $secondary = isset($employee->educational_background->secondary) ? $employee->educational_background->secondary : null;
+                $vocational = isset($employee->educational_background->vocational) ? $employee->educational_background->vocational : null;
+                $college = isset($employee->educational_background->college) ? $employee->educational_background->college : null;
+                $graduate = isset($employee->educational_background->graduate) ? $employee->educational_background->graduate : null;
                 // dd($elementary);
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
@@ -378,9 +378,17 @@ class EmployeeController extends Controller
                     $schedules = $this->formatSchedules($schedules);
               
                 $address = address::where('employee_id',$profile->id)->first();
-              
-               
-                return view('Employee.profile',compact('profile','age','schedules','address'));
+                $profile->educational_background = json_decode($profile->educational_background);
+                $elementary = isset($profile->educational_background->elementary) ? $profile->educational_background->elementary : null;
+                $secondary = isset($profile->educational_background->secondary) ? $profile->educational_background->secondary : null;
+                $vocational = isset($profile->educational_background->vocational) ? $profile->educational_background->vocational : null;
+                $college = isset($profile->educational_background->college) ? $profile->educational_background->college : null;
+                $graduate = isset($profile->educational_background->graduate) ? $profile->educational_background->graduate : null;
+                $profile->involvement = json_decode($profile->involvement);
+                $profile->voluntary = json_decode($profile->voluntary);
+                $profile->work = json_decode($profile->work);
+
+                return view('Employee.profile',compact('profile','age','schedules','address', 'elementary', 'secondary', 'vocational', 'college', 'graduate'));
                     
                 
             }

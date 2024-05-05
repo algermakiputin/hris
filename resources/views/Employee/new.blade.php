@@ -172,7 +172,7 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-step " step-no = '2'>
+				<fieldset class="form-step" step-no = '2'>
 					<div class="form-group">
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Campus Assign</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
@@ -263,6 +263,17 @@
 								<option value="">Permanent Position</option>
 								<option value="0">No</option>
 								<option value="1">Yes</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group"> 
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="unit"> 
+								<option>OFFICE OF THE PRESIDENT</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option> 
 							</select>
 						</div>
 					</div>
