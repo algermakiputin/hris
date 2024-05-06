@@ -256,24 +256,22 @@
       </div>
       <div class="modal-body">
         <table class="table table-bordered">
-			<tr>
-				<th class="text-center" >Type</th>
+			<tr> 
 				<th class="text-center">Allowance Per School Year</th>
 				<th class="text-center">Used</th>
 				<th class="text-center">Balance</th>
 			</tr>
 		 	@if ($leave_types)
 				@foreach($leave_types as $l)
-				<tr>
-					<td class="text-center">{{$l['name']}}</td>
-					<td class="text-center">{{$l['allowance']}} Days</td>
-					<td class="text-center">{{ $l['used'] }}</td>
-					<td class="text-center">{{ $l['balance'] }}</td>
+				<tr> 
+					<td class="text-center">{{$leaveCredits}} Days</td>
+					<td class="text-center">{{ $totalHoursUsed / 8 }}</td>
+					<td class="text-center">{{( ($leaveCredits * 8) - $totalHoursUsed ) / 8}}</td>
 				</tr>
 				@endforeach
 			@else
 				<tr>
-					<td class="text-center" colspan="4">No leave allocated for you department</td>
+					<td class="text-center" colspan="3">No leave allocated for you department</td>
 				</tr>
 			@endif
 		</table>

@@ -399,6 +399,51 @@ class EmployeeController extends Controller
         
     }
 
+    public function exportProfile(Request $request) {
+        
+        $id = $request->input('id');
+
+        if ($id) {
+
+            $profile = employee::select('employees.*','roles.name as role_name','departments.name as department_name','campuses.name as campus_name')
+                            ->leftJoin('roles','roles.id','=', 'employees.role_id')
+                            ->leftJoin('departments','departments.id','=','employees.department_id')
+                            ->leftJoin('campuses','campuses.id','=','employees.campus_id')
+                            ->where('employee_id', $id)->first();
+          
+            if ($profile) {
+                
+                $this->authorize('show', $profile);
+                $scheduleID = 0;
+                $age = (new Carbon($profile->birthday))->diffInYears(Carbon::now());
+                $schedules = Schedule::where(['employee_id' => $profile->employee_id, 'campus_id' => $profile->campus_id])->orderBy('day','ASC')
+                                ->orderBy('start', 'ASC')
+                                ->get();
+                if ($schedules)
+                    $schedules = $this->formatSchedules($schedules);
+              
+                $address = address::where('employee_id',$profile->id)->first();
+                $profile->educational_background = json_decode($profile->educational_background);
+                $elementary = isset($profile->educational_background->elementary) ? $profile->educational_background->elementary : null;
+                $secondary = isset($profile->educational_background->secondary) ? $profile->educational_background->secondary : null;
+                $vocational = isset($profile->educational_background->vocational) ? $profile->educational_background->vocational : null;
+                $college = isset($profile->educational_background->college) ? $profile->educational_background->college : null;
+                $graduate = isset($profile->educational_background->graduate) ? $profile->educational_background->graduate : null;
+                $profile->involvement = json_decode($profile->involvement);
+                $profile->voluntary = json_decode($profile->voluntary);
+                $profile->work = json_decode($profile->work);
+
+                return view('Employee.export',compact('profile','age','schedules','address', 'elementary', 'secondary', 'vocational', 'college', 'graduate'));
+                    
+                
+            }
+
+            abort(404);
+
+        }
+        
+    }
+
     public function destroy(Request $request) {
 
         $id = $request->input('id');
@@ -459,6 +504,12 @@ class EmployeeController extends Controller
                             <span class="caret"></span>
                         </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li>
+                                    <form method="get" action="' .url('export/profile'). '"> 
+                                        <input type="hidden" name="id" value="'.$employee->employee_id.'">
+                                        <button type="submit" class="btn-link"> <i class="fa fa-file"></i> Export Profile </button>
+                                    </form>
+                                </li>
                                 <li>
                                     <form method="get" action="' .url('employee/profile'). '"> 
                                         <input type="hidden" name="id" value="'.$employee->employee_id.'">

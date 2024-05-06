@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth']],function() {
 	//Employee
 	Route::get('employee', 'EmployeeController@index');
 	Route::get('employee/profile','EmployeeController@profile');
+	Route::get('export/profile','EmployeeController@exportProfile');
 	Route::post('employee/data','EmployeeController@data');
 	Route::get('leave/application','LeaveController@application');
 		 
