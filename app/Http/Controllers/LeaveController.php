@@ -7,7 +7,7 @@ use App\Leave_type;
 use App\Leave;
 use App\employee;
 use App\departmentHeads;
-use App\Campus;
+use App\Campus; 
 use App\LeaveApproval;
 use DB;
 use App\Roles;
@@ -380,15 +380,18 @@ class LeaveController extends Controller
 
 	}
 
-	public function getCurrentSem() { 
+	public function isFirstSem($currentMonth) {
+		return $isFirstSem = in_array((int)$currentMonth, $this->firstSem);
 	}
 
-	public function getTotalHoursUsed() {
-		$sy_start = config('config.school_year.start');
-		$sy_end = config('config.school_year.end');
-		
-		$currentMonth = (int)date("m");	  
+	public function isSecondSem($currentMonth) {
+		return $isSescondSem = in_array((int)$currentMonth, $this->secondSem);
+	}
 
+	public function getTotalHoursUsedEmployee() {
+		$sy_start = config('config.school_year.start');
+		$sy_end = config('config.school_year.end'); 
+		$currentMonth = (int)date("m");	   
 		$isFirstSem = in_array((int)$currentMonth, $this->firstSem);
 		$isSecondSem = in_array((int)$currentMonth, $this->secondSem);
 		$firstSemYearAdjustment = $isSecondSem ? (int)date('Y') - 1 : (int)date('Y');
@@ -426,36 +429,99 @@ class LeaveController extends Controller
 		return $totalHours;
 	}
 
+	public function getTotalHoursFaculty() {
+		$startDate = "";
+		$endDate = "";
+
+		if ($this->isFirstSem(date('m'))) {
+			$startDate = date("Y-".$this->firstSem[0]."-d");
+			$endDate = date("Y-".$this->firstSem[count($this->firstSem) - 1]."-d");
+		} else {
+			$startDate = date("Y-".$this->secondSem[0]."-d");
+			$endDate = date("Y-".$this->secondSem[count($this->firstSem) - 1]."-d");
+		}  
+
+		$totalHours = 0;
+		$leaves = Leave::whereBetween('date', [$startDate, $endDate])
+						->where('employee_id', Auth()->user()->employee_id)
+						->where('status', 1)
+						->where('reset', 0)
+						->get(); 
+		$start = Carbon::parse("2024-05-06");
+		$end = Carbon::parse("2024-05-08");
+		
+		$start = Carbon::parse($start);
+					$end = Carbon::parse($end);
+					$totalDays = $start->diffInDays($end); 
+		if ($leaves) {
+			foreach($leaves as $leave) {
+				if ($leave->duration === "whole_day") {
+					$totalHours += 8;
+				} else if ($leave->duration === "short") {
+					$start = Carbon::parse($leave->start);
+					$end = Carbon::parse($leave->end);
+					$totalHours += $start->diffInHours($end);
+				} else if ($leave->duration === "long") {
+					$start = Carbon::parse($leave->start);
+					$end = Carbon::parse($leave->end);
+					$totalDays = $start->diffInDays($end);
+					$totalHours += $totalDays * 8;
+				}
+			}
+		}
+
+		return $totalHours;
+	}
+
 	public function application() { 
-		$totalHoursUsed = $this->getTotalHoursUsed();
+		$totalHoursUsed = 0;
 		$employee = employee::where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
 		->first();
+		$role = Roles::where('id', $employee->role_id)->first();
 		$department_id = $employee->department_id;
 		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
 		$leaveBalance = 0;
 		$employmentStatus = $employee->employment_status;
 		$designation = $employee->designation2;
-		$hiringDate = $employee->date_joining;
-		$leaveCredits = 0;
-		
-		if ($designation === "Employee") { 
-			$totalMonthsEmployed = Carbon::now()->diffInMonths($hiringDate);
-			if ($totalMonthsEmployed < 6  && $employmentStatus !== "Permanent") {
+		$hiringDate = "2023-01-01";//$employee->date_joining;
+		$leaveCredits = 0; 
+		$isNewEmployee = Carbon::parse($hiringDate)->diffInMonths(Carbon::parse("2025-08-01")) < 6; 
+		$totalMonthsEmployed = Carbon::now()->diffInMonths($hiringDate);
+	 
+		if ($designation === "Employee") {  
+			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
+			if ($employmentStatus === "Part Time") {
+				$leaveCredits = 0;
+			}else if ($totalMonthsEmployed < 6  && $employmentStatus !== "Permanent") {
 				$leaveCredits = 0;
 			} else if ($totalMonthsEmployed > 6 && $employmentStatus !== "Permanent") {
 				$leaveCredits = 6;
-			} else if ($employmentStatus === "Permanent") {
+			} else if ($employmentStatus === "Permanent" && !$isNewEmployee) { 
+				$leaveCredits = 17.5;
+			} else if ($this->isFirstSem(date('m')) && $isNewEmployee) {
 				$leaveCredits = 17.5;
 			}
-		} 
+		} else if ($designation === "Faculty" && $totalMonthsEmployed >= 12) {
+			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanenet") {
+				$leaveCredits = 6;
+			} 
+
+			$totalHoursUsed = $this->getTotalHoursFaculty();
+		} else if (strtolower($role->name) === "dean") {
+			$leaveCredits = 20;
+			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
+		}
+	 
+		$balance = $leaveCredits - ($totalHoursUsed / 8);
+ 
 		// faculty = per sem
 		// employee = per 
 		//Permanent,  Contractual, Full Time = 5 leave credits per year upon 1 year;
 		// if role === dean 10 leave credits per sem
 		// all part time no leave credits 
 		// if newly hired turned to permanent after 6 mos  + 6 leave credits
-
-		return view('Leave.application',compact('leave_types','department_id', 'leaveCredits', 'totalHoursUsed'));
+		
+		return view('Leave.application',compact('leave_types','department_id', 'leaveCredits', 'totalHoursUsed', 'balance'));
 
 	}
 
@@ -717,7 +783,7 @@ class LeaveController extends Controller
 		return view('Leave.setting');
 	}
 
-	public function insert(Request $request) {
+	public function insert(Request $request) { 
 		$request->validate([
 			'leave_type' => 'required',
 			'duration' => 'required',
@@ -727,12 +793,11 @@ class LeaveController extends Controller
 		$duration = $request->input('duration');
 		
 		if ($duration == "short") {
-			$start = $request->input('start_time');
-			$end = $request->input('end_time');
+			$start = $request->input('timeradio') === "AM" ? "08:00 AM" : "01:00PM";
+			$end = $request->input('timeradio') === "AM" ? "12:00 PM" : "05:00 PM";
 			$date = $request->input('leave_date');
 			$request->validate([
-				'start_time' => 'required',
-				'end_time' => 'required',
+				'timeradio' => 'required', 
 				'leave_date' => 'required'
 				]);
 

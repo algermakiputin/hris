@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('export/profile','EmployeeController@exportProfile');
 	Route::post('employee/data','EmployeeController@data');
 	Route::get('leave/application','LeaveController@application');
-		 
+	Route::get('reset/leaves','EmployeeController@resetLeaves');	 
 	Route::get('employee/edit','EmployeeController@edit');
 	Route::post('employee/upload-avatar','EmployeeController@uploadAvatar');
 	Route::patch('employee/update','EmployeeController@update');

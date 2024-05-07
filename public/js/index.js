@@ -1932,6 +1932,22 @@ class Leave {
                 return $err;
             }
         });
+
+        $("#leave_application_form").submit(function(e) { 
+            var duration = $("#duration").val(); 
+            if (duration === "long") { 
+                var document = $("#resume").val();
+                const startDate = new Date($("#start_date").val());
+                const endDate = new Date($("#end_date").val());
+                const diffTime = Math.abs(endDate - startDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
+
+                if (diffDays >= 2 && !document) {
+                    e.preventDefault();
+                    alert("Document is required for leave request more than 3 days");
+                }
+            }
+        });
     }
 
     report() {

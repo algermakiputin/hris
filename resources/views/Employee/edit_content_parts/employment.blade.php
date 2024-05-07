@@ -127,11 +127,11 @@
 			<label class="control-label col-md-2 col-sm-2 col-xs-12">Employment Status</label>
 			<div class="col-md-4 col-sm-4 col-xs-12">
 				<select class="form-control" name="employment_status" value="{{ $employee->employment_status }}"> 
-					<option>Project Based</option>
-					<option>Contractual</option>
-					<option>Permanent</option>
-					<option>Provisionary</option>
-					<option>Part Time</option>
+					<option {{ $employee->employment_status === "Project Based" ? "selected" : "" }}>Project Based</option>
+					<option {{ $employee->employment_status === "Contractual" ? "selected" : "" }}>Contractual</option>
+					<option {{ $employee->employment_status === "Permanent" ? "selected" : "" }}>Permanent</option>
+					<option {{ $employee->employment_status === "Provisionary" ? "selected" : "" }}>Provisionary</option>
+					<option {{ $employee->employment_status === "Part Time" ? "selected" : "" }}>Part Time</option>
 				</select>
 			</div>
 		</div>

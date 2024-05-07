@@ -16,7 +16,7 @@ use Carbon\Carbon;
 use DB;
 use File;
 use App\Roles;
-
+use App\Leave;
 class EmployeeController extends Controller
 {
     
@@ -487,7 +487,15 @@ class EmployeeController extends Controller
         if ($employees) {
             $counter = 0;
             
-            foreach ($employees as $employee) {
+            foreach ($employees as $employee) {  
+                $resetLeaves = $employee->designation2 === "Faculty" ? '
+                        <li>
+                            <form method="get" action="' .url('reset/leaves'). '">
+                                <input type="hidden" name="id" value="'.$employee->employee_id.'">
+                                <button type="submit" class="btn-link"> <i class="fa fa-refresh"></i> Reset Leave </button>
+                            </form>
+                        </li>
+                ' : "";
                 $nestedData = [
                     $employee->employee_id,
                     ucwords($employee->first_name . ' ' . $employee->last_name),
@@ -522,6 +530,7 @@ class EmployeeController extends Controller
                                         <button type="submit" class="btn-link"> <i class="fa fa-edit"></i> Edit </button>
                                     </form>
                                 </li>
+                                ' . $resetLeaves .  ' 
                                 <li>
                                     <form method="post" action="' .url('employee/destroy'). '" class="delete-form" data-name ="Employee">
                                         <input type="hidden" name="_token" value="'.csrf_token() . '">
@@ -529,8 +538,8 @@ class EmployeeController extends Controller
                                         <input type="hidden" name="_method" value="delete">
                                         <button type="submit" class="btn-link"> <i class="fa fa-trash"></i> Delete </button>
                                     </form>
-                                </li>
-                                
+                                </li> 
+                               
                             </ul>
                         </div>                    
                     '
@@ -552,11 +561,16 @@ class EmployeeController extends Controller
         }
     }
 
+    public function resetLeaves(Request $request) {
+        $id = $request->input('id'); 
+        Leave::where('employee_id', $id)->update(['reset' => 1]);
+        return redirect()->back()->with('success','Leave credits reset successfully.');
+    }
+
     public function filterEmployee($campus_id, $employementType, $search,$start,$limit, $col, $dir) {
         
         if ($campus_id && $employementType) {
-            return  employee::select('id','first_name','last_name','salary','employee_id','role_id','department_id','email_address','status','campus_id')
-                        ->offset($start)
+            return  employee::offset($start)
                         ->limit($limit)
                         ->where(['campus_id' => $campus_id, 'employment_type' => $employementType]) 
                         ->orderBy($col,$dir)
@@ -564,8 +578,7 @@ class EmployeeController extends Controller
         }
 
         if ($campus_id) {
-            return  employee::select('id','first_name','last_name','salary','employee_id','role_id','department_id','email_address','status','campus_id')
-                        ->offset($start)
+            return  employee::offset($start)
                         ->limit($limit)
                         ->where(['campus_id' => $campus_id]) 
                         ->orderBy($col,$dir)
@@ -582,15 +595,13 @@ class EmployeeController extends Controller
         }
         if ($employementType == "" && $search == ""){
 
-            return employee::select('id','first_name','last_name','salary','employee_id','role_id','department_id','email_address','status','campus_id')
-                        ->offset($start)
+            return employee::offset($start)
                         ->limit($limit)
                         ->orderBy($col,$dir)
                         ->get();
         }
         if ($search !== "") {
-            return employee::select('id','first_name','last_name','salary','employee_id','role_id','department_id','email_address','status','campus_id')
-                    ->offset($start)
+            return employee::offset($start)
                     ->limit($limit)
                     ->where(DB::raw('CONCAT(first_name, " ",last_name)'), 'LIKE', '%' . $search . '%') 
                     ->orderBy($col,$dir)

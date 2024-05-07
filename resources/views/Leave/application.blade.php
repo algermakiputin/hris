@@ -63,7 +63,7 @@
 									</div>
 								</div>
 						 	@endif
-						  	@if (!$leave_types) 
+						  	@if ($balance <= 0) 
 						 		<div class="form-group">
 									<div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">
 										 <span class="text-danger">Cannot request for a leave. No leave allocated.</span>
@@ -132,23 +132,20 @@
 										<label class="control-label col-md-3 col-sm-3 col-xs-12">&nbsp;
 										</label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
-											<div class="input-group">
-												<input type='text' placeholder="Start time" class="form-control" id='start_time' name="start_time"/>
-												<span class="input-group-addon">
-													<span class="glyphicon glyphicon-time"></span>
-												</span>
-											</div>
+											<label class="radio-inline">
+												<input type="radio" value="AM" name="timeradio">AM
+											</label>
+											<label class="radio-inline">
+												<input type="radio" value="PM" name="timeradio">PM
+											</label>
+											<!-- <div class="radio">
+												<label><input type="radio" name="timeRadio" checked>AM</label>
+												</div>
+											<div class="radio">
+												<label><input type="radio" name="timeRadio">PM</label>
+											</div> -->
 											<span id="error-2"></span>
-										</div>
-										<div class="col-md-4 col-sm-4 col-xs-12">
-											<div class="input-group">
-												<input type='text' placeholder="End time" class="form-control" id='end_time' name="end_time"/>
-												<span class="input-group-addon">
-													<span class="glyphicon glyphicon-time"></span>
-												</span>
-											</div>
-											<span id="error-2"></span>
-										</div>	 
+										</div> 
 									</div>
 
 									
@@ -231,7 +228,7 @@
 									<label class="control-label col-md-3 col-sm-3 col-xs-12">&nbsp; 
 									</label>
 									<div class="col-md-9 col-sm-9 col-xs-12">
-										<button type="submit" class="btn btn-success">Submit</button>
+										<button type="submit" {{ $balance <= 0 ? 'disabled' : ''}} class="btn btn-success">Submit</button>
 									</div>	 
 								</div>
 					 		</fieldset>
