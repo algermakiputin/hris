@@ -110,7 +110,7 @@ class EmployeeController extends Controller
     }
 
     public function update(Request $request, employee $employee) {
-        dd($request->all());
+        //dd($request->all());
         $employee->update_personal_details($request->all());
         return redirect()->back()->with('success-personal','Employee has been updated successfully');
 
@@ -167,6 +167,8 @@ class EmployeeController extends Controller
                 $vocational = isset($employee->educational_background->vocational) ? $employee->educational_background->vocational : null;
                 $college = isset($employee->educational_background->college) ? $employee->educational_background->college : null;
                 $graduate = isset($employee->educational_background->graduate) ? $employee->educational_background->graduate : null;
+                $familyBackground = isset($employee->familyBackground) ? json_decode($employee->familyBackground) : null;
+                
                 // dd($elementary);
                 if ($partimeScheds)
                     $partimeScheds = $this->formatSchedules($partimeScheds);
@@ -184,7 +186,8 @@ class EmployeeController extends Controller
                     'secondary',
                     'vocational',
                     'college',
-                    'graduate'
+                    'graduate',
+                    'familyBackground'
                 ));
             }
 
@@ -432,7 +435,10 @@ class EmployeeController extends Controller
                 $profile->involvement = json_decode($profile->involvement);
                 $profile->voluntary = json_decode($profile->voluntary);
                 $profile->work = json_decode($profile->work);
-
+                $profile->civil_service = json_decode($profile->civil_service);
+                $profile->training = json_decode($profile->training);
+                $profile->familyBackground = json_decode($profile->familyBackground);
+                //dd($profile);
                 return view('Employee.export',compact('profile','age','schedules','address', 'elementary', 'secondary', 'vocational', 'college', 'graduate'));
                     
                 
@@ -646,12 +652,59 @@ class EmployeeController extends Controller
     }
 
     public function storeCareer(Request $request) {
+       // dd($request->all());
         $id = $request->input('id');
         $data = $request->input('civil_service_data');
         $employee = employee::find($id);
         $employee->civil_service = $data;
         $employee->save();
         return redirect()->back()->with('success','Updated successfully.');
+    }
+
+    public function storeFamilyBackground(Request $request) {
+        $spouseFname = $request->input('spouse-fname');
+        $spouseLname = $request->input('spouse-lname');
+        $spouseMname = $request->input('spouse-mname');
+        $spouseOccupation = $request->input('spouse-occupation');
+        $spouseEmployer = $request->input('spouse-employer');
+        $spouseEmployerContact = $request->input('spouse-employer-contact');
+        $spouseContact = $request->input('spouse-contact');
+
+        $childNames = $request->input('child-name');
+        $childDob = $request->input('child-dob');
+
+        $fatherLname = $request->input('father-lname');
+        $fatherFname = $request->input('father-fname');
+        $fatherMname = $request->input('father-mname');
+
+        $motherLname = $request->input('mother-lname');
+        $motherFname = $request->input('mother-fname');
+        $motherMname = $request->input('mother-mname');
+
+        $data = json_encode(
+            array(
+                'spouseFname' => $spouseFname,
+                'spouseLname' => $spouseLname,
+                'spouseMname' => $spouseMname,
+                'spouseOccupation' => $spouseOccupation,
+                'spouseEmployer' => $spouseEmployer,
+                'spouseEmployerContact' => $spouseEmployerContact,
+                'spouseContact' => $spouseContact,
+                'childNames' => $childNames,
+                'childDob' => $childDob,
+                'fatherLname' => $fatherLname,
+                'fatherFname' => $fatherFname,
+                'fatherMname' => $fatherMname,
+                'motherLname' => $motherLname,
+                'motherFname' => $motherFname,
+                'motherMname' => $motherMname
+            )
+        );
+        $id = $request->input('id');
+        $employee = employee::find($id);
+        $employee->familyBackground = $data;
+        $employee->save();
+        return redirect()->back()->with('success','Family Background Updated successfully.');
     }
 
     public function storeInvolvement(Request $request) { 

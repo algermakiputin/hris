@@ -70,7 +70,7 @@
     <div class="card">
         <div class="card-header"><b>Other Information</b></div>
         <div class="card-body">
-            <form action="{{ url('employeeInfo/store') }}" method="POST" id="work-exp-form">
+            <form action="{{ url('employeeInfo/store') }}" method="POST">
                 @csrf
                 @method('post')
                 <input type="hidden" value="{{ $employee->id }}" name="id" />

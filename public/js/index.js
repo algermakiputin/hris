@@ -2560,6 +2560,7 @@ $("#civil-service-submit-btn").click(function() {
         releaseDate,
     }];
     if (current_civil_service_data) civilService = [...current_civil_service_data, ...civilService];
+    console.log(civilService);
     $("#civil_service_data").val(JSON.stringify(civilService));
     $("#civil-service-form").submit();
 });
@@ -2807,3 +2808,16 @@ function sy_options() {
 
     }
 }
+
+$("#add-child").click(function(e) {
+    $("#child-table tbody").append(`
+        <tr>
+            <td><input type="text" class="form-control" name="child-name[]" /></td>
+            <td><input type="text" class="form-control" name="child-dob[]" /></td>
+        </tr>
+    `);
+});
+
+$("body").on('click', '.child-remove', function() {
+    $(this).parents("tr").remove();
+})

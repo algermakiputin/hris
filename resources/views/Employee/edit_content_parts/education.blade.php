@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-header"><b>Educational Background</b></div>
         <div class="card-body">
-            <form action="{{ url('educationalBackground/store') }}" method="POST" id="civil-service-form">
+            <form action="{{ url('educationalBackground/store') }}" method="POST" >
                     @csrf
                     @method('post')
                     <input type="hidden" name="id" value="{{ $employee->id }}" />
@@ -92,7 +92,7 @@
                         <td>{{ isset($civilService->rating) ? $civilService->rating : '' }}</td>
                         <td>{{ isset($civilService->date) ? $civilService->date :'' }}</td>
                         <td>{{ isset($civilService->place) ? $civilService->place : '' }}</td>
-                        <td>{{ isset($civilService->numbe) ? $civilService->numbe : '' }}</td>
+                        <td>{{ isset($civilService->numbe) ? $civilService->number : '' }}</td>
                         <td>{{ property_exists($civilService, 'releaseDate') ? $civilService->releaseDate : '' }}</td> 
                     </tr>
                     @endforeach

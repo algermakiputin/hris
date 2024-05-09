@@ -325,6 +325,180 @@
     </div>
 </div>
 
+<div>
+    <div class="card">
+        <div class="card-header"><b>Civil Service Eligiblity</b></div>
+        <div class="card-body">
+            <table class="table table-stripped table-hover" id="civil-service-table">
+                <thead>
+                    <th>Career Service</th>
+                    <th>Rating</th>
+                    <th>Date of Examination</th>
+                    <th>Place of Examination</th>
+                    <th>Number</th>
+                    <th>Date of Release</th> 
+                </thead>
+                <tbody>
+                @if($profile->civil_service)
+                    @foreach($profile->civil_service as $civilService)
+                    <tr>
+                        <td>{{ isset($civilService->careerService) ? $civilService->careerService : '' }}</td>
+                        <td>{{ isset($civilService->rating) ? $civilService->rating : '' }}</td>
+                        <td>{{ isset($civilService->date) ? $civilService->date :'' }}</td>
+                        <td>{{ isset($civilService->place) ? $civilService->place : '' }}</td>
+                        <td>{{ isset($civilService->numbe) ? $civilService->number : '' }}</td>
+                        <td>{{ property_exists($civilService, 'releaseDate') ? $civilService->releaseDate : '' }}</td> 
+                    </tr>
+                    @endforeach
+                @else 
+                    <tr><td colspan="7">No data available</td></tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div class="card">
+        <div class="card-header"><b>Training Program</b> </div>
+        <div class="card-body">
+            <table class="table table-stripped table-hover" id="training-list-table">
+                <thead>
+                    <th>Title</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>No. of Hours</th>
+                    <th>Conducted/Sponsored By</th> 
+                </thead>
+                <tbody>
+                @if($profile->training)
+                    @foreach($profile->training as $training)
+                    <tr>
+                        <td>{{ $training->trainingTitle }}</td>
+                        <td>{{ $training->trainingFrom }}</td>
+                        <td>{{ $training->trainingTo }}</td>
+                        <td>{{ $training->trainingHours }}</td>
+                        <td>{{ $training->trainingSponsor }}</td> 
+                    </tr>
+                    @endforeach
+                @else 
+                    <tr><td colspan="7">No data available</td></tr>
+                @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="card">
+        <div class="card-header"><b>Other Information</b></div>
+        <div class="card-body">
+            <form action="{{ url('employeeInfo/store') }}" method="POST">
+                @csrf
+                @method('post') 
+                <table class="table">
+                    <tr>
+                        <th>Special Skills/Hobbies</th>
+                        <th>Non-Academic Distinction/Recognition/Awards</th>
+                    </tr>
+                    <tr>
+                        <td>{{ $profile->hobbies }}</td>
+                        <td>{{ $profile->awards }}</td>
+                    </tr>
+                </table> 
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><b>Family Background</b></div>
+    <div class="card-body">
+        <legend>Spouse</legend>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <td>{{ isset($profile->familyBackground->spouseFname) ? $profile->familyBackground->spouseFname : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Last Name</th>
+                    <td>{{ isset($profile->familyBackground->spouseLname) ? $profile->familyBackground->spouseLname : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Middle Name</th>
+                    <td>{{ isset($profile->familyBackground->spouseMname) ? $profile->familyBackground->spouseMname : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Occupation Name</th>
+                    <td>{{ isset($profile->familyBackground->spouseOccupation) ? $profile->familyBackground->spouseOccupation : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Employer</th>
+                    <td>{{ isset($profile->familyBackground->spouseEmployer) ? $profile->familyBackground->spouseEmployer : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Employer/Bus Tel.No.</th>
+                    <td>{{ isset($profile->familyBackground->spouseEmployerContact) ? $profile->familyBackground->spouseEmployerContact : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Contact No.</th>
+                    <td>{{ isset($profile->familyBackground->spouseContact) ? $profile->familyBackground->spouseContact : '' }}</td>
+                </tr>
+            </thead>
+        </table>
+        <br />
+        <legend>Child</legend>
+        <table class="table" id="child-table">
+        <thead>
+            <tr>
+                <th>Name of Child</th>
+                <th>Date of Birth</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(isset($profile->familyBackground->childNames)): ?>
+                <?php foreach($profile->familyBackground->childNames as $key=>$child): ?>
+                <tr>
+                    <td><input type="text" value="{{ $child }}" class="form-control" name="child-name[]" /></td>
+                    <td><input type="text" value="{{ $profile->familyBackground->childDob[$key] }}" class="form-control" name="child-dob[]" /></td> 
+                </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    <table class="table">
+        <tr>
+            <th>Father First Name</th>
+            <td>{{ isset($profile->familyBackground->fatherFname) ? $profile->familyBackground->fatherFname : '' }}</td>
+        </tr>
+        <tr>
+            <th>Father Last Name</th>
+            <td>{{ isset($profile->familyBackground->fatherLname) ? $profile->familyBackground->fatherLname : '' }}</td>
+        </tr>
+        <tr>
+            <th>Father Middle Name</th>
+            <td>{{ isset($profile->familyBackground->fatherMname) ? $profile->familyBackground->fatherMname : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mother First Name</th>
+            <td>{{ isset($profile->familyBackground->motherFname) ? $profile->familyBackground->motherFname : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mother Last Name</th>
+            <td>{{ isset($profile->familyBackground->motherLname) ? $profile->familyBackground->motherLname : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mother Middle Name</th>
+            <td>{{ isset($profile->familyBackground->motherMname) ? $profile->familyBackground->motherMname : '' }}</td>
+        </tr>
+    </table>
+    </div>
+</div>
+
 <script>
     window.onload = function() {
         window.print();

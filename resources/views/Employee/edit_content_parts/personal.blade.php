@@ -154,3 +154,96 @@
 		</div>
 	</div>
 </form>
+<div>
+	<br/>
+    <div class="card">
+        <div class="card-header"><b>Family Background</b></div>
+        <div class="card-body">
+            <form action="{{ url('familyBackground/store') }}" method="POST">
+                @csrf
+                @method('post')
+                <input type="hidden" value="{{ $employee->id }}" name="id" />
+                <label style="display:block; background-color:#333;color:#fff;padding:10px;margin: 10px 0;border-radius:5px">Spouse</label>
+				<div class="form-group">
+					<label>Fisrt Name</label>
+					<input type="text" value="{{ isset($familyBackground->spouseFname) ? $familyBackground->spouseFname : '' }}" class="form-control" name="spouse-fname" />
+				</div>
+				<div class="form-group">
+					<label>Last Name</label>
+					<input type="text" value="{{ isset($familyBackground->spouseLname) ? $familyBackground->spouseLname : '' }}" class="form-control" name="spouse-lname" />
+				</div>
+				<div class="form-group">
+					<label>Middle Name</label>
+					<input type="text" class="form-control" name="spouse-mname" value="{{ isset($familyBackground->spouseMname) ? $familyBackground->spouseMname : '' }}" />
+				</div>
+				<div class="form-group">
+					<label>Occupation</label>
+					<input type="text" class="form-control" name="spouse-occupation" value="{{ isset($familyBackground->spouseOccupation) ? $familyBackground->spouseOccupation : '' }}" />
+				</div>
+				<div class="form-group">
+					<label>Employer/Busness Name</label>
+					<input type="text" class="form-control" name="spouse-employer" value="{{ isset($familyBackground->spouseEmployer) ? $familyBackground->spouseEmployer : '' }}"/>
+				</div>
+				<div class="form-group">
+					<label>Employer/Bus.Tel.No.</label>
+					<input type="text" class="form-control" name="spouse-employer-contact" value="{{ isset($familyBackground->spouseEmployerContact) ? $familyBackground->spouseEmployerContact : '' }}"/>
+				</div>
+				<div class="form-group">
+					<label>Contact No.</label>
+					<input type="text" class="form-control" name="spouse-contact" value="{{ isset($familyBackground->spouseContact) ? $familyBackground->spouseContact : '' }}"/>
+				</div>
+				<label style="display:block; background-color:#333;color:#fff;padding:10px;margin: 10px 0;border-radius:5px">Child/Children</label>
+				<table class="table" id="child-table">
+					<thead>
+						<tr>
+							<th>Name of Child</th>
+							<th>Date of Birth</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if(isset($familyBackground->childNames)): ?>
+							<?php foreach($familyBackground->childNames as $key=>$child): ?>
+							<tr>
+								<td><input type="text" value="{{ $child }}" class="form-control" name="child-name[]" /></td>
+								<td><input type="text" value="{{ $familyBackground->childDob[$key] }}" class="form-control" name="child-dob[]" /></td>
+								<td><button type="button" class="btn btn-danger child-remove">Remove</button></td>
+							</tr>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</tbody>
+				</table>
+				<button type="button" class="btn btn-success" id="add-child">Add Child</button>
+				<label style="display:block; background-color:#333;color:#fff;padding:10px;margin: 10px 0;border-radius:5px">Father</label>
+				<div class="form-group">
+					<label>Last Name</label>
+					<input type="text" class="form-control" value="{{ isset($familyBackground->fatherLname) ? $familyBackground->fatherLname : '' }}" name="father-lname"/>
+				</div>
+				<div class="form-group">
+					<label>First Name</label>
+					<input type="text" class="form-control" name="father-fname" value="{{ isset($familyBackground->fatherFname) ? $familyBackground->fatherFname : '' }}"/>
+				</div>
+				<div class="form-group">
+					<label>Middle Name</label>
+					<input type="text" class="form-control" name="father-mname" value="{{ isset($familyBackground->fatherMname) ? $familyBackground->fatherMname : '' }}"/>
+				</div>
+				<label style="display:block; background-color:#333;color:#fff;padding:10px;margin: 10px 0;border-radius:5px">Mother</label>
+				<div class="form-group">
+					<label>Last Name</label>
+					<input type="text" class="form-control" name="mother-lname" value="{{ isset($familyBackground->motherLname) ? $familyBackground->motherLname : '' }}"/>
+				</div>
+				<div class="form-group">
+					<label>First Name</label>
+					<input type="text" class="form-control" name="mother-fname" value="{{ isset($familyBackground->motherFname) ? $familyBackground->motherFname : '' }}"/>
+				</div>
+				<div class="form-group">
+					<label>Middle Name</label>
+					<input type="text" class="form-control" name="mother-mname" value="{{ isset($familyBackground->motherMname) ? $familyBackground->motherMname : '' }}"/>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary" value="Update Family Background" />
+				</div>
+            </form>
+        </div>
+    </div>
+</div>

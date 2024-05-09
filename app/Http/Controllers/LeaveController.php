@@ -384,7 +384,7 @@ class LeaveController extends Controller
 		return $isFirstSem = in_array((int)$currentMonth, $this->firstSem);
 	}
 
-	public function isSecondSem($currentMonth) {
+	public function isSecondSem($currentMonth) { 
 		return $isSescondSem = in_array((int)$currentMonth, $this->secondSem);
 	}
 
@@ -402,6 +402,7 @@ class LeaveController extends Controller
 		$leaves = Leave::whereBetween('date', [$syStartDate, $syEndDate])
 						->where('employee_id', Auth()->user()->employee_id)
 						->where('status', 1)
+						->where('reset', 0)
 						->get();
 		$start = Carbon::parse("2024-05-06");
 		$end = Carbon::parse("2024-05-08");
@@ -483,12 +484,18 @@ class LeaveController extends Controller
 		$leaveBalance = 0;
 		$employmentStatus = $employee->employment_status;
 		$designation = $employee->designation2;
-		$hiringDate = "2023-01-01";//$employee->date_joining;
+		$hiringDate = $employee->date_joining;
 		$leaveCredits = 0; 
-		$isNewEmployee = Carbon::parse($hiringDate)->diffInMonths(Carbon::parse("2025-08-01")) < 6; 
-		$totalMonthsEmployed = Carbon::now()->diffInMonths($hiringDate);
-	 
-		if ($designation === "Employee") {  
+		$now = Carbon::now();
+		$month = (int)date('m');
+		$totalMonthsEmployed = Carbon::parse($now)->diffInMonths($hiringDate); 
+		$isNewEmployee = $totalMonthsEmployed <= 6;  
+		
+		if (strtolower($role->name) === "dean") {
+			$leaveCredits = 20;
+			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
+		}
+		else if ($designation === "Employee") {  
 			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
 			if ($employmentStatus === "Part Time") {
 				$leaveCredits = 0;
@@ -496,20 +503,17 @@ class LeaveController extends Controller
 				$leaveCredits = 0;
 			} else if ($totalMonthsEmployed > 6 && $employmentStatus !== "Permanent") {
 				$leaveCredits = 6;
-			} else if ($employmentStatus === "Permanent" && !$isNewEmployee) { 
+			} else if ($employmentStatus === "Permanent" && !$isNewEmployee) {  
 				$leaveCredits = 17.5;
-			} else if ($this->isFirstSem(date('m')) && $isNewEmployee) {
+			} else if ($isNewEmployee && $this->isSecondSem($month) && $month >= 7) {
 				$leaveCredits = 17.5;
 			}
 		} else if ($designation === "Faculty" && $totalMonthsEmployed >= 12) {
-			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanenet") {
-				$leaveCredits = 6;
+			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanenet" || $employee->employment_type) {
+				$leaveCredits = 5;
 			} 
 
 			$totalHoursUsed = $this->getTotalHoursFaculty();
-		} else if (strtolower($role->name) === "dean") {
-			$leaveCredits = 20;
-			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
 		}
 	 
 		$balance = $leaveCredits - ($totalHoursUsed / 8);
