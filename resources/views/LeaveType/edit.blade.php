@@ -70,11 +70,11 @@
 							</div>	 
 						</div>
 					 	<div class="form-group" id="campus-department">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12">Department: 
+							<label class="control-label col-md-4 col-sm-4 col-xs-12">School/Office: 
 							</label>
 							<div class="col-md-4 col-sm-4 col-xs-12">
 								<select name="department" class="form-control campus-department-select" id="campus-department-select">
-									<option value="">Select Department</option>
+									<option value="">Select School/Office</option>
 									@foreach($departments as $department)
 									<option {{ $department_id == $department->id ? 'selected' : '' }} value="{{ $department->id }}">{{ $department->name }}</option>
 									@endforeach

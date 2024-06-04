@@ -11,24 +11,24 @@
       <div class="tile-stats">
         <div class="icon"><i class="fa fa-users"></i></div>
         <div class="count">{{ $employeeCount }}</div>
-        <h3>Employees</h3>
-        <p>Total employees in the organization</p>
+        <h3>Employees and Faculties</h3>
+        <p>Total employees and faculties in the organization</p>
       </div>
     </div>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
         <div class="icon"><i class="fa fa-bookmark "></i></div>
-        <div class="count">{{ $departmentCount }}</div>
-        <h3>Campus</h3>
-        <p>Total campus in the organization</p>
+        <div class="count">{{ $campusCount }}</div>
+        <h3>Campuses</h3>
+        <p>Total campuses in the organization</p>
       </div>
     </div>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
       <div class="tile-stats">
         <div class="icon"><i class="fa fa-building-o "></i></div>
-        <div class="count">{{ $campusCount }}</div>
-        <h3>Department</h3>
-        <p>Total department in the organization</p>
+        <div class="count">{{ $departmentCount }}</div>
+        <h3>School and Offices</h3>
+        <p>Total schools and offices in the organization</p>
       </div>
     </div>
     <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">

@@ -36,8 +36,8 @@
 						<tr>
 							<th>Name</th>
 							<th>Description</th> 
-							<th>Departments</th>
-							<th>Total Employees</th>
+							<th>Schools and Offices</th>
+							<th>Total Employees and Faculties</th>
 							<th>Action</th>
 						</tr>
 					</thead>

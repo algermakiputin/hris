@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('department','DepartmentController@index');
 	Route::post('department/data','DepartmentController@data');
 	
+	Route::get('appointments/new', 'AppointmentController@new');
 	//Leave
 	Route::get('leaves', 'LeaveController@index');
 	Route::post('leave/insert','LeaveController@insert');

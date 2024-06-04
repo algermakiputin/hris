@@ -492,7 +492,7 @@ class LeaveController extends Controller
 		$isNewEmployee = $totalMonthsEmployed <= 6;  
 		
 		if (strtolower($role->name) === "dean") {
-			$leaveCredits = 20;
+			$leaveCredits = 10;
 			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
 		}
 		else if ($designation === "Employee") {  
@@ -501,15 +501,17 @@ class LeaveController extends Controller
 				$leaveCredits = 0;
 			}else if ($totalMonthsEmployed < 6  && $employmentStatus !== "Permanent") {
 				$leaveCredits = 0;
-			} else if ($totalMonthsEmployed > 6 && $employmentStatus !== "Permanent") {
-				$leaveCredits = 6;
 			} else if ($employmentStatus === "Permanent" && !$isNewEmployee) {  
 				$leaveCredits = 17.5;
+			} else if ($totalMonthsEmployed >=6 && $employmentStatus === "Permanent") {
+				$leaveCredits = 6;
+			
+			
 			} else if ($isNewEmployee && $this->isSecondSem($month) && $month >= 7) {
 				$leaveCredits = 17.5;
 			}
 		} else if ($designation === "Faculty" && $totalMonthsEmployed >= 12) {
-			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanenet" || $employee->employment_type) {
+			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanent" ) {
 				$leaveCredits = 5;
 			} 
 

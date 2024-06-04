@@ -103,7 +103,7 @@
         <td>{{ ucfirst($profile->campus_name) }}</td>
     </tr>
     <tr>
-        <td>Department:</td>
+        <td>School/Office:</td>
         <td>{{ ucwords($profile->department_name) }}</td>
     </tr>
     <tr>

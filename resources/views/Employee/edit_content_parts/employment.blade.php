@@ -40,10 +40,10 @@
 		<input type="hidden" name="current_campus" value="{{ $employee->campus_id }}">
 		<input type="hidden" name="current_employee_id" value="{{ $employee->employee_id }}">
 		<div class="form-group">
-			<label class="control-label col-md-2 col-sm-2 col-xs-12">Department:</label>
+			<label class="control-label col-md-2 col-sm-2 col-xs-12">Shool/Office:</label>
 			<div class="col-md-9 col-sm-9 col-xs-12">
 				<select id="campus-department-select" name="department" class="form-control" data-parsley-group='block2' required="required">
-					<option value="">Select Department</option>
+					<option value="">Select School/Office</option>
 					@foreach( $departments as $department )
 					<option value="{{ $department->id }}" {{ $employee->department_id == $department->id ? 'selected' : '' }}>
 						{{ ucwords($department->name) }}

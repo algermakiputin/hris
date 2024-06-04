@@ -106,7 +106,7 @@
 				 </div>
 			</div>
 			<div class="modal-header">
-				<h4 class="modal-title">Department Heads Approval</h4>
+				<h4 class="modal-title">Approvals</h4>
 			</div>
 			<div class="modal-body">
 				 <div class="row" id="department-heads-approval">
@@ -136,7 +136,7 @@
         <table class="table table-bordered">
 			<tr>
 				<th class="text-center" >Type</th>
-				<th class="text-center">Allowance Per School Year</th>
+				<th class="text-center">Leave Credits</th>
 				<th class="text-center">Used</th>
 				<th class="text-center">Balance</th>
 			</tr>
@@ -152,7 +152,7 @@
 				@endforeach
 			@else
 				<tr>
-					<td class="text-center" colspan="4">No leave allocated for you department</td>
+					<td class="text-center" colspan="4">No leave allocated for your school/office</td>
 				</tr>
 			@endif
 		</table>

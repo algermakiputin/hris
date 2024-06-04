@@ -61,7 +61,7 @@
 					<thead>
 						<tr>
 							<th>Date</th>
-							<th>Employee Name</th>
+							<th>Name</th>
 							<th>Leave Type</th>
 							<th>From</th>
 							<th>To</th> 
@@ -103,7 +103,7 @@
 				 </div>
 			</div>
 			<div class="modal-header">
-				<h4 class="modal-title">Department Heads Approval </h4>
+				<h4 class="modal-title">Approvals</h4>
 				<span class="btn btn-link btn-sm" data-toggle="collapse" data-target="#leave-b" id="check-balance">View Leave Balance</span>
 				<div id="leave-b" class="collapse">
 					 <table class="table" id="balance-table">

@@ -24,7 +24,7 @@
 				@if (Auth()->user()->employee_id == $profile->employee_id)
 				<h2>My Profile</h2>
 				@else 
-				<h2>Employee Profile</h2>
+				<h2>Employee/Faculty Profile</h2>
 
 				@endif
 				<ul class="nav navbar-right panel_toolbox">
@@ -190,7 +190,7 @@
 										<td>{{ ucfirst($profile->campus_name) }}</td>
 									</tr>
 									<tr>
-										<td>Department:</td>
+										<td>School/Office:</td>
 										<td>{{ ucwords($profile->department_name) }}</td>
 									</tr>
 									<tr>

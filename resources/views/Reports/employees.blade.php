@@ -22,7 +22,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">    
-                    <h2>Employees Reports</h2>
+                    <h2>Employees/Faculty Reports</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content relative"> 
@@ -47,7 +47,7 @@
                                 <th>Sex</th>
                                 <th>Age</th>
                                 <th>Contact No.</th>
-                                <th>Office</th>
+                                <th>School/Office</th>
                                 <th>Position</th>
                                 <th>Employment Type</th>
                             </tr>

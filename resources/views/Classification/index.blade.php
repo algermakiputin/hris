@@ -30,14 +30,14 @@
 			</div>
 			<div class="x_content">
 				<h5>Common Variables</h5>
-				<p>Employees who are Male, Age 36 to 45 he is working over 10 years as a teacher in college department who lives in Matina, he has asthma had tend to had more days of tardiness that other characteristics.</p>
+				<p>Employees and Faculties who are Male, Age 36 to 45 he is working over 10 years as a teacher in college department who lives in Matina, he has asthma had tend to had more days of tardiness that other characteristics.</p>
 				<table class="table table-striped table-bordered no-footer" id="classification_table">
 					<thead>
 						<tr>
 							<th>Name</th>
 							<th>Age</th>
 							<th>Position</th>
-							<th>Department</th>	  						 	
+							<th>School/Office</th>	  						 	
 							<th>Status</th>
 						 	<th>Late</th>
 						</tr>
@@ -127,7 +127,7 @@
 				<h4 class="modal-title text-danger" id="myModalLabel"><span class="fa fa-exclamation-triangle"></span> Warning</h4>
 			</div>
 			<div class="modal-body">
-				<h5>Are you sure you want to permanently delete that employee?</h5>
+				<h5>Are you sure you want to permanently delete that employee/faculty?</h5>
 			 
 			</div>
 			<div class="modal-footer">

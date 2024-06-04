@@ -78,7 +78,7 @@
 				<h4 class="modal-title text-danger" id="myModalLabel"><span class="fa fa-exclamation-triangle"></span> Warning</h4>
 			</div>
 			<div class="modal-body">
-				<h5>Are you sure you want to permanently delete that department?</h5>
+				<h5>Are you sure you want to permanently delete that school/office?</h5>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>

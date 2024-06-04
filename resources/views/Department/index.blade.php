@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Department</h3>
+		<h3>School and Office</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Department</li>
+				<li class="breadcrumb-item active" aria-current="page">School and Office</li>
 			</ol>
 		</nav>
 	</div>
@@ -21,7 +21,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Department Lists</h2>
+				<h2>School/Office Lists</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>
@@ -34,7 +34,7 @@
 					<thead>
 						<tr>
 							<th>Campus</th>
-							<th>Department Name</th>
+							<th>School/Office Name</th>
 							<th>Description</th> 
 							<th>Action</th>
 						</tr>
@@ -56,10 +56,10 @@
 		<div class="modal-content">
 
 			<div class="modal-header ">
-				<h4 class="modal-title" id="header">Department Heads</h4> 			 
+				<h4>Approvals</h4> 			 
 			</div>
 			<div class="modal-body">
-				<p>Drag and drop to order department heads</p>
+				<p>Drag and drop to order approvals</p>
 				<ul class="list-group" id="department-heads-list">
 					<li class="list-group-item">Empty</li>
 				</ul> 
@@ -79,14 +79,14 @@
 	<div class="modal-dialog modal-sm" role="document" style="vertical-align: middle;">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="exampleModalLongTitle">Add Department Heads</h4>
+				<h4 class="modal-title" id="exampleModalLongTitle">Add Approval</h4>
 			</div>
 			<div class="modal-body">
 				<form>
 					<div class="form-group">
-						<label>Select Employee</label>
+						<label>Select Employee/Faculty</label>
 						<select id="select-employee" name="select-employee" class="form-control" >
-							<option value="">Select Employee</option>
+							<option value="">Select Employee/Faculty</option>
 						</select>
 					</div>
 				</form>

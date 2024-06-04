@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <select required="required" data-parsley-errors-container="#a" class="form-control selectpicker" name="report" id="report-type">
                                 <option value="">Select Report</option>
-                                <option value="attendance">Attendance</option>
+                                <!--<option value="attendance">Attendance</option>-->
                                 <option value="leave">Leave</option>
                             </select>
                             <div id="a"></div>
@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group">
                             <select required="required" data-parsley-errors-container="#c" name="department" class="form-control selectpicker" id="campus-department-select">
-                                <option value="">Select Department</option>
+                                <option value="">Select School/Office</option>
                             </select>
                             <div id="c"></div>
                         </div>
@@ -98,7 +98,7 @@
                    <div id="attendance" style="display: none;">
                         <table id="general-attendance" class="table table-stripped table-hover table-bordered">
                             <thead>
-                                <th>Employee Name</th>
+                                <th>Name</th>
                                 <th>Working</th>
                                 <th>Worked</th>
                                 <th>Total Hours</th>
@@ -119,7 +119,7 @@
                         </div>
                        <table class="table table-bordered table-stripped" id="general-leave">
                            <thead>
-                               <th>Employee Name</th>
+                               <th>Name</th>
                                <th>Leave Type</th>
                                <th>Allowance</th>
                                <th>Used</th>

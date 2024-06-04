@@ -21,7 +21,7 @@
 			<div class="x_title">
 				<div class="row">
 					<div class="col-md-5">
-						<h2>Employee Attendance</h2>
+						<h2>Employee/Faculty Attendance</h2>
 					</div>
 				</div>
 				<div class="clearfix"></div>
@@ -31,7 +31,7 @@
 					<div class="col-md-5">
 						<div>
 							<select id="employee_id" name="employee_id" data-campusid="" class="form-control selectpicker show-tick" data-size="5" data-live-search="true">
-								<option value="" id="select_employee">Select Employee</option>
+								<option value="" id="select_employee">Select Employee/Faculty</option>
 								@foreach ($employees as $employee) 
 								<option data-campusid="{{ $employee->campus_id }}" value="{{ $employee->employee_id }}">{{ ucwords($employee->first_name) . ' ' . ucfirst($employee->last_name) }}</option>
 								@endforeach

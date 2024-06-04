@@ -36,7 +36,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Campus</th>
-							<th>Department</th> 
+							<th>School/Office</th> 
 							<th>Description</th>
 							<th>Allowance Per Year</th>
 							<th>Action</th>

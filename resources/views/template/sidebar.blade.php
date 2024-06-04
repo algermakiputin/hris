@@ -1,7 +1,7 @@
 <div class="col-md-3 left_col">
   <div class="left_col scroll-view">
     <div class="navbar nav_title" style="border: 0;">
-      <a href="{{ url('/') }}" class="site_title"><i class="fa fa-adn"></i> <span>HR System</span></a>
+      <a href="{{ url('/') }}" class="site_title"><img src="{{ url('images/logo.png') }}" style="height: 45px;" ><span>HR System</span></a>
     </div>
 
     <div class="clearfix"></div>
@@ -34,24 +34,25 @@
             <a href="{{ url('/') }}"><i class="fa fa-home"></i> Dashboard  </a>
 
           </li>
-          
-          <li><a><i class="fa fa-user-md"></i> Employee <span class="fa fa-chevron-down"></span></a>
+          @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
+          <li><a><i class="fa fa-user-md"></i> Employee/Faculty <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="{{ url('employee') }}">View Employees</a></li>
+              <li><a href="{{ url('employee') }}">View All</a></li>
               @if (Auth()->user()->role)
-              <li><a href="{{ url('employee/new') }}">New Employee</a></li> 
+              <li><a href="{{ url('employee/new') }}">New Employee/Faculty</a></li> 
               @endif
             </ul>
           </li>
+          @endif
 
-          @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
+          <!--@if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
           <li><a><i class="fa fa-clock-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu"> 
               <li><a href="{{ url('attendance/import') }}">Import</a></li>
               <li><a href="{{ url('attendance/entry') }}">Manual Entry</a></li>
             </ul>
           </li>
-          @endif
+          @endif-->
          
           @if((int)Auth()->user()->employmentType() == 1 || (int)Auth()->user()->role !== 0 )
             <li><a><i class="fa fa-bed"></i> Leaves <span class="fa fa-chevron-down"></span></a>
@@ -64,7 +65,6 @@
                   <a href="{{ url('leaves/calendar') }}">Leave Calendar</a>
                 </li>
                 @endif
-                
                 @if ((int)Auth()->user()->role !== 3)
                 <li>
                   <a href="{{ url('my-leaves') }}">My Leaves</a>
@@ -74,6 +74,20 @@
                 </li>
                 @endif
              
+              </ul>
+            </li>
+          @endif
+          @if((int)Auth()->user()->employmentType() == 1 || (int)Auth()->user()->role !== 0 )
+            <li><a><i class="fa fa-calendar"></i> Appointments <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu">
+                @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2 || count(checkDepartmentHead()))
+                <li>
+                  <a href="{{ url('appointments') }}">View Appointments</a>
+                </li>
+                <li>
+                  <a href="{{ url('appointments/new') }}">New Appointment</a>
+                </li>
+                @endif
               </ul>
             </li>
           @endif
@@ -99,10 +113,10 @@
           @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
           <li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="{{ url('reports/employees') }}">Employees</a></li>
-              <li><a href="{{ url('reports/attendance') }}">Attendance</a></li>
+              <li><a href="{{ url('reports/employees') }}">Employees/Faculties</a></li>
+              <!--<li><a href="{{ url('reports/attendance') }}">Attendance</a></li>-->
               <li><a href="{{ url('reports/leaves') }}">Leaves</a></li>
-              <li><a href="{{ url('reports/general') }}">General Reports</a></li> 
+             <!-- <li><a href="{{ url('reports/general') }}">General Reports</a></li> -->
             </ul>
           </li>
           
@@ -114,13 +128,13 @@
               @endif
             </ul>
           </li>
-          <li><a><i class="fa fa-building-o"></i> Department <span class="fa fa-chevron-down"></span></a>
+          <li><a><i class="fa fa-building-o"></i> School/Office <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="{{ url('department') }}">View Departments</a></li>
+              <li><a href="{{ url('department') }}">View All</a></li>
               @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
-              <li><a href="{{ url('department/new') }}">Add Department</a></li>
-              <li><a href="{{ url('roles') }}">View Roles</a></li>
-              <li><a href="{{ url('roles/new') }}">New Role</a></li>
+              <li><a href="{{ url('department/new') }}">Add School/Office</a></li>
+              <li><a href="{{ url('roles') }}">View Job Titles</a></li>
+              <li><a href="{{ url('roles/new') }}">New Job Titles</a></li>
               @endif
               
             </ul>
@@ -138,25 +152,6 @@
 
         </ul>
       </div>
-      <div class="sidebar-footer hidden-small">
-          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Settings">
-            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-          </a>
-          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="FullScreen">
-            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-          </a>
-          <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Lock">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-          </a>
-          <a data-toggle="tooltip" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();" data-placement="top" title="" href="login.html" data-original-title="Logout">
-            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-          </a>
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-              @csrf
-           </form>
-        </div>
-
       </div>
       <!-- /sidebar menu -->
 

@@ -1599,10 +1599,12 @@ class DatePicker {
             $("#leave_start_date").val('');
             $("#days").val('');
         });
-        $("#short_leave_date").datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
+        $("#short_leave_date").datetimepicker();
         
+        $(".date-time-picker").datetimepicker({
+            format: 'YYYY-MM-DD HH:II:SS'
+        });
+
         $('#end_date').datetimepicker({
             format: 'YYYY-MM-DD'
         }).on('dp.change', function(timestamp) {
@@ -1801,7 +1803,7 @@ class Employee {
                             employeeTable.search('');
                             employeeTable.columns(7).search('');
                             $("#employment_filter").val('');
-                            employeeTable.columns(1).search($(this).val()).draw();
+                            employeeTable.columns(0).search($(this).val()).draw();
                         })
                     }
                 });
@@ -1828,7 +1830,7 @@ class Employee {
             employeeTable.columns(7).search('');
             $("#employment_filter").val('');
             $("#select-campus").val('');
-            employeeTable.columns(1).search('');
+            employeeTable.columns(0).search('');
         })
     }
 
@@ -2074,7 +2076,7 @@ class Department {
                 },
                 {
                     'name': "description",
-                    'title': 'Desciption',
+                    'title': 'Unit',
                     width: '35%'
                 },
                 {

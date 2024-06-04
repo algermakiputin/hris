@@ -72,9 +72,9 @@
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select class="form-control" name="role" id="role" required="required" data-parsley-errors-container="#error-3">
 								<option value="">Select Role</option>
-								<option value="0" {{ $user['role'] == 0 ? 'selected="selected"' : '' }}>Staff</option>
-								<option value="1" {{ $user['role'] == 1 ? 'selected="selected"' : '' }}>HR Staff</option>
-								<option value="2" {{ $user['role'] == 2 ? 'selected="selected"' : '' }} >HR Admin</option>
+								<option value="0" {{ $user['role'] == 0 ? 'selected="selected"' : '' }}>Faculty</option>
+								<option value="1" {{ $user['role'] == 1 ? 'selected="selected"' : '' }}>Employee</option>
+								<option value="2" {{ $user['role'] == 2 ? 'selected="selected"' : '' }} >Encoder</option>
 								<option value="3" {{ $user['role'] == 3 ? 'selected="selected"' : '' }}>System Administrator</option>
 							</select>
 						</div>

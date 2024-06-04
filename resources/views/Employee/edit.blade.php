@@ -2,13 +2,13 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Edit Employee</h3>
+		<h3>Edit Employee/Faculty</h3>
 	</div>
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Edit Employee</li>
+				<li class="breadcrumb-item active" aria-current="page">Edit Employee/Faculty</li>
 			</ol>
 		</nav>
 	</div>

@@ -125,7 +125,7 @@ class DepartmentController extends Controller
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 							<li>
 							<form> 
-								<button data-id="'. $department->id .'" data-campus="'. $department->campus_id .'" type="button" class="btn-link heads" data-toggle="modal" data-target="#modal-heads"> <i class="fa fa-users"></i>  Heads</button>
+								<button data-id="'. $department->id .'" data-campus="'. $department->campus_id .'" type="button" class="btn-link heads" data-toggle="modal" data-target="#modal-heads"> <i class="fa fa-users"></i>Approvals</button>
 							</form>
 							</li>
 							<li>

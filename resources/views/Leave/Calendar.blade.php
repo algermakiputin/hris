@@ -67,7 +67,7 @@
 				 </div>
 			</div>
 			<div class="modal-header">
-				<h4 class="modal-title">Department Heads Approval</h4>
+				<h4 class="modal-title">Approvals</h4>
 			</div>
 			<div class="modal-body">
 				 <div class="row" id="department-heads-approval">

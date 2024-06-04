@@ -51,11 +51,11 @@
 					</div>
 				 	
 				 	<div class="form-group" style="display: none;" id="employee-wrapper">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Employee: 
+						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Employee/Faculty: 
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select name="employee" class="form-control" id="employees">
-							 	<option value="">Select Employee</option>
+							 	<option value="">Select Employee/Faculty</option>
 							</select>
 							
 						</div>	 

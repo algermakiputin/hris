@@ -12,19 +12,19 @@
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-3 col-xs-12">First Name:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ $employee->first_name }}">
+			<input type="text" class="form-control" placeholder="First Name" name="first_name" pattern="[a-zA-Z0-9\s]+" value="{{ $employee->first_name }}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-3 col-xs-12">Last Name:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ $employee->last_name }}">
+			<input type="text" class="form-control" placeholder="Last Name" name="last_name" pattern="[a-zA-Z0-9\s]+" value="{{ $employee->last_name }}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-3 col-xs-12">Middle Name:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" value="{{ $employee->middle_name }}">
+			<input type="text" class="form-control" placeholder="Middle Name" name="middle_name" pattern="[a-zA-Z0-9\s]+" value="{{ $employee->middle_name }}">
 		</div>
 	</div>
 	<div class="form-group">
@@ -112,39 +112,49 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-md-2 col-sm-2 col-xs-12">Height:</label>
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Height (cm):</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Height" name="height" value="{{ $employee->height }}">
+			<input type="number" class="form-control" placeholder="Height" name="height" max="200" value="{{ $employee->height }}">
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="control-label col-md-2 col-sm-2 col-xs-12">Weight:</label>
+		<label class="control-label col-md-2 col-sm-2 col-xs-12">Weight (kg):</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Weight" name="weight" value="{{ $employee->weight }}">
+			<input type="number" class="form-control" placeholder="Weight" name="weight" max="200" value="{{ $employee->weight }}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-2 col-xs-12">Blood Type:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Blood Type" name="bloodType" value="{{ $employee->bloodType }}">
+			<select type="text" class="form-control" name="bloodType" value="{{ $employee->bloodType }}">
+				<option hidden>{{ $employee->bloodType }}</option>
+				<option>A+</option>
+				<option>A-</option>
+				<option>B+</option>
+				<option>B-</option>
+				<option>AB+</option>
+				<option>AB-</option>
+				<option>O+</option>
+				<option>O-</option>
+			</select>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-2 col-xs-12">Tin No:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Tin No." name="tin" value="{{ $employee->tin }}">
+			<input type="number" class="form-control" placeholder="Tin No." name="tin" value="{{ $employee->tin }}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-2 col-xs-12">SSS No.:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="SSS No." name="sss" value="{{ $employee->sss }}">
+			<input type="numer" class="form-control" placeholder="SSS No." name="sss" value="{{ $employee->sss }}">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-md-2 col-sm-2 col-xs-12">Philhealth:</label>
 		<div class="col-md-9 col-sm-9 col-xs-12">
-			<input type="text" class="form-control" placeholder="Philhealth" name="philhealth" value="{{ $employee->philhealth }}">
+			<input type="numer" class="form-control" placeholder="Philhealth" name="philhealth" value="{{ $employee->philhealth }}">
 		</div>
 	</div>
 	<div class="ln_solid"></div>

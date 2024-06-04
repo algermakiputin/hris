@@ -3,7 +3,7 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>New Department</h3>
+		<h3>New School/Office</h3>
 	</div>
 
 	<div class="title_right">
@@ -26,7 +26,7 @@
 
 				 
 			<div class="x_title" id="x_title">
-				<h2>Department</h2>
+				<h2>School and Office</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li>
 						<a class="collapse-link">
@@ -42,7 +42,7 @@
 
 					<fieldset class="form-step active" step-no = '1'>
 						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Department Name  
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Name  
 							</label>
 							<div class="col-md-4 col-sm-4 col-xs-12">
 								<input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="fname" placeholder="">
@@ -58,7 +58,7 @@
 						</div>
 
 						<div class="form-group">
-							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Department Head  
+							<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">School/Office Head  
 							</label>
 							<div class="col-md-4 col-sm-4 col-xs-12">
 								<input type="text" id="first-name" required="required" class="form-control col-md-7 col-xs-12" name="fname" placeholder="">

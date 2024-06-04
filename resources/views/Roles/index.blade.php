@@ -36,7 +36,7 @@
 						<tr> 
 							<th>Name</th>
 							<th>Description</th>
-							<th>Total Employees</th>
+							<th>Total Employees and Faculties</th>
 							<th>Actions</th> 
 						</tr>
 					</thead>

@@ -21,9 +21,6 @@
 		</div>
 	</div>
 	<footer>
-     <div class="pull-right">
-       Human Resource Information System By <a href="https://algermakiputin.com">Alger Makiputin</a>
-     </div>
      <div class="clearfix"></div>
    </footer>
 </body>

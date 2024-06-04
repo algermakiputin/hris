@@ -2,7 +2,7 @@
 
 return array( 
 	'currency' => '₱',
-	'access' => array('Staff', 'HR Staff', 'HR Admin', 'Admin'),
+	'access' => array('Faculty', 'Employee', 'Encoder', 'Admin'),
 	'school_year' => array(
 			'start' => 8,
 			'end' => 6

@@ -254,21 +254,19 @@
       <div class="modal-body">
         <table class="table table-bordered">
 			<tr> 
-				<th class="text-center">Allowance Per School Year</th>
+				<th class="text-center">Leave Credits</th>
 				<th class="text-center">Used</th>
 				<th class="text-center">Balance</th>
 			</tr>
-		 	@if ($leave_types)
-				@foreach($leave_types as $l)
+		 	@if ($balance) 
 				<tr> 
 					<td class="text-center">{{$leaveCredits}} Days</td>
 					<td class="text-center">{{ $totalHoursUsed / 8 }}</td>
 					<td class="text-center">{{( ($leaveCredits * 8) - $totalHoursUsed ) / 8}}</td>
-				</tr>
-				@endforeach
+				</tr> 
 			@else
 				<tr>
-					<td class="text-center" colspan="3">No leave allocated for you department</td>
+					<td class="text-center" colspan="3">No leave allocated for your school/office</td>
 				</tr>
 			@endif
 		</table>

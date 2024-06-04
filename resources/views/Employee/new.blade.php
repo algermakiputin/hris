@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Add Employee</h3>
+		<h3>Add Employee/Faculty</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-				<li class="breadcrumb-item active" aria-current="page">New Employee</li>
+				<li class="breadcrumb-item active" aria-current="page">New Employee/Faculty</li>
 			</ol>
 		</nav>
 	</div>
@@ -39,7 +39,7 @@
 				@if(session()->has('message'))
 				<div>
 					<div class="alert alert-success text-center">
-						{{ session()->get('message') }} <a href="#">View Departments</a>
+						{{ session()->get('message') }} <a href="#">View Schools and Offices</a>
 					</div>
 				</div>
 				@endif
@@ -64,13 +64,13 @@
 						<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first_name">Full Name  
 						</label>
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="text" id="first_name" class="form-control form-control-lg" name="first_name" placeholder="First Name" pattern="^[a-zA-Z]+$" required="required" data-parsley-group='block1' minlength="2">
+							<input type="text" id="first_name" class="form-control form-control-lg" name="first_name" placeholder="First Name" pattern="[a-zA-Z ]+$" required="required" data-parsley-group='block1' minlength="2">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="text" id="family_name"  class="form-control" name="family_name" placeholder="Family Name" required="required" data-parsley-group='block1' minlength="2">
+							<input type="text" id="family_name"  class="form-control" name="family_name" placeholder="Family Name" pattern="[a-zA-Z0-9\s]+" required="required" data-parsley-group='block1' minlength="2">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="text" id="middle_initial"  class="form-control" name="middle_initial" placeholder="Middle Initial" required="required" data-parsley-group='block1' minlength="2">
+							<input type="text" id="middle_initial"  class="form-control" name="middle_initial" placeholder="Middle Name" pattern="[a-zA-Z0-9\s]+" required="required" data-parsley-group='block1' minlength="2">
 						</div>
 					</div>
 					<div class="form-group">
@@ -185,7 +185,7 @@
 							<div class="clearfix"></div>
 							<div id="campus-error"></div>
 						</div>
-						<label class="control-label col-md-1 col-sm-1 col-xs-12">Department  
+						<label class="control-label col-md-1 col-sm-1 col-xs-12">School/Office  
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select name="department" class="form-control selectpicker campus-department-select" id="campus-department-select" data-parsley-group='block2' required="required" data-parsley-errors-container="#department-error">
@@ -313,10 +313,7 @@
 					<div class="form-group"> 
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Honorarium</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<select class="form-control" name="honorarium"> 
-								<option>Faculty</option>
-								<option>Employee</option> 
-							</select>
+							<input type="text" class="form-control" name="honorarium"></input>
 						</div>
 					</div>
 					<div class="form-group"> 
@@ -358,7 +355,7 @@
 
 				<fieldset class="form-step" step-no = '4'>
 					<div class="success-page text-center">
-						<span>Employee Added Successfully</span>
+						<span>Employee/Faculty Added Successfully</span>
 					</div>
 				</fieldset>
 			{{ Form::close() }}

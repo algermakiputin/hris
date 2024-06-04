@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Department</h3>
+		<h3>School and Office</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">New Department</li>
+		    <li class="breadcrumb-item active" aria-current="page">New School/Office</li>
 		  </ol>
 		</nav>
 	</div>
@@ -22,7 +22,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title" id="x_title">
-				<h2>New Department</h2>
+				<h2>New School/Office</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
@@ -39,7 +39,7 @@
 						</div>
 				 	@endif
 				 	<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12">Department Name: 
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Name: 
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" class="form-control col-md-7 col-xs-12" name="department_name"  required="required" placeholder="Name">
@@ -63,7 +63,7 @@
 					
 				 	
 				 	<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12">Details:
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Unit:
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" class="form-control col-md-7 col-xs-12" name="description" placeholder="Details" required="required">

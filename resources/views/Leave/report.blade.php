@@ -24,7 +24,7 @@
 		<div class="x_title">
 			<div class="row">
 				<div class="col-md-12">
-					<h2>Employee Leave Report</h2>
+					<h2>Leave Report</h2>
 				</div>
 				 
 			</div>
@@ -39,7 +39,7 @@
 				 		<th>Leave Type</th>
 				 		<th>allowance</th>
 				 		<th>Used</th>
-				 		<th>Balance</th>
+				 		<th>Leave credits</th>
 				 	</tr>
 				 </thead>
 				 <tbody>

@@ -609,7 +609,7 @@ class EmployeeController extends Controller
         if ($search !== "") {
             return employee::offset($start)
                     ->limit($limit)
-                    ->where(DB::raw('CONCAT(first_name, " ",last_name)'), 'LIKE', '%' . $search . '%') 
+                    ->where(DB::raw('CONCAT(employee_id, " ",first_name, " ",last_name)'), 'LIKE', '%' . $search . '%') 
                     ->orderBy($col,$dir)
                     ->get();
         }
