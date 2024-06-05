@@ -34,7 +34,15 @@ if (typeof balance != 'undefined') {
 
 $(document).ready(function() {
  
- 
+    var departmentsOption = $("#deperments-value").val();
+    $("#campus-select").change(function() {
+        var val = JSON.parse(departmentsOption);
+        var options = val.filter(deparment => deparment.campus_id == $(this).val());
+      
+        $("#department-select").find("option").remove().end().append(
+            options.map(option => `<option value="${option.id}">${option.name}</option>`)
+        );
+    }); 
 
     $("body").on('click','.notify', function(e) {
  

@@ -32,7 +32,7 @@
 				<br />
 				<div class="row">
 					<div class="col-md-6" style="float: none;display: block;margin: auto;">
-						{{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'leave/insert', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
+						{{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'appointments/store', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
 						@if ($errors->any())
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">
@@ -47,15 +47,21 @@
                             </div>  
 						@endif
                         <fieldset> 
+                            <input type="hidden" id="deperments-value" value="{{ json_encode($departments) }}" />
                         <div class="form-group">
                                 <label>Campus</label>
-                                <select name="campus" class="form-control">
+                                <select name="campus" class="form-control" id="campus-select">
                                     <option value="">Select Campus</option>
+                                    @foreach($campuses as $campus)
+                                    <option value="{{ $campus->id }}">{{ $campus->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Deparment/Office</label>
-                                <input type="text" class="form-control"  name="department"/>
+                                <select name="department" class="form-control" id="department-select">
+                                    <option>Campus is Required</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Deparment/Office</label>
@@ -83,3 +89,8 @@
 	</div>
 </div> 
 @endsection
+
+<script>
+    
+
+</script>
