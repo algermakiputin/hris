@@ -35,6 +35,9 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('department','DepartmentController@index');
 	Route::post('department/data','DepartmentController@data');
 	
+	Route::post('appointments/update', 'AppointmentController@update');
+	Route::get('admin/appointments', 'AppointmentController@adminAppointments');
+	Route::get('appointments/datatable', 'AppointmentController@appointmentsDatatable');
 	Route::get('appointments', 'AppointmentController@index');
 	Route::get('appointments/new', 'AppointmentController@new');
 	Route::post('appointments/store', 'AppointmentController@store');

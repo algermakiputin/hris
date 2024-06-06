@@ -33,7 +33,17 @@ if (typeof balance != 'undefined') {
 }
 
 $(document).ready(function() {
- 
+
+    $("body").on('click', '.update-appointment-link', function(e) {
+        e.preventDefault();
+        var id = $(this).data('id');
+        var status = $(this).data('status');
+        $("#appointment-status").val(status);
+        $("#appointment-id").val(id);
+        $("#update-appointment-status-modal").modal('toggle');
+    });
+    
+    $("#my_appointments_table").DataTable();
     var departmentsOption = $("#deperments-value").val();
     $("#campus-select").change(function() {
         var val = JSON.parse(departmentsOption);
@@ -418,6 +428,18 @@ $(document).ready(function() {
 
     $("#add-work-exp-btn").click(function() {
         $("#add-exp-modal").modal('toggle');
+    });
+
+    var adminAppointmentsTable = $("#admin_appointments_table").DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            type: 'GET',
+            url: '/appointments/datatable',
+            data : {
+                '_token': $("meta[name=csrf-token]").attr('content')
+            }
+        }
     });
 
 

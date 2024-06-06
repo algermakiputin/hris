@@ -47,8 +47,7 @@ class AppController extends Controller
         	$departmentCount = Department::count();
         	$campusCount = Campus::count();
         	$pendingLeave = Leave::where(['status' => 0, 'pending' => 1])->count();
-		
+	 
 		return view('index',compact('applications','approved','disapprove','employeeCount','departmentCount','campusCount','pendingLeave'));
- 
     }
 }

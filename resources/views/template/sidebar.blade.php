@@ -77,7 +77,7 @@
               </ul>
             </li>
           @endif
-          @if((int)Auth()->user()->employmentType() == 1 || (int)Auth()->user()->role !== 0 )
+          @if(Auth()->user()->employee_id)
             <li><a><i class="fa fa-calendar"></i> Appointments <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu"> 
                 <li>
@@ -85,6 +85,15 @@
                 </li>
                 <li>
                   <a href="{{ url('appointments/new') }}">New Appointment</a>
+                </li> 
+              </ul>
+            </li>
+          @endif
+          @if(!Auth()->user()->employee_id)
+            <li><a><i class="fa fa-calendar"></i> Appointments <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu"> 
+                <li>
+                  <a href="{{ url('admin/appointments') }}">Appointments</a>
                 </li> 
               </ul>
             </li>
