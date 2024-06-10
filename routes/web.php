@@ -41,6 +41,10 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('appointments', 'AppointmentController@index');
 	Route::get('appointments/new', 'AppointmentController@new');
 	Route::post('appointments/store', 'AppointmentController@store');
+
+	Route::get('request/new', 'RequestController@new');
+	Route::get('request', 'RequestController@index');
+	Route::post('request/store', 'RequestController@store');
 	//Leave
 	Route::get('leaves', 'LeaveController@index');
 	Route::post('leave/insert','LeaveController@insert');

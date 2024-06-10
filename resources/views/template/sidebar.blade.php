@@ -89,6 +89,18 @@
               </ul>
             </li>
           @endif
+          @if(Auth()->user()->employee_id)
+            <li><a><i class="fa fa-file"></i> Request <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu"> 
+                <li>
+                  <a href="{{ url('request') }}">View Request</a>
+                </li>
+                <li>
+                  <a href="{{ url('request/new') }}">New Request</a>
+                </li> 
+              </ul>
+            </li>
+          @endif
           @if(!Auth()->user()->employee_id)
             <li><a><i class="fa fa-calendar"></i> Appointments <span class="fa fa-chevron-down"></span></a>
               <ul class="nav child_menu"> 
