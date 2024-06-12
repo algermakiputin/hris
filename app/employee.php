@@ -9,9 +9,7 @@ class employee extends Model
     	protected $primary_key = 'id';
 
     	public function destroyRow($id) {
-
     		$this->where('id', $id)->delete();
-
     	}
 
     	public function getName($id) {

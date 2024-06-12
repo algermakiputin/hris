@@ -35,6 +35,15 @@ if (typeof balance != 'undefined') {
 $(document).ready(function() {
 
     $("body").on('click', '.request-update', function(e) {
+        var name = $(this).data('name');
+        var status = $(this).data('status');
+        var id = $(this).data('id');
+        var type = $(this).data('type');
+
+        $("#request-employee-name").val(name);
+        $("#request-status").val(status);
+        $("#request-id").val(id);
+        $("#request-type").val(type);
         $("#request-update-modal").modal('toggle');
     });
 

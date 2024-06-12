@@ -37,4 +37,34 @@ class RequestController extends Controller
         
         return view('request.admin-request', compact('requests'));
     }
+
+    public function update(Request $request) { 
+      
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store('public/file');
+            $fileName = basename($path);
+            $data = array(
+                'status' => $request->input('status'),
+                'file' => $fileName
+            );
+
+            requests::where('id', $request->input('id'))->update($data);
+            return redirect()->back();
+
+        }
+    }
+
+    public function uploadFile(Request $request) {
+        $request->validate([
+                'avatar' => 'required|mimes:jpg,jpeg,bmp,png'
+            ]);
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('public/file');
+            $fileName = basename($path); 
+            employee::where('employee_id', $request->input('_id'))->update(['avatar' => $fileName]);
+            Users::where('employee_id', $request->input('_id'))->update(['avatar' => $fileName]);
+            return redirect()->back()->with('success-upload', 'Avatar uploaded successfully');
+        } 
+    }
 }

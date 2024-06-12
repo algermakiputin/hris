@@ -83,9 +83,7 @@ class EmployeeController extends Controller
             employee::where('employee_id', $request->input('_id'))->update(['avatar' => $fileName]);
             Users::where('employee_id', $request->input('_id'))->update(['avatar' => $fileName]);
             return redirect()->back()->with('success-upload', 'Avatar uploaded successfully');
-        }
-
-        
+        } 
     }
 
     public function activate_account() {

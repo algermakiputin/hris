@@ -47,9 +47,15 @@
                             <td>{{ $request->employee_id }}</td>
                             <td>{{ $request->employeeName }}</td>
                             <td>{{ $request->type }}</td>
-                            <td>{{ $request->file }}</td>
+                            <td><a href="{{ url('storage/file/' . $request->file) }}">Download File</a></td>
                             <td>{{ $request->status }}</td>
-                            <td><button class="btn btn-sm btn-primary request-update" data-id="{{ $request->id }}">Update</button></td>
+                            <td><button 
+                                class="btn btn-sm btn-primary request-update" 
+                                data-id="{{ $request->id }}"
+                                data-name="{{ $request->employeeName }}"
+                                data-status="{{ $request->status }}"
+                                data-type="{{ $request->type }}"
+                                >Update</button></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -72,7 +78,7 @@
         <h4 class="modal-title"><i class="fa fa-info-circle"></i> Update Request</h4>
       </div>
       <div class="modal-body">
-      {{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'leave/insert', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
+      {{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'request/store', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
         @if ($errors->any()) 
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">
@@ -95,6 +101,7 @@
             </div>
             @endif    
             <div class="form-group">
+                <input type="hidden" name="id" id="request-id" />
                 <label>Employee Name</label>
                 <input type="text" disabled class="form-control"  id="request-employee-name" name="name"/>
             </div>
