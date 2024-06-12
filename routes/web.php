@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::get('request/new', 'RequestController@new');
 	Route::get('request', 'RequestController@index');
 	Route::post('request/store', 'RequestController@store');
+	Route::get('admin/request', 'RequestController@adminRequest');
 	//Leave
 	Route::get('leaves', 'LeaveController@index');
 	Route::post('leave/insert','LeaveController@insert');

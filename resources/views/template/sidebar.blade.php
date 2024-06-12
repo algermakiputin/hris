@@ -72,8 +72,7 @@
                 <li>
                   <a href="{{ url('leave/application') }}">Apply Leave</a>
                 </li>
-                @endif
-             
+                @endif 
               </ul>
             </li>
           @endif
@@ -85,6 +84,15 @@
                 </li>
                 <li>
                   <a href="{{ url('appointments/new') }}">New Appointment</a>
+                </li> 
+              </ul>
+            </li>
+          @endif
+          @if(!Auth()->user()->employee_id)
+            <li><a><i class="fa fa-file"></i> Request <span class="fa fa-chevron-down"></span></a>
+              <ul class="nav child_menu"> 
+                <li>
+                  <a href="{{ url('admin/request') }}">View Request</a>
                 </li> 
               </ul>
             </li>

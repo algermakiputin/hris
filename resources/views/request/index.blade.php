@@ -36,7 +36,7 @@
 							<th>File</th>
 							<th>Status</th>
 						</tr>
-					</thead> 
+					</thead>
 					<tbody> 
                         @foreach($requests as $request)
                         <tr>

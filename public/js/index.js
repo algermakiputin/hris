@@ -34,6 +34,10 @@ if (typeof balance != 'undefined') {
 
 $(document).ready(function() {
 
+    $("body").on('click', '.request-update', function(e) {
+        $("#request-update-modal").modal('toggle');
+    });
+
     $("body").on('click', '.update-appointment-link', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
