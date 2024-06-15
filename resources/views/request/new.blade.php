@@ -32,7 +32,7 @@
 				<br />
 				<div class="row">
 					<div class="col-md-6" style="float: none;display: block;margin: auto;">
-						{{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'request/store', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
+						{{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'request/store', 'autocomplete' => 'off','id' => 'request_form'])}}
 						@if ($errors->any())
                             <div class="form-group">
                                 <div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">

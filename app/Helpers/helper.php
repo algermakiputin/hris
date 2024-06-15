@@ -3,6 +3,7 @@
 	use App\employee;
 	use Carbon\Carbon;
 	use App\departmentHeads;
+	use App\admin_notifications;
 
 	function checkDepartmentHead() {
 
@@ -115,26 +116,40 @@
 
  	function getNotification() {
  		$datasets = [];
- 		$notification = Notification::where(['employee_id' => Auth()->user()->employee_id,
+		$isAdmin = !Auth()->user()->employee_id;
+		if (!$isAdmin) {
+			$notification = Notification::where(['employee_id' => Auth()->user()->employee_id,
  										'campus_id' => Auth()->user()->campus_id,
  										'status' => 1
  							])->get();
+		} else {
+			$notification = admin_notifications::where(['admin_id' => Auth()->user()->id, 'status' => 1])->get();
+		}
+ 		
  		
  		if ($notification) {
  			foreach ($notification as $notify) {
- 				$employee = employee::find($notify->user_id);
- 				$name = ucwords($employee->first_name . ' ' . $employee->last_name);
-
-
- 				$datasets[] = [
- 					'id' => $notify->id,
- 					'avatar' => $employee->avatar,
- 					'diff' => Carbon::parse($notify->created_at)->diffForHumans(),
- 					'message' => $name . ' ' . $notify->message,
- 					'link' =>  $notify->link,
- 					'name' => $name
- 				];
-
+ 				if (!$isAdmin) {
+					$employee = employee::find($notify->user_id);
+					$name = ucwords($employee->first_name . ' ' . $employee->last_name);
+					$datasets[] = [
+						'id' => $notify->id,
+						'avatar' => $employee->avatar,
+						'diff' => Carbon::parse($notify->created_at)->diffForHumans(),
+						'message' => $notify->message,
+						'link' =>  $notify->link,
+						'name' => ""
+					];
+				} else {
+					$datasets[] = [
+						"id" => $notify->id,
+						'avatar' => null,
+						'diff' => Carbon::parse($notify->created_at)->diffForHumans(),
+						'message' => $notify->description ,
+						'link' =>  $notify->link,
+						'name' => $notify->message
+					];
+				}
  			} 
  		
  		}

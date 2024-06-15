@@ -42,7 +42,7 @@
                         <tr>
                             <td>{{ $request->created_at }}</td>
                             <td>{{ $request->type }}</td>
-                            <td>{{ $request->file }}</td>
+                            <td><a href="{{ url('storage/file/' . $request->file) }}">Download File</a></td>
                             <td>{{ $request->status }}</td>
                         </tr>
                         @endforeach

@@ -8,6 +8,9 @@ use App\Department;
 use App\Appointment;
 use App\employee;
 use App\Roles;
+use App\admin_notifications;
+use App\Users;
+use App\Notification;
 use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
@@ -28,6 +31,8 @@ class AppointmentController extends Controller
     }
 
     public function store(Request $request) {
+        $admins = Users::where('employee_id', null)->get();
+   
         Appointment::create([
             'campus_id' => $request->input('campus'),
             'employee_id' => Auth()->user()->employee_id,
@@ -36,6 +41,16 @@ class AppointmentController extends Controller
             'status' => 'pending',
             'department_id' => $request->input('department')
         ]);
+        
+        foreach ($admins as $admin) {
+            admin_notifications::create([
+                "message" => "New Appointment",
+                "description" => Auth()->user()->name . " " . "has created a new appointment", 
+                "link" => "admin/appointments",
+                "admin_id" => $admin->id,
+                "status" => 1
+            ]);
+        } 
 
         return redirect()->back();
     }
@@ -45,8 +60,8 @@ class AppointmentController extends Controller
 	}
 
     public function appointmentsDatatable(Request $request) {  
-		$limit = $request->input('length') || 10;
-		$start = $request->input('start') || 0;  
+		$limit = $request->input('length');
+		$start = $request->input('start');  
 		$appointments = Appointment::offset($start)
                                     ->limit($limit)
                                     ->orderBy('id', 'DESC') 
@@ -81,9 +96,19 @@ class AppointmentController extends Controller
     }
 
     public function update(Request $request) {
-        $appointment = Appointment::find($request->input('id'));
+        $appointment = Appointment::find($request->input('id')); 
         $appointment->status = $request->input('status');
         $appointment->save();
+        $employee = employee::where('employee_id', $appointment->employee_id)->first(); 
+        Notification::create([
+			'employee_id' => $appointment->employee_id,
+			'campus_id' => $appointment->campus_id,
+			'user_id' => $employee->id,
+			'message' => "Appointment " . $request->input('status'),
+			'link' => "appointments",
+			'status' => 1
+		]);
+
         return redirect()->back();
     }
 }

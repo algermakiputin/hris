@@ -78,7 +78,7 @@
         <h4 class="modal-title"><i class="fa fa-info-circle"></i> Update Request</h4>
       </div>
       <div class="modal-body">
-      {{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'request/store', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
+      {{ Form::open(['class' => 'form-horizontal form-label-left','files' => true, 'url' => 'request/update', 'autocomplete' => 'off','id' => 'leave_application_form'])}}
         @if ($errors->any()) 
             <div class="form-group">
                 <div class="col-md-offset-3 col-md-9 col-sm-4 col-xs-12">
