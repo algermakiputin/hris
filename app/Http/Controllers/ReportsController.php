@@ -22,6 +22,29 @@ class ReportsController extends Controller
         	return view('Reports.general',compact('campuses','roles'));
     }
 
+    public function recruitment() {
+        $count = 10;
+        $current_year = date('Y');
+        $years = [];
+        $data = [];
+        for ($i = 0; $i <= 10; $i++) {
+            $year = (string)((int)$current_year - $i);
+            array_push($years, $year);
+            $data[$year] = 0;
+        } 
+
+        $employees = DB::table('employees')->select('date_joining')->get();
+        $date = "2023-10-10"; 
+        foreach ($employees as $employee) {
+            $joiningYear = date('Y', strtotime($employee->date_joining));
+            if (in_array($joiningYear, $years)) {
+                $data[$joiningYear] += 1;
+            }
+        } 
+        
+        return view('Reports.recruitment', compact('data'));
+    }
+
     public function employees() {
         $employees = employee::all();
         return view('Reports.employees');

@@ -140,6 +140,7 @@
           @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
           <li><a><i class="fa fa-line-chart"></i> Reports <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
+            <li><a href="{{ url('reports/recruitment') }}">Recruitment</a></li>
               <li><a href="{{ url('reports/employees') }}">Employees/Faculties</a></li>
               <!--<li><a href="{{ url('reports/attendance') }}">Attendance</a></li>-->
               <li><a href="{{ url('reports/leaves') }}">Leaves</a></li>

@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth']],function() {
 	Route::post('leaves-approval/insert', 'LeaveApprovalsController@insert');
 	
 	Route::get('reports/general','ReportsController@general');
+	Route::get('reports/recruitment','ReportsController@recruitment');
 	Route::get('reports/employees','ReportsController@employees');
 	Route::get('reports/employeesDatatable','ReportsController@datatable');
 	Route::post('reports/all','ReportsController@all');
