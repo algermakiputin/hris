@@ -872,24 +872,7 @@ $(document).ready(function() {
                 '_token': $("meta[name=csrf-token]").attr('content')
             }
 
-        },
-        'columns': [{
-                'name': 'name',
-                width: '25%'
-            },
-            {
-                'name': 'description',
-                width: '45%'
-            },
-            {
-                orderable: false,
-                width: '15%'
-            },
-            {
-                'name': 'id',
-                width: '15%'
-            },
-        ]
+        }
     });
 
     $("#select_role_campus").change(function() {

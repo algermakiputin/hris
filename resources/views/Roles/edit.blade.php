@@ -45,8 +45,18 @@
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" id="department_name" class="form-control col-md-7 col-xs-12" name="name" value="{{ $role->name }}"  required="required" placeholder="Name">
-						</div>
-							 
+						</div> 
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Department/Office: 
+						</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="department">
+								@foreach ($departments as $department)
+								<option value="{{ $department->id }}">{{ $department->name }}</option>
+								@endforeach
+							</select>
+						</div> 
 					</div>
 				 	
 				 	<div class="form-group">

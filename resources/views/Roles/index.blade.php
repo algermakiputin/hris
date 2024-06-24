@@ -35,6 +35,7 @@
 					<thead>
 						<tr> 
 							<th>Name</th>
+							<th>Department/Office</th>
 							<th>Description</th>
 							<th>Total Employees and Faculties</th>
 							<th>Actions</th> 

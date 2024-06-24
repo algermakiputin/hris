@@ -45,13 +45,23 @@
 						</div>
 							 
 					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Department/Office: 
+						</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select class="form-control" name="department">
+								@foreach ($departments as $department)
+								<option value="{{ $department->id }}">{{ $department->name }}</option>
+								@endforeach
+							</select>
+						</div> 
+					</div>
 			 		<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12">Description: 
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" id="description" class="form-control col-md-7 col-xs-12" name="description"  required="required" placeholder="Description">
-						</div>
-							 
+						</div> 
 					</div>
 				  
 

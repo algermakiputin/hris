@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Campus</h3>
+		<h3>Units</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">Campuses</li>
+		    <li class="breadcrumb-item active" aria-current="page">Unit</li>
 		  </ol>
 		</nav>
 	</div>
@@ -21,7 +21,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title">
-				<h2>Campus Lists</h2>
+				<h2>Units Lists</h2>
 				<ul class="nav navbar-right panel_toolbox">
 					<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 					</li>

@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Campus</h3>
+		<h3>Unit</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">New Campus</li>
+		    <li class="breadcrumb-item active" aria-current="page">New Unit</li>
 		  </ol>
 		</nav>
 	</div>
@@ -22,7 +22,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel">
 			<div class="x_title" id="x_title">
-				<h2>New Campus</h2>
+				<h2>New Unit</h2>
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
@@ -37,10 +37,10 @@
 						</div>
 				 	@endif
 					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Campus Name: 
+						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Unit Name: 
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name"  required="required" placeholder="Campus Name">
+							<input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name"  required="required" placeholder="Unit Name">
 						</div>
 							 
 					</div>

@@ -32,7 +32,7 @@ class EmployeeController extends Controller
         $campuses = Campus::select('id','name')->get();
         $roles = Roles::select('id','name')->orderBy('name')->get();
         $schedules = $this->getSchedules(Schedule::all());
-       
+        // dd($campuses);
 		return view('Employee.new', compact('departments','campuses','roles','schedules'));
 
 	}

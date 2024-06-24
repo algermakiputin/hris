@@ -3,14 +3,14 @@
 @section('main')
 <div class="page-title">
 	<div class="title_left">
-		<h3>Edit campus</h3>
+		<h3>Edit Unit</h3>
 	</div>
 
 	<div class="title_right">
 		<nav aria-label="breadcrumb" class="nav navbar-right">
 		  <ol class="breadcrumb">
 		    <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-		    <li class="breadcrumb-item active" aria-current="page">Edit Campus</li>
+		    <li class="breadcrumb-item active" aria-current="page">Edit Unit</li>
 		  </ol>
 		</nav>
 	</div>
@@ -43,10 +43,10 @@
 				 	@endif
 					<input type="hidden" name="id" value="{{ $campus->id }}">
 					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12">Campus Name:
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Unit Name:
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name"  required="required" placeholder="Campus Name" value="{{ $campus->name }}">
+							<input type="text" id="name" class="form-control col-md-7 col-xs-12" name="name"  required="required" placeholder="Unit Name" value="{{ $campus->name }}">
 						</div>
 							 
 					</div>

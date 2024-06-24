@@ -16,18 +16,15 @@ class RolesController extends Controller
 
 	public function data(Request $request) {
 
-		$totalData = Roles::count();
-
-	     $limit = intval($request->input('length'));
-	     $start = intval($request->input('start'));
-	     $order = intval($request->input('order.0.column'));
-	     $dir = $request->input('order.0.dir');
-	     $search = $request->input('search');
-	     $col = $request->input("columns.$order.name");
-	    	$campus_id = $request->input("columns.0.search.value");
-
-	   
-    		$roles = Roles::offset($start)
+		$totalData = Roles::count(); 
+	    $limit = intval($request->input('length'));
+	    $start = intval($request->input('start'));
+	    $order = intval($request->input('order.0.column'));
+	    $dir = $request->input('order.0.dir');
+	    $search = $request->input('search');
+	    $col = $request->input("columns.$order.name");
+	    $campus_id = $request->input("columns.0.search.value");
+    	$roles = Roles::offset($start)
 					->limit($limit) 
 					->get();
 
@@ -36,9 +33,14 @@ class RolesController extends Controller
 	     if ($roles) {
 	     	$counter = 0;
 	     	foreach ($roles as $role) {
+				$departmentName = "";
+				if ($role->department_id) {
+					$departmentName = Department::find($role->department_id)->name;
+				}
 	     		$counter++;
 	     		$nestedData = [ 
 	     			ucwords($role->name),
+					$departmentName || '',
 	     			ucfirst($role->description), 
 	     			employee::where('role_id', $role->id)->count(),
 	     			'<div class="dropdown">
@@ -84,10 +86,10 @@ class RolesController extends Controller
 	}
 
 	public function edit(Request $request) {
-
+		$departments = Department::all();
 		$role = Roles::find($request->input('id'));
 	 	 
-		return view('Roles.edit', compact('departments','role','campuses','campus_id','currentCampusDepartments'));
+		return view('Roles.edit', compact('departments','role'));
 	}
 
 	public function update(Request $request) {
@@ -100,19 +102,22 @@ class RolesController extends Controller
 		return redirect()->back()->with('success','Role updated successfully');
 	}
 
-	public function new() { 
-		return view('Roles.new');
+	public function new() {
+		$departments = Department::all();
+		return view('Roles.new', compact('departments'));
 	}
 
 	public function insert(Request $request) { 
 		$request->validate([
 				'name' => 'required',
-				'description' => 'required'
+				'description' => 'required',
+				'department' => 'required'
 			]);
 
 		Roles::create([
 				'name' => $request->input('name'),
-				'description' => $request->input('description') 
+				'description' => $request->input('description'),
+				'department_id' => $request->input('department')
 			]);
 
 		return redirect()->back()->with('success','New role added successfully');

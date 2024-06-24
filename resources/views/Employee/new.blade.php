@@ -174,10 +174,10 @@
 
 				<fieldset class="form-step" step-no = '2'>
 					<div class="form-group">
-						<label class="control-label col-md-2 col-sm-2 col-xs-12">Campus Assign</label>
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select name="campus" class="form-control selectpicker" data-parsley-group='block2' required="required" id="select_role_campus" data-parsley-errors-container="#campus-error">
-								<option value="">Select Campus</option>
+								<option value="">Select Unit</option>
 								@foreach ($campuses as $campus)
 								<option value="{{ $campus->id }}">{{$campus->name}}</option>
 								@endforeach
