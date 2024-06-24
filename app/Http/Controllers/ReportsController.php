@@ -27,7 +27,7 @@ class ReportsController extends Controller
         $current_year = date('Y');
         $years = [];
         $data = [];
-        for ($i = 0; $i <= 10; $i++) {
+        for ($i = 0; $i <= 9; $i++) {
             $year = (string)((int)$current_year - $i);
             array_push($years, $year);
             $data[$year] = 0;

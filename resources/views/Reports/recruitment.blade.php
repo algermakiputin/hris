@@ -1,7 +1,19 @@
 @extends('master')
 
 @section('main')
-
+    <style>
+        @media print {
+            body {
+                visibility: hidden;
+            }
+            #section-to-print {
+                visibility: visible;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
     <div class="page-title">
         <div class="title_left">
             <h3>Recruitment</h3>
@@ -16,11 +28,15 @@
             </nav>
         </div> 
     </div>
-
+    
     <div class="row"> 
         <div class="col-md-12 col-xs-12">
-            <div class="x_panel">
-                <canvas id="myChart" width="inherit" height="100"></canvas>
+            <div class="x_panel"> 
+                <button id="printMe"><i class="fa fa-print"></i> Print</button>
+                <div style="padding:50px 0;" id="section-to-print">
+                    <h1 class="text-center">Recruitment Reports</h1>
+                    <canvas id="myChart" width="inherit" height="100"></canvas>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div> 
@@ -29,7 +45,11 @@
     <script>
         var labels = JSON.parse('<?php echo json_encode(array_keys($data)); ?>');
         var data = JSON.parse('<?php echo json_encode(array_values($data)); ?>');
-      
+        var button = document.getElementById("printMe");
+        button.onclick = function() {
+            window.print()
+        }
+        const backgrounds = ["#03fc41", "#0335fc", "#f4fc03", "#fc8403", "#fc8403", "#f003fc", "#f003fc", "#4d5963", "#578f9c"]
         var ctx = document.getElementById("myChart");
         new Chart(ctx, {
             type: 'pie',
@@ -38,7 +58,8 @@
             datasets: [{
                 label: '# of Votes',
                 data: data,
-                borderWidth: 1
+                borderWidth: 1,
+                backgroundColor: backgrounds
             }]
             },
             options: {
