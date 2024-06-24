@@ -579,8 +579,8 @@ $(document).ready(function() {
                 table.empty();
                 $.each(result, function(key, value) {
                     table.append("<tr>" +
-                            '<td>' + value.name  +'</td>' + 
-                            '<td>' + value.allowance  +'</td>' + 
+                            '<td>Leave Credit</td>' + 
+                            '<td>' + value.leaveCredits  +'</td>' + 
                             '<td>' + value.used  +'</td>' + 
                             '<td>' + value.balance  +'</td>' + 
                         "</tr>");

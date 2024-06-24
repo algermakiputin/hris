@@ -118,8 +118,8 @@ class LeaveController extends Controller
 		'campus_id' => $request->input('campus_id')
 		];
 		$employee = employee::where($data)->first();
-		
-		$leave_types = $this->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id);
+		$leaveBalance = $this->getLeavesBalance($employee->employee_id, $employee->campus_id); 
+		$leave_types = [$leaveBalance];
 		return json_encode($leave_types);
 	}
 
