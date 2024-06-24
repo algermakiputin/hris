@@ -25,8 +25,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2>Leave Report</h2>
-				</div>
-				 
+				</div> 
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -35,11 +34,10 @@
 			<table class="table table-striped table-bordered no-footer" id="leaves_report_table">
 				 <thead>
 				 	<tr>
-				 		<th>Name</th>
-				 		<th>Leave Type</th>
-				 		<th>allowance</th>
+				 		<th>Name</th> 
+				 		<th>Total Leave Credits</th>
 				 		<th>Used</th>
-				 		<th>Leave credits</th>
+				 		<th>Available Leave Credits</th>
 				 	</tr>
 				 </thead>
 				 <tbody>

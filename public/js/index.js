@@ -468,57 +468,11 @@ $(document).ready(function() {
             }
 
         },
-        'columns': [{
-                'name': 'id',
-                orderable: false
-            },
-            {
-                'name': 'leave_type_id',
-                orderable: false
-            },
-            {
-                'name': 'allowance',
-                orderable: false
-            },
-            {
-                orderable: false
-            },
-            {
-                orderable: false
-            }
-        ],
-        fnDrawCallback : function(value) {
-         
-            var table = $(this);
-            table.find("tbody tr").each(function(){
-                var tr = $(this);
-                var next =  tr.next("tr");
-                var nexttr = next.next('tr');
-                var trCol = tr.find('td').eq(0);
-                var nextCol = next.find('td').eq(0);
-                var nextnextCol = nexttr.find('td').eq(0);
-
-                if (trCol.text() == nextCol.text()) {
-
-                    if (trCol.text() == nextCol.text() && trCol.text() == nextnextCol.text() ) {
-                     
-                        trCol.attr('rowspan','3');
-                        trCol.addClass('align-middle');
-                        nextCol.remove();
-                        nextnextCol.remove();
-                        return;
-                    }
-                    trCol.attr('rowspan','2');
-                    trCol.addClass('align-middle');
-                    nextCol.remove();     
-                }
-            })
-        },  
         initComplete: function() {
              
-            $("#leaves_report_table_length").append('&nbsp;&nbsp;<label>School Year <select aria-controls="leaves_report_table" style="width:150px;" id="sy" class="">' +
-                '<option value="">Select School Year</option></select></label>'
-            );
+            // $("#leaves_report_table_length").append('&nbsp;&nbsp;<label>School Year <select aria-controls="leaves_report_table" style="width:150px;" id="sy" class="">' +
+            //     '<option value="">Select School Year</option></select></label>'
+            // );
             sy_options();
 
             $("#sy").change(function() {

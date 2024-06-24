@@ -474,6 +474,58 @@ class LeaveController extends Controller
 		return $totalHours;
 	}
 
+	private function getLeavesBalance($employee_id, $campus_id) {
+		$totalHoursUsed = 0;
+		$employee = employee::where(['employee_id' => $employee_id, 'campus_id' => $campus_id])
+		->first();
+		$role = Roles::where('id', $employee->role_id)->first();
+		$department_id = $employee->department_id;
+		$leave_types = $this->getEmployeeLeaveBalance($department_id, $employee->employee_id, $employee->campus_id);
+		$leaveBalance = 0;
+		$employmentStatus = $employee->employment_status;
+		$designation = $employee->designation2;
+		$hiringDate = $employee->date_joining;
+		$leaveCredits = 0; 
+		$now = Carbon::now();
+		$month = (int)date('m');
+		$totalMonthsEmployed = Carbon::parse($now)->diffInMonths($hiringDate); 
+		$isNewEmployee = $totalMonthsEmployed <= 6;  
+		
+		if (strtolower($role->name) === "dean") {
+			$leaveCredits = 10;
+			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
+		}
+		else if ($designation === "Employee") {  
+			$totalHoursUsed = $this->getTotalHoursUsedEmployee();
+			if ($employmentStatus === "Part Time") {
+				$leaveCredits = 0;
+			}else if ($totalMonthsEmployed < 6  && $employmentStatus !== "Permanent") {
+				$leaveCredits = 0;
+			} else if ($employmentStatus === "Permanent" && !$isNewEmployee) {  
+				$leaveCredits = 17.5;
+			} else if ($totalMonthsEmployed >=6 && $employmentStatus === "Permanent") {
+				$leaveCredits = 6;
+			
+			
+			} else if ($isNewEmployee && $this->isSecondSem($month) && $month >= 7) {
+				$leaveCredits = 17.5;
+			}
+		} else if ($designation === "Faculty" && $totalMonthsEmployed >= 12) {
+			if ($employmentStatus === "Contractual" || $employmentStatus === "Permanent" ) {
+				$leaveCredits = 5;
+			} 
+
+			$totalHoursUsed = $this->getTotalHoursFaculty();
+		}
+	 
+		$balance = $leaveCredits - ($totalHoursUsed / 8);
+		return array(
+			'balance' => $balance,
+			'leaveCredits' => $leaveCredits,
+			'used' => $totalHoursUsed
+		);
+	}
+
 	public function application() { 
 		$totalHoursUsed = 0;
 		$employee = employee::where(['employee_id' => Auth()->user()->employee_id, 'campus_id' => Auth()->user()->campus_id])
@@ -544,15 +596,13 @@ class LeaveController extends Controller
 
 	public function generalReports(Request $request) {
 		$totalData = employee::all()->count();
-		$leaveType = new Leave_type;
-
+		$leaveType = new Leave_type; 
 		$limit = intval($request->input('length'));
 		$start = intval($request->input('start'));  
 		$sy = $request->input('columns.3.search.value'); 
 		$search = $request->input('search.value');
 
-		if ($search) {
-
+		if ($search) { 
 			$employees = employee::offset($start)
 			->limit($limit)
 			->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'LIKE', '%' . $search . '%')
@@ -561,8 +611,7 @@ class LeaveController extends Controller
 			$employees = employee::offset($start)
 			->limit($limit) 
 			->get();
-		}
-
+		} 
 		
 		$start_sy = sy_start();
 		$end_sy = sy_end();
@@ -576,38 +625,23 @@ class LeaveController extends Controller
 			$start_sy = Carbon::create($s ."$start", $sy_start)->format('Y-m-d');
 			$end_sy = Carbon::create($s . "$end", $sy_end)->format('Y-m-d');
 			
-		}
-		
+		} 
 
 		$totalFiltered = $employees->count();
 		$data = [];
 
 		$counter = $start + 1;
 
-		if ($employees) {
-
-			foreach ($employees as $employee) {
-				
+		if ($employees) { 
+			foreach ($employees as $employee) { 
+				$leaveBalance = $this->getLeavesBalance($employee->employee_id, $employee->campus_id); 
 				$leave_types = $this->getEmployeeLeaveBalance($employee->department_id, $employee->employee_id, $employee->campus_id, $start_sy, $end_sy);
-
-				if ($leave_types) { 
-					foreach ($leave_types as $type) {
-
-						$nestedData = [
-						ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name),
-						$type['name'],
-						$type['allowance'],
-						$type['used'],
-						$type['balance']
-						];
-
-						$data[] = $nestedData;
-
-					}
-				}
-				
-				
-
+				$data[] = [
+					ucfirst($employee->first_name) . ' ' . ucfirst($employee->last_name), 
+					$leaveBalance['leaveCredits'],
+					$leaveBalance['used'],
+					$leaveBalance['balance']
+				];  
 			}
 		}
 
