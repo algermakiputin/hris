@@ -884,12 +884,15 @@ $(document).ready(function() {
                 _token: token,
                 campus_id: campus_id
             },
-            success: function(data) {
-
+            success: function(data) { 
                 $("#campus-department").fadeOut();
                 $("#campus-department-select").empty();
                 $("#campus-department-select").fadeOut();
-                var departments = JSON.parse(data);
+                var response = JSON.parse(data);
+                console.log(`response`, response);
+                var departments = response.departments;
+                var roles = response.roles;
+                $("#roles-data").val(JSON.stringify(roles));
                 $("#campus-department-select").append("<option value=''>Select Department</option>");
                 $.each(departments, function(key, value) {
                     $("#campus-department-select").append("<option value='" + value.id + "'>" + value.name.charAt(0).toUpperCase() + value.name.slice(1) + "</option>");
@@ -897,33 +900,45 @@ $(document).ready(function() {
                 $("#campus-department").fadeIn();
                 $("#campus-department-select").fadeIn();
                 $("#campus-department-select").selectpicker('refresh');
+            } 
+        }); 
+    })
+    
+    $("#campus-department-select").change(function(e) {
+        var departmentId = $(this).val();
+        console.log(departmentId);
+        var roles = JSON.parse($("#roles-data").val());
+        console.log(roles);
+        $("#roles-select").empty();
+        $.each(roles, function(key, value) {
+            if (departmentId === value.department_id) {
+                $("#roles-select").append("<option value='" + value.id +"'>"+ value.name +"</option>")
             }
-
+            
         });
+    });
 
-    })
+    // $(".campus-department-select").change(function() {
+    //     var id = $(this).val();
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/roles/getDepartmentRoles',
+    //         data: {
+    //             id: id
+    //         },
+    //         success: function(data) {
+    //             var roles = JSON.parse(data);
+    //             $("#select-role").hide();
+    //             $("#roles").empty();
+    //             $("#roles").append('<option value="">Select Role</option>');
+    //             $.each(roles, function(key, value) {
+    //                 $("#roles").append('<option value="' + value.id + '">' + value.name + '</option>')
+    //             });
+    //             $("#select-role").fadeIn();
+    //         }
 
-    $(".campus-department-select").change(function() {
-        var id = $(this).val();
-        $.ajax({
-            type: 'GET',
-            url: '/roles/getDepartmentRoles',
-            data: {
-                id: id
-            },
-            success: function(data) {
-                var roles = JSON.parse(data);
-                $("#select-role").hide();
-                $("#roles").empty();
-                $("#roles").append('<option value="">Select Role</option>');
-                $.each(roles, function(key, value) {
-                    $("#roles").append('<option value="' + value.id + '">' + value.name + '</option>')
-                });
-                $("#select-role").fadeIn();
-            }
-
-        })
-    })
+    //     })
+    // })
 
     $("#schedules_table").DataTable({
         'order': [

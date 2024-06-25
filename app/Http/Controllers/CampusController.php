@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Campus;
 use App\employee;
 use App\Department;
+use App\Roles;
 
 class CampusController extends Controller
 {
@@ -25,7 +26,11 @@ class CampusController extends Controller
   public function getDepartments(Request $request) {
 
       $departments = Department::where('campus_id', $request->input('campus_id'))->get();
-      return json_encode($departments);
+      $roles = Roles::all();
+      return json_encode(array(
+        'departments' => $departments,
+        'roles' => $roles
+      ));
   }
 
   public function data(Request $request) {

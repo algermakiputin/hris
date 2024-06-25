@@ -172,8 +172,9 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-step" step-no = '2'>
+				<fieldset class="form-step active" step-no = '2'>
 					<div class="form-group">
+						<input type="hidden" id="roles-data" />
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<select name="campus" class="form-control selectpicker" data-parsley-group='block2' required="required" id="select_role_campus" data-parsley-errors-container="#campus-error">
@@ -207,11 +208,9 @@
 						<label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Role  
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12"> 
-							<select class="form-control selectpicker" data-parsley-errors-container="#role-error" data-size="5" name="designation">
+							<select class="form-control" id="roles-select" data-parsley-errors-container="#role-error" data-size="5" name="designation">
 								<option value="">Select Role</option>
-								@foreach ($roles as $role)
-								<option value="{{ $role->id }}">{{ ucwords($role->name) }}</option>
-								@endforeach
+							 
 							</select>
 							<div class="clearfix"></div>
 							<div id="role-error"></div>
