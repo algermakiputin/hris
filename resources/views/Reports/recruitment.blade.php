@@ -32,7 +32,16 @@
     <div class="row"> 
         <div class="col-md-12 col-xs-12">
             <div class="x_panel"> 
-                <button id="printMe"><i class="fa fa-print"></i> Print</button>
+                <div class="row">
+                    <div class="col-2"><button id="printMe"><i class="fa fa-print"></i> Print</button></div>
+                    <div class="col-2"><select>
+                        <option>Recruitment</option>
+                        <option>Sex</option>
+                        <option>Years of Service</option>
+                        <option>Employment Status</option>
+                        <option>Academic Rank</option>
+                    </select></div>
+                </div>
                 <div style="padding:50px 0;" id="section-to-print">
                     <h1 class="text-center">Recruitment Reports</h1>
                     <canvas id="myChart" width="inherit" height="100"></canvas>
@@ -51,7 +60,8 @@
         }
         const backgrounds = ["#03fc41", "#0335fc", "#f4fc03", "#fc8403", "#fc8403", "#f003fc", "#f003fc", "#4d5963", "#578f9c"]
         var ctx = document.getElementById("myChart");
-        new Chart(ctx, {
+        
+        var chart = new Chart(ctx, {
             type: 'pie',
             data: {
             labels: labels,
@@ -63,13 +73,14 @@
             }]
             },
             options: {
-            scales: {
-                y: {
-                beginAtZero: true
+                scales: {
+                    y: {
+                    beginAtZero: true
+                    }
                 }
             }
-            }
         });
-  
+        
+        
     </script>
 @endsection

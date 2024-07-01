@@ -23,6 +23,7 @@ class ReportsController extends Controller
     }
 
     public function recruitment() {
+        $employees = employee::all();
         $count = 10;
         $current_year = date('Y');
         $years = [];
@@ -32,7 +33,9 @@ class ReportsController extends Controller
             array_push($years, $year);
             $data[$year] = 0;
         } 
-
+        $sexReports = $this->getSexReports($employees);
+        $ageReports = $this->getAgeReports($employees);
+        $employmentStatusReports = $this->getEmploymentStatusReports($employees);
         $employees = DB::table('employees')->select('date_joining')->get();
         $date = "2023-10-10"; 
         foreach ($employees as $employee) {
@@ -43,6 +46,73 @@ class ReportsController extends Controller
         } 
         
         return view('Reports.recruitment', compact('data'));
+    }
+
+    public function getSexReports($employees) {
+        $female = 0;
+        $male = 0; 
+        foreach ($employees as $employee) {
+            if ($employee->gender) {
+                $male++;
+            } else {
+                $female++;
+            }
+        }
+        return array(
+            'female' => $female,
+            'male' => $male
+        );
+    }
+
+    public function getAgeReports($employees) {
+        $data = array(
+            '19-25' => 0,
+            '26-35' => 0,
+            '36-45' => 0,
+            '46-55' => 0,
+            '56-65' => 0,
+            '66-75' => 0
+        );
+        $currentDate = Carbon::now();
+        foreach ($employees as $employee) {
+            $age = $currentDate->diffInYears($employee->birthday);
+            if ($age >= 19 && $age <= 25) {
+                $data['19-25']++;
+            } else if ($age >= 26 && $age <= 35) {
+                $data['26-35']++;
+            } else if ($age >= 36 && $age <= 45) {
+                $data['36-45']++;
+            } else if ($age >= 46 && $age <= 55) {
+                $data['46-55']++;
+            } else if ($age >= 26 && $age <= 35) {
+                $data['56-65']++;
+            } else if ($age >= 66 && $age <= 75) {
+                $data['66-75']++;
+            }
+        }  
+        return $data;
+    }
+
+    public function getEmploymentStatusReports($employees) {
+        $data = array(
+            'Project Based' => 0,
+            'Contractual' => 0,
+            'Permanent' => 0,
+            'Provisionary' => 0,
+            'Part Time' => 0,
+        ); 
+        foreach ($employees as $employee) {
+            if (array_key_exists($employee->employment_status, $data)) { 
+                $data[$employee->employment_status] = $data[$employee->employment_status] + 1;
+            }  
+        } 
+    }
+
+    public function getAcademicRankReports($employees) {
+        $data = array();
+        foreach ($employees as $employee) {
+
+        }
     }
 
     public function employees() {
