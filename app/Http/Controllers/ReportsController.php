@@ -35,8 +35,7 @@ class ReportsController extends Controller
         } 
         $sexReports = $this->getSexReports($employees);
         $ageReports = $this->getAgeReports($employees);
-        $employmentStatusReports = $this->getEmploymentStatusReports($employees);
-        $employees = DB::table('employees')->select('date_joining')->get();
+        $employmentStatusReports = $this->getEmploymentStatusReports($employees) || []; 
         $date = "2023-10-10"; 
         foreach ($employees as $employee) {
             $joiningYear = date('Y', strtotime($employee->date_joining));
@@ -45,7 +44,9 @@ class ReportsController extends Controller
             }
         } 
         
-        return view('Reports.recruitment', compact('data'));
+        $sexReportsLabel = json_encode(array_Keys($sexReports));
+        $sexReportsData = json_encode(array_values($sexReports));
+        return view('Reports.recruitment', compact('data', 'sexReports', 'ageReports', 'employmentStatusReports'));
     }
 
     public function getSexReports($employees) {
