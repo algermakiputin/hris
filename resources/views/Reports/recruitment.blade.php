@@ -11,6 +11,8 @@
                 position: absolute;
                 left: 0;
                 top: 0;
+                padding:0;
+                margin:0;
             }
         }
     </style>
@@ -23,7 +25,7 @@
             <nav aria-label="breadcrumb" class="nav navbar-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="fa fa-home"></i> Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Recruitment Report</li>
+                    <li class="breadcrumb-item active" aria-current="page">Employee Report</li>
                 </ol>
             </nav>
         </div> 
@@ -35,17 +37,16 @@
                 <div class="row">
                     <div class="col-2"><button id="printMe"><i class="fa fa-print"></i> Print</button></div>
                     <div class="col-2" class="form-control" id="report-select"><select>
-                        <option value="Recruitment">Recruitment</option>
+                        <option value="Recruitment">Employee Hired by Year</option>
                         <option value="Sex">Sex</option>
                         <option value="Years of Service">Years of Service</option>
                         <option value="Employment Status">Employment Status</option>
                         <option value="Academic Rank">Academic Rank</option>
                     </select></div>
                 </div>
-                <div style="padding:50px 0;" id="section-to-print">
-                    <h1 class="text-center">Recruitment Reports</h1>
-                    <div id="canvas-area" style="width:550px; margin:auto"> 
-                    </div> 
+                <div id="section-to-print" style="width:65%;margin:auto">
+                    <h1 class="text-center" id="chart-label" style="text-align:center;">Recruitment Reports</h1>
+                    <div id="canvas-area" ></div> 
                 </div>
             </div>
         </div>
@@ -67,22 +68,25 @@
             var ageReportsData = JSON.parse('<?php echo json_encode(array_values($ageReports ? $ageReports : [])); ?>');
             var employmentStatusReportsLabel = JSON.parse('<?php echo json_encode(array_Keys($employmentStatusReports ? $employmentStatusReports : [])) ?>');
             var employmentStatusReportsData = JSON.parse('<?php echo json_encode(array_values($employmentStatusReports ? $employmentStatusReports : [])) ?>');
+            var academicRankLabel = JSON.parse('<?php echo json_encode(array_keys($academicRankReports ? $academicRankReports : [])) ?>');
+            var academicRankData = JSON.parse('<?php echo json_encode(array_values($academicRankReports ? $academicRankReports : [])) ?>');
+            console.log(academicRankData);
+            // console.log(academicRankLabel);
             $("#report-select").change(function(event) {
                 chart?.destroy();
                 var value = event.target.value;
                 if (value === "Recruitment") {  
-                    alert(0)
                     chart = createChart(document.getElementById("myChart"), labels,data);
                 } else if (value === "Sex") {   
-                    chart = createChart(document.getElementById("sex"), sexReportsLabel,sexReportsData);
-                  
+                    chart = createChart(document.getElementById("sex"), sexReportsLabel,sexReportsData); 
                 } else if (value === "Years of Service") { 
                     chart = createChart(document.getElementById("sex"), ageReportsLabel,ageReportsData);
                 } else if (value === "Employment Status") {
                     chart = createChart(document.getElementById("sex"), employmentStatusReportsLabel,employmentStatusReportsData);
-                } else if (value === "Academic Rank") {
-                    
-                } 
+                } else if (value === "Academic Rank") { 
+                    chart = createChart(document.getElementById("sex"), academicRankLabel, academicRankData);
+                }
+                $("#chart-label").text(value);
             });
             chart = createChart(document.getElementById("myChart"), labels,data);
             function hideAllCanvas() {

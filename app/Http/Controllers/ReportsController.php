@@ -35,7 +35,9 @@ class ReportsController extends Controller
         } 
         $sexReports = $this->getSexReports($employees);
         $ageReports = $this->getAgeReports($employees);
-        $employmentStatusReports = $this->getEmploymentStatusReports($employees) || []; 
+        $employmentStatusReports = $this->getEmploymentStatusReports($employees); 
+        $academicRankReports = $this->getAcademicRankReports($employees);
+       
         $date = "2023-10-10"; 
         foreach ($employees as $employee) {
             $joiningYear = date('Y', strtotime($employee->date_joining));
@@ -46,7 +48,26 @@ class ReportsController extends Controller
         
         $sexReportsLabel = json_encode(array_Keys($sexReports));
         $sexReportsData = json_encode(array_values($sexReports));
-        return view('Reports.recruitment', compact('data', 'sexReports', 'ageReports', 'employmentStatusReports'));
+        return view('Reports.recruitment', compact(
+            'data', 
+            'sexReports', 
+            'ageReports', 
+            'employmentStatusReports', 
+            'academicRankReports'
+        ));
+    }
+
+    public function getAcademicRankReports($employees) {
+        $data = [];
+        foreach ($employees as $employee) {
+            if (!$employee->academic_rank) continue;
+            if (array_key_exists($employee->academic_rank, $data)) {
+                $data[strval($employee->academic_rank)]++;
+            } else {
+                $data[strval($employee->academic_rank)] = 1;
+            }
+        }
+        return $data;
     }
 
     public function getSexReports($employees) {
@@ -106,15 +127,10 @@ class ReportsController extends Controller
             if (array_key_exists($employee->employment_status, $data)) { 
                 $data[$employee->employment_status] = $data[$employee->employment_status] + 1;
             }  
-        } 
-    }
-
-    public function getAcademicRankReports($employees) {
-        $data = array();
-        foreach ($employees as $employee) {
-
         }
-    }
+     
+        return $data;
+    } 
 
     public function employees() {
         $employees = employee::all();
