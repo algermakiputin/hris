@@ -36,11 +36,11 @@ class RolesController extends Controller
 				$departmentName = "";
 				if ($role->department_id) {
 					$departmentName = Department::find($role->department_id)->name;
-				}
+				} 
 	     		$counter++;
 	     		$nestedData = [ 
 	     			ucwords($role->name),
-					$departmentName || '',
+					$departmentName,
 	     			ucfirst($role->description), 
 	     			employee::where('role_id', $role->id)->count(),
 	     			'<div class="dropdown">
@@ -92,11 +92,11 @@ class RolesController extends Controller
 		return view('Roles.edit', compact('departments','role'));
 	}
 
-	public function update(Request $request) {
-
+	public function update(Request $request) { 
 		Roles::where('id',$request->input('id'))->update([
 				'name' => $request->input('name'),
-				'description' => $request->input('description')
+				'description' => $request->input('description'),
+				'department_id' => $request->input('department')
 			]);
 
 		return redirect()->back()->with('success','Role updated successfully');

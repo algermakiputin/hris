@@ -906,12 +906,14 @@ $(document).ready(function() {
     
     $("#campus-department-select").change(function(e) {
         var departmentId = $(this).val();
-        console.log(departmentId);
+        console.log(`department id ${departmentId}`);
         var roles = JSON.parse($("#roles-data").val());
-        console.log(roles);
+       
         $("#roles-select").empty();
         $.each(roles, function(key, value) {
-            if (departmentId === value.department_id) {
+            console.log(value.department_id);
+            if (departmentId == value.department_id) {
+                console.log('same');
                 $("#roles-select").append("<option value='" + value.id +"'>"+ value.name +"</option>")
             }
             

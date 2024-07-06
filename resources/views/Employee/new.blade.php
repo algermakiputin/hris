@@ -204,13 +204,11 @@
 							 
 							>
 						</div>
-						
 						<label class="control-label col-md-1 col-sm-1 col-xs-12" for="first-name">Role  
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12"> 
 							<select class="form-control" id="roles-select" data-parsley-errors-container="#role-error" data-size="5" name="designation">
 								<option value="">Select Role</option>
-							 
 							</select>
 							<div class="clearfix"></div>
 							<div id="role-error"></div>
