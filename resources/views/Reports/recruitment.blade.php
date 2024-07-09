@@ -125,7 +125,7 @@
                 $("#canvas-area").empty();
                 $("#canvas-area").append('<canvas id="canvas'+index+'" width="inherit" height="100" ></canvas>');
                 var canvas = $("#canvas" + index);
-                const backgrounds = ["#03fc41", "#0335fc", "#f4fc03", "#fc8403", "#fc8403", "#f003fc", "#f003fc", "#4d5963", "#578f9c"]
+                const backgrounds = ["#03fc41", "#0335fc", "#f4fc03", "#fc8403", "#fc8403", "#f003fc", "#2874A6", "#4d5963", "#578f9c","#D35400", "#F4D03F"]
                 new Chart(canvas, {
                     type: 'pie',
                     data: {
