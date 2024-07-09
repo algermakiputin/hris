@@ -113,7 +113,7 @@
 						</div>
 
 						<div class="col-md-3 col-sm-3 col-xs-12">
-							<input type="number" id="age" class="form-control col-md-7 col-xs-12" name="age" placeholder="Age" readonly="readonly">
+							<input type="number" min="15" required id="age" class="form-control col-md-7 col-xs-12" name="age" placeholder="Age" readonly="readonly">
 						</div>
 					</div>
 					<div class="clearfix"></div>
@@ -167,7 +167,7 @@
 					<div class="ln_solid"></div>
 					<div class="form-group">
 						<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2 text-right">
-							<button type="submit" class="btn btn-success next">Next</button>
+							<button type="submit" class="btn btn-success next" id="first-step-validation">Next</button>
 						</div>
 					</div>
 				</fieldset>
