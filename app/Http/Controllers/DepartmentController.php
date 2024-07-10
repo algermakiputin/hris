@@ -114,9 +114,9 @@ class DepartmentController extends Controller
 
 	     		$counter++;
 	     		$nestedData = [
-	     			$campus,
-	     			ucwords($department->name),
+					ucwords($department->name),
 	     			ucfirst($department->description), 
+					 $campus,
 	     			'<div class="dropdown">
 						<a class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px; ">
 						Action
