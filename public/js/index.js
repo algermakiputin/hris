@@ -2063,27 +2063,6 @@ class Department {
                     '_token': token
                 }
             },
-            'columns': [{
-                    'name': 'id',
-                    width: '15%'
-                },
-                {
-                    'name': "name",
-                    width: '35%'
-                },
-                {
-                    'name': "description",
-                    'title': 'Unit',
-                    width: '35%'
-                },
-                {
-                    'name': 'campus_id',
-                    'orderable': false,
-                    'title': 'Actions',
-                    'visible': actions,
-                    width: '15%'
-                }
-            ],
             initComplete: function() {
                 $("#department_table_wrapper").prepend('<div class="dataTables_length" id="department_table_length"></div>');
                 $.ajax({

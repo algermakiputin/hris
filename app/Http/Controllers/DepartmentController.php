@@ -35,7 +35,8 @@ class DepartmentController extends Controller
 		$id = $request->input('id');
 		$update = Department::where('id', $id)->update([
 				'name' => $request->input('department_name'),
-		 		'description' => $request->input('department_details')
+		 		'description' => $request->input('department_details'),
+				'unit' => $request->input('unit')
 			]);
 
 		if ($update)
@@ -85,38 +86,32 @@ class DepartmentController extends Controller
 	    	
 	     if ($campus_id) {
 	     	$departments = Department::offset($start)
-	     					->limit($limit)
-	     					->orderBy($col,$dir)
+	     					->limit($limit) 
 	     					->where('campus_id', $campus_id)
 	     					->get();
 	     }else if ($search) {
 	     	$departments = Department::offset($start)
 	     					->limit($limit)
-	     					->orderBy($col,$dir)
+	     				
 	     					->where('name', 'like', '%' . $search . '%')
 	     					->get();
 	     }else {
 	     	$departments = Department::offset($start)
-	     					->limit($limit)
-	     					->orderBy($col,$dir)
+	     					->limit($limit) 
 	     					->get();
 	     }
-
-
-	     
-
 	     $data = [];
 
 	     if ($departments) {
 	     	$counter = 0;
 	     	foreach ($departments as $department) {
 	     		$campus = Campus::select('name')->where('id', $department->campus_id)->first()->name;
-
 	     		$counter++;
 	     		$nestedData = [
 					ucwords($department->name),
 	     			ucfirst($department->description), 
-					 $campus,
+					$department->unit,
+					$campus,
 	     			'<div class="dropdown">
 						<a class="icon_action btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="padding:3px 7px;border-radius:5px; ">
 						Action

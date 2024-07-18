@@ -25,7 +25,7 @@ class CampusController extends Controller
 
   public function getDepartments(Request $request) {
 
-      $departments = Department::where('campus_id', $request->input('campus_id'))->get();
+      $departments = Department::where('unit', $request->input('campus_id'))->get();
       $roles = Roles::all();
       return json_encode(array(
         'departments' => $departments,

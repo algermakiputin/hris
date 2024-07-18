@@ -172,16 +172,17 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-step" step-no = '2'>
+				<fieldset class="form-step active" step-no = '2'>
 					<div class="form-group">
 						<input type="hidden" id="roles-data" />
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<select name="campus" class="form-control selectpicker" data-parsley-group='block2' required="required" id="select_role_campus" data-parsley-errors-container="#campus-error">
+							<select name="unit" class="form-control" required id="select_role_campus">
 								<option value="">Select Unit</option>
-								@foreach ($campuses as $campus)
-								<option value="{{ $campus->id }}">{{$campus->name}}</option>
-								@endforeach
+								<option>OFFICE OF THE PRESIDENT</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
+								<option>OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
 							</select>
 							<div class="clearfix"></div>
 							<div id="campus-error"></div>
@@ -264,13 +265,13 @@
 						</div>
 					</div>
 					<div class="form-group"> 
-						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>
+						<label class="control-label col-md-2 col-sm-2 col-xs-12">Campus</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<select class="form-control" name="unit"> 
-								<option>OFFICE OF THE PRESIDENT</option>
-								<option>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
-								<option>OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
-								<option>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option> 
+							<select name="campus" class="form-control selectpicker" data-parsley-group='block2' required="required" id="select_campus" data-parsley-errors-container="#campus-error">
+								<option value="">Select Campus</option>
+								@foreach ($campuses as $campus)
+								<option value="{{ $campus->id }}">{{$campus->name}}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>

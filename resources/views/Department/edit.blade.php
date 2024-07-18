@@ -26,7 +26,6 @@
 			</div>
 			<div class="x_content">
 				<br />
-			 
 				<form class="form-horizontal form-label-left" method="POST" action="{{ url('department/update') }}">
 					@method('put')
 					@csrf 
@@ -46,15 +45,26 @@
 							<input type="text" id="department_name" class="form-control col-md-7 col-xs-12" name="department_name" value="{{ $department->name }}" >
 						</div>	 
 					</div>
-				 	
 				 	<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Unit:
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" id="details" class="form-control col-md-7 col-xs-12" name="department_details" value="{{ $department->description }}">
+							<select name="unit" class="form-control">
+								<option {{ $department->unit == "OFFICE OF THE PRESIDENT" ? "selected" : ""}}>OFFICE OF THE PRESIDENT</option>
+								<option {{ $department->unit == "OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS" ? "selected" : ""}}>OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option>
+								<option {{ $department->unit == "OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION" ? "selected" : ""}}>OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
+								<option {{ $department->unit == "OFFICE OF THE VICE PRESIDENT FOR FINANCE" ? "selected" : ""}}>OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
+							</select>
 						</div>	 
 					</div>
-
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">Description:
+						</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+						<input type="text" id="details" class="form-control col-md-7 col-xs-12" name="department_details" value="{{ $department->description }}">
+						</div>	 
+					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">&nbsp; 
 						</label>
@@ -62,7 +72,6 @@
 							<button class="btn btn-success" type="submit">Update</button>
 						</div>	 
 					</div>
- 
 				</form>
 			</div>
 		</div>
