@@ -148,11 +148,11 @@
             </ul>
           </li>
           
-          <li><a><i class="fa fa-bookmark"></i> Units <span class="fa fa-chevron-down"></span></a>
+          <li><a><i class="fa fa-bookmark"></i> Campus <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="{{ url('campus') }}">View Units</a></li>
+              <li><a href="{{ url('campus') }}">View Campus</a></li>
               @if ((int)Auth()->user()->role == 3 || (int)Auth()->user()->role == 2)
-              <li><a href="{{ url('campus/new') }}">New Unit</a></li>
+              <li><a href="{{ url('campus/new') }}">New Campus</a></li>
               @endif
             </ul>
           </li>

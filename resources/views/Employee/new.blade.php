@@ -172,7 +172,7 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-step active" step-no = '2'>
+				<fieldset class="form-step" step-no = '2'>
 					<div class="form-group">
 						<input type="hidden" id="roles-data" />
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Unit</label>

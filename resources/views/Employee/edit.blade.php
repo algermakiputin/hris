@@ -105,6 +105,25 @@
 										<input type="hidden" name="old_file" value="{{ $employee->resume }}">
 										<div class="form-group">
 											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+												<label>File 1</label>
+												<input  type="file" name="file2" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+												<label>File 2</label>
+												<input  type="file" name="file3" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+												<label>File 3</label>
+												<input  type="file" name="file4" />
+											</div>
+										</div>
+										<br/>
+										<div class="form-group">
+											<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
 												Uploaded Resume File: <a href="{{ url('storage/resume') . '/' .  $employee->resume }}">{{ $employee->resume }}</a>
 												<br>
 											</div>

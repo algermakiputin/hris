@@ -246,6 +246,36 @@
 										<th colspan="2"><i class="fa fa-file"></i> Documents</th>
 									</tr>
 									<tr>
+										<td width="30%">File 1:</td>
+										<td>
+											@if ($profile->file2)
+											<a href="{{ asset('storage/resume') . '/' . $profile->file2 }}">{{ $profile->file2 }}</a>
+											@else 
+											N/A
+											@endif
+										</td>
+									</tr>
+									<tr>
+										<td width="30%">File 2:</td>
+										<td>
+											@if ($profile->file3)
+											<a href="{{ asset('storage/resume') . '/' . $profile->file3 }}">{{ $profile->file3 }}</a>
+											@else 
+											N/A
+											@endif
+										</td>
+									</tr>
+									<tr>
+										<td width="30%">File 3:</td>
+										<td>
+											@if ($profile->file4)
+											<a href="{{ asset('storage/resume') . '/' . $profile->file4 }}">{{ $profile->file4 }}</a>
+											@else 
+											N/A
+											@endif
+										</td>
+									</tr>
+									<tr>
 										<td width="30%">Uploaded Resume:</td>
 										<td>
 											@if ($profile->resume)

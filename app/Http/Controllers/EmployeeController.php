@@ -205,27 +205,69 @@ class EmployeeController extends Controller
     }
 
     public function resumeUpdate(Request $request) {
-
-	    $request->validate([
-	        'resume' => 'required|mimes:docx,pdf'
-        ]);
+        
+	    
+        $file = Input::file('resume');
+        $file2 = Input::file('file2');
+        $file3 = Input::file('file3');
+        $file4 = Input::file('file4'); 
 
 	    $id = $request->input('id');
 
-        if ($request->input('old_file'))
+        if  ($file) {
+            if ($request->input('old_file'))
             Storage::delete('public/resume/' . $request->input('old_file'));
+            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extention = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
 
-        $file = Input::file('resume');
+            do{
+                $fileName .= rand(0, 100);
+            }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
 
-        $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $extention = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
+            $file->storeAs('public/resume/', $fileName . '.' . $extention);
+            employee::where('id', $id)->update(['resume' => $fileName . '.' . $extention]);
+        }
 
-        do{
-            $fileName .= rand(0, 100);
-        }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
+        if ($file2) { 
+            $fileName = pathinfo($file2->getClientOriginalName(), PATHINFO_FILENAME);
+            $extention = pathinfo($file2->getClientOriginalName(), PATHINFO_EXTENSION);
 
-        $file->storeAs('public/resume/', $fileName . '.' . $extention);
-        employee::where('id', $id)->update(['resume' => $fileName . '.' . $extention]);
+            do{
+                $fileName .= rand(0, 100);
+            }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
+
+            $file2->storeAs('public/resume/', $fileName . '.' . $extention);
+            employee::where('id', $id)->update(['file2' => $fileName . '.' . $extention]);
+        }
+
+        if ($file3) {
+            if ($file3) { 
+                $fileName = pathinfo($file3->getClientOriginalName(), PATHINFO_FILENAME);
+                $extention = pathinfo($file3->getClientOriginalName(), PATHINFO_EXTENSION);
+    
+                do{
+                    $fileName .= rand(0, 100);
+                }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
+    
+                $file3->storeAs('public/resume/', $fileName . '.' . $extention);
+                employee::where('id', $id)->update(['file3' => $fileName . '.' . $extention]);
+            }
+        }
+
+        if ($file4) {
+            if ($file4) { 
+                $fileName = pathinfo($file4->getClientOriginalName(), PATHINFO_FILENAME);
+                $extention = pathinfo($file4->getClientOriginalName(), PATHINFO_EXTENSION);
+    
+                do{
+                    $fileName .= rand(0, 100);
+                }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
+    
+                $file4->storeAs('public/resume/', $fileName . '.' . $extention);
+                employee::where('id', $id)->update(['file4' => $fileName . '.' . $extention]);
+            }
+        }
+
         return redirect()->back()->with('update','resume');
     
     }
