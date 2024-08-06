@@ -38,8 +38,8 @@ class RequestController extends Controller
         return redirect()->back();
     }
 
-    public function index(Request $request) {
-        $requests = requests::all();
+    public function index(Request $request) { 
+        $requests = requests::where('employee_Id', Auth()->user()->employee_id)->get();
         return view('request.index', compact('requests'));
     }
 

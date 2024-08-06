@@ -516,6 +516,10 @@ $(document).ready(function() {
         employeeReportsTable.columns(0).search($(this).val()).draw();
     }); 
 
+    $("#employee-gender-sorting").change(function(e) {
+        employeeReportsTable.columns(1).search($(this).val()).draw();
+    });
+
     $("#employeesExportToPDF").click(function() {
         employeeReportsTable.buttons('.buttons-pdf').trigger();
     });

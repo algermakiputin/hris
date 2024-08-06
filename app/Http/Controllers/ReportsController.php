@@ -142,10 +142,12 @@ class ReportsController extends Controller
         $limit = $request->input('length');
 		$start = $request->input('start');
         $sort = $request->input('columns.0.search.value') ? $request->input('columns.0.search.value') : "first_name";
-        $employees = employee::orderBy($sort, 'ASC')
+        $order = $request->input('order.0.dir');
+        $employees = employee::orderBy($sort, $order)
                             ->offset($start)
                             ->limit($limit)
                             ->get();
+        
         $count = employee::count();
         $data = [];
 
