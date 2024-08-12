@@ -63,13 +63,24 @@
 					
 				 	
 				 	<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12">Description:
+						</label>
+						<div class="col-md-4 col-sm-4 col-xs-12">
+							<input type="text" class="form-control col-md-7 col-xs-12" name="description" placeholder="Description" required="required">
+						</div>	 
+					</div>
+					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12">Unit:
 						</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
-							<input type="text" class="form-control col-md-7 col-xs-12" name="description" placeholder="Details" required="required">
+							<select name="unit" class="form-control">
+								<option >OFFICE OF THE PRESIDENT</option>
+								<option >OFFICE OF THE VICE PRESIDENT FOR ACADEMIC AFFAIRS</option>
+								<option >OFFICE OF THE VICE PRESIDENT FOR ADMINISTRATION</option>
+								<option >OFFICE OF THE VICE PRESIDENT FOR FINANCE</option>
+							</select>
 						</div>	 
 					</div>
-			 
 
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12">&nbsp; 

@@ -141,14 +141,78 @@ class ReportsController extends Controller
         $draw = $request->input('draw');
         $limit = $request->input('length');
 		$start = $request->input('start');
-        $sort = $request->input('columns.0.search.value') ? $request->input('columns.0.search.value') : "first_name";
+        $columnMapping = [
+            'gender' => 'gender',
+            'employment_type' => ''
+        ];
+
+        $column = $request->input('columns.0.search.value');
+        $value = $request->input('columns.1.search.value');
         $order = $request->input('order.0.dir');
-        $employees = employee::orderBy($sort, $order)
+        $employees = [];
+        $count = 0;
+        if ($column == "gender") {
+            $employees = employee::where($columnMapping[$column], $value)
                             ->offset($start)
                             ->limit($limit)
                             ->get();
+            $count = employee::where($columnMapping[$column], $value)
+            ->offset($start)
+            ->limit($limit)
+            ->count();
+        } else if ($column == "birthday") {
+            $ageMapping = array(
+                '20-30' => [strtotime('-20 years', time()), strtotime('-30 years', time())],
+                '31-40' => [strtotime('-31 years', time()), strtotime('-40 years', time())],
+                '41-50' => [strtotime('-41 years', time()), strtotime('-50 years', time())],
+                '51-60' => [strtotime('-51 years', time()), strtotime('-60 years', time())],
+                '61+' => [strtotime('-61 years', time()), strtotime('-900 years', time())]
+            );
+            $from = date('Y-m-d', $ageMapping[$value][1]);
+            $to = date('Y-m-d', $ageMapping[$value][0]);
+           
+            $employees = employee::whereBetween('birthday', [$from, $to]) 
+                                ->offset($start)
+                                ->limit($limit)
+                                ->get();
+            $count = employee::whereBetween('birthday', [$from, $to]) 
+                                ->offset($start)
+                                ->limit($limit)
+                                ->count();
+         
+        } else if ($column == "employment_type") {
+            $employees = employee::where('employment_status', $value)
+                            ->offset($start)
+                            ->limit($limit)
+                            ->get();
+            $count = employee::where('employment_status', $value)
+                            ->offset($start)
+                            ->limit($limit)
+                            ->count();
+        } else if ($column == "date_joining") {
+            $dateJoiningMapping = array(
+                'less' => [strtotime('-1 year', time()), time()],
+                '1-5' => [strtotime('-13 month', time()), strtotime('-5 year', time())],
+                '6-10' => [strtotime('-6 year', time()), strtotime('-10 year', time())],
+                '11-20' => [strtotime('-11 year', time()), strtotime('-20 year', time())],
+                '20+' => [strtotime('-21 year', time()), strtotime('-100 year', time())]
+            );
+
+            $from = date('Y-m-d', $dateJoiningMapping[$value][1]);
+            $to = date('Y-m-d', $dateJoiningMapping[$value][0]);
+           
+            $employees = employee::whereBetween('date_joining', [$from, $to]) 
+                                ->offset($start)
+                                ->limit($limit)
+                                ->get();
+            $count = employee::whereBetween('date_joining', [$from, $to]) 
+                                ->offset($start)
+                                ->limit($limit)
+                                ->count();
+        }
+ 
         
-        $count = employee::count();
+        
         $data = [];
 
         foreach ($employees as $employee) {

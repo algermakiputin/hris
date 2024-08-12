@@ -47,7 +47,7 @@ class DepartmentController extends Controller
 	public function save(Request $request) {
 	  
 	    $request->validate([
-	    			'campus_id' => 'required|max:50',
+	    		'campus_id' => 'required|max:50',
 	 			'department_name' => 'required|max:50',  
 	 			'description' => 'required|max:50'
 	 		]);
@@ -56,7 +56,7 @@ class DepartmentController extends Controller
 	 	$department->campus_id = $request->input('campus_id');
 		$department->name = $request->input('department_name');
 		$department->description = $request->input('description'); 
-
+		$department->unit = $request->input('unit');
 		if ($department->save()) {
 			return redirect()->back()->with('success','Department added successfully...');
 		}

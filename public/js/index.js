@@ -508,13 +508,32 @@ $(document).ready(function() {
             'data': {
                 '_token': $("meta[name=csrf-token]").attr('content')
             }
-
         }
     });
+    
+    $("#gender-select select").change(function(e) {
+        var column = $("#employee-reports-sorting").val();
+        var filter = $(this).val();
+        employeeReportsTable.columns(0).search(column)
+                            .columns(1).search(filter)
+                            .draw();
+    });
 
-    $("#employee-reports-sorting").change(function() {
-        employeeReportsTable.columns(0).search($(this).val()).draw();
-    }); 
+    $("#age-select select").change(function(e) {
+        var column = $("#employee-reports-sorting").val();
+        var filter = $(this).val();
+        employeeReportsTable.columns(0).search(column)
+                            .columns(1).search(filter)
+                            .draw();
+    });
+
+    $("#employment-status-select select, #service-select select").change(function(e) {
+        var column = $("#employee-reports-sorting").val();
+        var filter = $(this).val();
+        employeeReportsTable.columns(0).search(column)
+                            .columns(1).search(filter)
+                            .draw();
+    });
 
     $("#employee-gender-sorting").change(function(e) {
         employeeReportsTable.columns(1).search($(this).val()).draw();
