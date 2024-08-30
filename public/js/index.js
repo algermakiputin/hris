@@ -1636,14 +1636,13 @@ class DatePicker {
            
             //var days = Math.round((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
             var days = moment(end_date).diff(moment(start_date), 'days') + 1;
- 
+            
             if (days > 0) {
                 var output = (days > 1 ? days + ' Days' : days + ' Day');
                 $("#days").val(output);
                 $.each(myLeaveBalance, function(key, value) {
                 if (value.id == id) {
                     var allowance = value.allowance - value.total;
-
                     if (days > value.allowance) {
                         $("#a-error").show();
                         $("#a-success").hide();

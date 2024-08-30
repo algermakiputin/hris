@@ -155,9 +155,19 @@
  		}
 
  		return $datasets;
-
-
  	}
+
+	function isBirthdayToday() {
+		$id = Auth()->user()->employee_id;
+		if ($id) {
+			$employee = employee::where('employee_id', $id)->first();
+			
+			$today = date('m-d', strtotime(date('Y-m-d')));
+			$birthdate = date('m-d', strtotime($employee->birthday));
+			return $today == $birthdate;
+		}
+		 
+	}
 
 
 ?>

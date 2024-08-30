@@ -232,9 +232,6 @@
 									</div>	 
 								</div>
 					 		</fieldset>
-
-							 
-
 						{{ Form::close()}}
 					</div>
 					 

@@ -46,9 +46,22 @@
                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                <i class="fa fa-envelope-o"></i>
                 @if ($notification = getNotification())
-               <span class="badge bg-green">{{ count($notification) }}</span>
+               <span class="badge bg-green">{{ count($notification) + (isBirthdayToday() ? 1 : 0) }}</span>
                </a>
                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                     @if(isBirthdayToday()) 
+                        <li>
+                           <a href="#" data-id="#" class="">
+                           <span class="image"></span>
+                           <span>
+                           <span>It's your birthday today! {{ Auth()->user()->name }}</span>
+                           </span>
+                           <span class="message">
+                              Happy Birthday!
+                           </span>
+                           </a>
+                        </li>
+                     @endif
                      @foreach($notification as $notify)
                      <li>
                         <a href="{{ url($notify['link']) }}" data-id="{{ $notify['id'] }}" class="notify">

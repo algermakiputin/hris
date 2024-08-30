@@ -299,6 +299,17 @@
 					<div class="form-group" id="academic-wrapper"> 
 						<label class="control-label col-md-2 col-sm-2 col-xs-12">Academic Rank</label>
 						<div class="col-md-4 col-sm-4 col-xs-12">
+							<select name="academic_rank" class="form-control">
+								<option>Instructor 1</option>
+								<option>Instructor 2</option>
+								<option>Instructor 3</option>
+								<option>Associate Professor 1</option>
+								<option>Associate Professor 2</option>
+								<option>Associate Professor 3</option>
+								<option>Professor 1</option>
+								<option>Professor 2</option>
+								<option>Professor 3</option>
+							</select>
 							<input type="text" name="academic_rank" class="form-control" />
 						</div>
 					</div>

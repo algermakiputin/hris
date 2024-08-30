@@ -430,7 +430,7 @@ class LeaveController extends Controller
 		return $totalHours;
 	}
 
-	public function getTotalHoursFaculty() {
+	public function getTotalHoursFaculty($employeeId = 0) {
 		$startDate = "";
 		$endDate = "";
 
@@ -444,7 +444,7 @@ class LeaveController extends Controller
 
 		$totalHours = 0;
 		$leaves = Leave::whereBetween('date', [$startDate, $endDate])
-						->where('employee_id', Auth()->user()->employee_id)
+						->where('employee_id', $employeeId ? $employeeId : Auth()->user()->employee_id)
 						->where('status', 1)
 						->where('reset', 0)
 						->get(); 
@@ -515,7 +515,8 @@ class LeaveController extends Controller
 				$leaveCredits = 5;
 			} 
 
-			$totalHoursUsed = $this->getTotalHoursFaculty();
+			$totalHoursUsed = $this->getTotalHoursFaculty($employee_id);
+		 
 		}
 	 
 		$balance = $leaveCredits - ($totalHoursUsed / 8);
@@ -835,7 +836,7 @@ class LeaveController extends Controller
 		if ($duration == "short") {
 			$start = $request->input('timeradio') === "AM" ? "08:00 AM" : "01:00PM";
 			$end = $request->input('timeradio') === "AM" ? "12:00 PM" : "05:00 PM";
-			$date = $request->input('leave_date');
+			$date = date('Y-m-d', strtotime($request->input('leave_date')));
 			$request->validate([
 				'timeradio' => 'required', 
 				'leave_date' => 'required'

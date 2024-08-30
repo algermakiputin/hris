@@ -211,7 +211,7 @@ class EmployeeController extends Controller
         $file2 = Input::file('file2');
         $file3 = Input::file('file3');
         $file4 = Input::file('file4'); 
-
+        $file5 = Input::file('file5');
 	    $id = $request->input('id');
 
         if  ($file) {
@@ -265,6 +265,20 @@ class EmployeeController extends Controller
     
                 $file4->storeAs('public/resume/', $fileName . '.' . $extention);
                 employee::where('id', $id)->update(['file4' => $fileName . '.' . $extention]);
+            }
+        }
+
+        if ($file5) {
+            if ($file5) { 
+                $fileName = pathinfo($file5->getClientOriginalName(), PATHINFO_FILENAME);
+                $extention = pathinfo($file5->getClientOriginalName(), PATHINFO_EXTENSION);
+    
+                do{
+                    $fileName .= rand(0, 100);
+                }while(Storage::exists(url('public/resume/') . $fileName . '.' . $extention));
+    
+                $file5->storeAs('public/resume/', $fileName . '.' . $extention);
+                employee::where('id', $id)->update(['file5' => $fileName . '.' . $extention]);
             }
         }
 

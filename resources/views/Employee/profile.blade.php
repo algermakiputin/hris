@@ -276,6 +276,16 @@
 										</td>
 									</tr>
 									<tr>
+										<td width="30%">File 4:</td>
+										<td>
+											@if ($profile->file5)
+											<a href="{{ asset('storage/resume') . '/' . $profile->file5 }}">{{ $profile->file5 }}</a>
+											@else 
+											N/A
+											@endif
+										</td>
+									</tr>
+									<tr>
 										<td width="30%">Uploaded Resume:</td>
 										<td>
 											@if ($profile->resume)
